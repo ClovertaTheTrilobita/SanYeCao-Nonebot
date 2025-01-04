@@ -1,1 +1,5 @@
 .env.prod
+.venv
+.xml
+.idea
+.db
