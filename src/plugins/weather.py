@@ -13,7 +13,6 @@ async def handle_function():
 
 
 
-
 def get_weather(city_name):
     # 设置请求的URL和参数
     url = f'https://apis.juhe.cn/simpleWeather/query?key=50a3bd415158e186903d6e6994157589&city={city_name}'
