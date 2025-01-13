@@ -45,7 +45,7 @@ def touch_init():
         return print("摸摸功能已初始化。")
     else:
         print("摸摸功能未初始化，开始执行初始化文件。")
-        execute_init_file()
+        execute_init_file2()
         return ""
 
 """
