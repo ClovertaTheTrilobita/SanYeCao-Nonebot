@@ -7,6 +7,7 @@ nonebot2[websockets]
 sqlalchemy~=2.0.34
 autopep8
 graiax-silkcoder
+graiax-silkcoder[ffempeg]
 Crypto
 fake_useragent
 pycryptodome

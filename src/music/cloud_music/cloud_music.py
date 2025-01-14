@@ -76,6 +76,7 @@ def encSecKey():
 
 
 save_path = os.getcwd()+'/src/music/netease_music'
+qrcode_path = os.getcwd()+'/src/music'
 
 
 # 判断cookie是否有效
@@ -85,15 +86,21 @@ def netease_cloud_music_is_login(session):
     except Exception:
         pass
     csrf_token = session.cookies.get('__csrf')
-    c = str({'csrf_token': csrf_token})
-    try:
-        loginurl = session.post('https://music.163.com/weapi/w/nuser/account/get?csrf_token={}'.format(csrf_token),data={'params': params(None), 'encSecKey': encSecKey()}, headers=headers).json()
-        if '200' in str(loginurl['code']):
-            return session, True
-        else:
-            return session, False
-    except BaseException:
+    if csrf_token is None:
         return session, False
+    else:
+        try:
+            loginurl = session.post(f'https://music.163.com/weapi/w/nuser/account/get?csrf_token={csrf_token}',data={'params': params(None), 'encSecKey': encSecKey()}, headers=headers).json()
+            print(loginurl)
+            print(loginurl['code'])
+            if '200' in str(loginurl['code']):
+                print('登录成功')
+                return session, True
+            else:
+                print('登录失败')
+                return session, False
+        except BaseException:
+            return session, False
 
 # 获取二维码的key
 def get_qr_key(session):
@@ -120,16 +127,8 @@ def create_qr_code(unikey):
     img = qr.make_image()
     a = BytesIO()
     img.save(a, 'png')
-    png = a.getvalue()
-    # 将字节数据转换为图像
-    img = Image.open(BytesIO(png))
-    # 保存图像到本地文件
-    img.save(save_path,'qrcode.png')
-    a.close()
-    return os.getcwd()+'/'+save_path+'/qrcode.png'
-    # # 打开二维码进行扫码操作
-    # t = showpng(png)
-    # t.start()
+    img.save(os.path.join(qrcode_path, 'qrcode.png'))
+    return  qrcode_path + '/qrcode.png'
 
 
 # 检查二维码状态是否被扫描
