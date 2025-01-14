@@ -6,18 +6,21 @@ nonebot2[websockets]
 
 sqlalchemy~=2.0.34
 autopep8
+graiax-silkcoder[ffmpeg]
+Crypto~=1.4.1
 graiax-silkcoder
-graiax-silkcoder[ffempeg]
 Crypto
 fake_useragent
-pycryptodome
-PyExecJS
+pycryptodome~=3.21.0
+PyExecJS~=1.5.1
 gradio_client
 
 
 
 
-requests~=2.32.3
-pillow~=10.4.0
+requests~=2.31.0
+pillow~=11.1.0
 yaml~=0.2.5
 pyyaml~=6.0.1
+qrcode~=7.4.2
+nonebot~=1.9.1

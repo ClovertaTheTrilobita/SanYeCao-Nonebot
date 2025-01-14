@@ -150,7 +150,7 @@ def netease_music_search(keyword,session):
     params = {
         "s": keyword,
         "type": 1,  # 1 表示搜索歌曲，2 表示搜索专辑，3 表示搜索歌手等
-        "limit": 50,  # 限制搜索结果的数量
+        "limit": 10,  # 限制搜索结果的数量
         "offset": 0,  # 搜索结果的偏移量，可用于分页
         "sub": "false",
     }
@@ -161,6 +161,8 @@ def netease_music_search(keyword,session):
         if songs:
             filtered_data = [item for item in songs if item.get('fee') == 8]# 过滤掉付费歌曲
             num = 0
+            if len(filtered_data) - 1 <= 0: # 判断返回内容是否为空
+                return None, None, None, None
             num = Random().randint(0, len(filtered_data) - 1)
             first_song = filtered_data[num]  # 获取第一首歌曲
             song_name = first_song["name"]
