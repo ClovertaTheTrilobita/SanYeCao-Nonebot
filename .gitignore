@@ -2,4 +2,5 @@
 .venv
 .xml
 .idea
-.db
+chat_bot.db
+cloud_music_cookies.cookie

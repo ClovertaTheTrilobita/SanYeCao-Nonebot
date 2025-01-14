@@ -10,7 +10,7 @@ from src.common_plugins.img.get_image import get_image_names, get_smms_image_url
 fortune_by_sqlite = on_command("今日运势", rule=to_me(), priority=10, block=True)
 @fortune_by_sqlite.handle()
 async def get_today_fortune(message: MessageEvent):
-    url = get_smms_image_url()
+
     local_image_path = get_image_names()
     member_openid = message.get_user_id()
     # 查询今日是否已经获取过今日运势，如果获取过则直接从日志取

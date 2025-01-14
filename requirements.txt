@@ -4,7 +4,7 @@ nonebot2[fastapi]
 nonebot2[httpx]
 nonebot2[websockets]
 
-sqlalchemy
+sqlalchemy~=2.0.34
 autopep8
 graiax-silkcoder
 Crypto
@@ -15,3 +15,8 @@ gradio_client
 
 
 
+
+requests~=2.32.3
+pillow~=10.4.0
+yaml~=0.2.5
+pyyaml~=6.0.1
