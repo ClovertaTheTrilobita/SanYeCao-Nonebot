@@ -1,6 +1,6 @@
 import nonebot
 from nonebot.adapters.qq import Adapter as QQAdapter
-from src.qq_plugins.data_init import data_init  # 导入QQ插件
+from src.my_sqlite.data_init import data_init
 
 nonebot.init()
 driver = nonebot.get_driver()

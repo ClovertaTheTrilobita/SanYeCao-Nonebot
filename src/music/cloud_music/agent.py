@@ -24,7 +24,7 @@ def djs(js):
             break
     return jst
 def getjs():
-    return djs('src/common_plugins/cloud_music/jsdm.js')
+    return djs('src/music/cloud_music/jsdm.js')
 
 # 获取ptqrtoken
 def ptqrtoken(qrsign):

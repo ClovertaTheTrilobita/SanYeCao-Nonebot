@@ -35,22 +35,22 @@ def tarotChoice(lockTarot):
     if ints == 0:
         tarots = random.choice(tarot)
         txt = tarots[0] + '\n' + '正位' + '\n' + tarots[1]
-        img = f'src/img_resource/tarotT/TarotImages' + tarots[3]
+        img = f'src/image/tarotT/TarotImages' + tarots[3]
         img_folder = 'AbstractImages' if lockTarot else 'TarotImages'
-        img = f'src/img_resource/tarot/{img_folder}/{tarots[3]}'
+        img = f'src/image/tarot/{img_folder}/{tarots[3]}'
         return txt, img
     if ints == 1:
         tarots = random.choice(tarot)
         txt = tarots[0] + '\n' + '逆位' + '\n' + tarots[2]
         img_folder = 'AbstractImages' if lockTarot else 'TarotImages'
-        img1 = f'src/img_resource/tarot/side{img_folder}/' + tarots[3]
-        if not os.path.exists(f'src/img_resource/tarot/side{img_folder}'):
-            os.mkdir(f'src/img_resource/tarot/side{img_folder}')
+        img1 = f'src/image/tarot/side{img_folder}/' + tarots[3]
+        if not os.path.exists(f'src/image/tarot/side{img_folder}'):
+            os.mkdir(f'src/image/tarot/side{img_folder}')
         if os.path.exists(img1):
             return txt, img1
         else:
             # 打开图像
-            img = Image.open(f'src/img_resource/tarot/{img_folder}/{tarots[3]}')
+            img = Image.open(f'src/image/tarot/{img_folder}/{tarots[3]}')
 
             if img.mode == 'RGBA':
                 img = img.convert('RGB')
@@ -58,7 +58,7 @@ def tarotChoice(lockTarot):
             rotated_img = img.rotate(180)
 
             # 保存旋转后的图像
-            rotated_img.save(f'src/img_resource/tarot/side{img_folder}/' + tarots[3])
+            rotated_img.save(f'src/image/tarot/side{img_folder}/' + tarots[3])
             return txt, img1
 
 tarot = [['愚者 (The Fool)',

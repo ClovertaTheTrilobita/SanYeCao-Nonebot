@@ -1,12 +1,10 @@
-import os
 import pickle
+import time
 from pathlib import Path
-
-import requests
 from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.adapters.qq import   MessageSegment,MessageEvent
-from src.common_plugins.cloud_music.cloud_music import *
+from src.music.cloud_music.cloud_music import *
 
 music = on_command("点歌", rule=to_me(), priority=10, block=True)
 @music.handle()
