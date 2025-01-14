@@ -15,12 +15,7 @@ pycryptodome~=3.21.0
 PyExecJS~=1.5.1
 gradio_client
 
-
-
-
 requests~=2.31.0
-pillow~=11.1.0
-yaml~=0.2.5
-pyyaml~=6.0.1
-qrcode~=7.4.2
-nonebot~=1.9.1
+pillow
+pyyaml
+qrcode
