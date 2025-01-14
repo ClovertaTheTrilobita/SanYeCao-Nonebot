@@ -162,7 +162,7 @@ def netease_music_search(keyword,session):
         if songs:
             filtered_data = [item for item in songs if item.get('fee') == 8]# 过滤掉付费歌曲
             num = 0
-            if len(filtered_data) - 1 <= 0:
+            if len(filtered_data) - 1 <= 0: # 判断返回内容是否为空
                 return None, None, None, None
             num = Random().randint(0, len(filtered_data) - 1)
             first_song = filtered_data[num]  # 获取第一首歌曲
