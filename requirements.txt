@@ -1,0 +1,17 @@
+nonebot2
+nonebot_adapter_qq
+nonebot2[fastapi]
+nonebot2[httpx]
+nonebot2[websockets]
+
+sqlalchemy
+autopep8
+graiax-silkcoder
+Crypto
+fake_useragent
+pycryptodome
+PyExecJS
+gradio_client
+
+
+

@@ -9,3 +9,5 @@
 ## Documentation
 
 See [Docs](https://nonebot.dev/)
+
+pip install -r requirements.txt
