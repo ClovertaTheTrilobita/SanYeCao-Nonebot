@@ -1,10 +1,11 @@
+from nonebot.plugin import on_command, on_keyword
 import random
 from nonebot.rule import Rule, to_me
 from nonebot import  on_message
 from nonebot.adapters.qq import Message
 from nonebot.adapters import Bot, Event
 
-menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆']
+menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '我喜欢你', "❤"]
 async def check_value_in_menu(event: Event) -> bool:
     value = event.get_plaintext().strip().split(" ")
     if value[0] in menu:
@@ -26,3 +27,15 @@ text_list = [
     "是特殊信号？猫猫听不懂，喵～" + '\n' + "(๑・̀︶・́)و 下个明确指令，喵~",
     "难道是新指令？猫猫一脸茫然，喵～" + '\n' + "(๑＞ڡ＜)☆ 说详细点，别这么隐晦，喵～",
 ]
+
+love = on_keyword({"我喜欢你", "❤"}, rule=to_me(), priority=10, block=True)
+@love.handle()
+async def spread_love():
+    await love.finish("我也喜欢你。")
+
+test = on_command("test", rule=to_me(), priority=10, block=True)
+@test.handle()
+async def bot_on_ready():
+    await test.finish("\nBoost & Magnum, ready fight!!!")
+
+
