@@ -1,37 +1,47 @@
 # SanYeCao-Nonebot
 
-## How to start
+## 开始使用
 
-1. generate project using `nb create` .
-2. install plugins using `nb plugin install` .
-3. run your bot using `nb run` .
+### 声明 
 
-## Documentation
+###### 我是菜比，我是笨比🏳️🏳️
 
-See [Docs](https://nonebot.dev/)
+📦安装
 
 pip install -r requirements.txt
 
-你需要把你 [example.env.prod](example.env.prod)文件改为你自己的配置文件
-如果没有可以自己创建一个
-.env.prod
-
-内容如下
-
 ```
-DRIVER=~fastapi+~httpx+~websockets
-
-QQ_IS_SANDBOX=false
-
-QQ_BOTS='[{
-    "id": "",
-    "token": "",
-    "secret": "",
-    "intent": {
-        "guild_messages": true,
-        "c2c_group_at_messages": true
-        },
-    	"use_websocket": false
-    }]'
+#使用网易云点歌需要
+npm install crypto-js
 ```
 
+#### ⚙️技术架构
+
+- 本项目是nonebot2 框架搭建需要 安装nonebot2
+
+	🌈目前功能:
+
+- [x] 待办
+- [x]  天气 
+- [x] 今日运势
+- [x] 点歌（网易云 需扫码登录 在 src\music 目录下）PC端 QQ可能播放不出来 原因不明
+- [x] 图（返回图库中的图片）
+- [ ] 摸摸头（待实现动图）
+- [ ] 今日老婆
+- [ ] 群老婆
+
+
+
+---
+
+### 🙏项目感谢
+
+| 贡献者 （按首字母排序，不分先后） | 主要贡献 |
+| :-------------------------------- | :------- |
+|                                   |          |
+|                                   |          |
+|                                   |          |
+|                                   |          |
+|                                   |          |
+
+#### 
