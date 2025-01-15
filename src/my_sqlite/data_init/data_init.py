@@ -28,7 +28,7 @@ def QrFortune_init():
 """
 def execute_init_file():
     # 拼接文件的完整路径
-    file_path = os.getcwd() + "\\src\\qq_plugins\\data_init\\fortune_init_data.py"
+    file_path = os.getcwd() + "\\src\\my_sqlite\\data_init\\fortune_init_data.py"
     init_file_path = os.path.join(os.path.dirname(__file__), file_path)
     try:
         # 执行初始化文件
@@ -53,7 +53,7 @@ def touch_init():
 """
 def execute_init_file2():
     # 拼接文件的完整路径
-    file_path = os.getcwd() + "\\src\\qq_plugins\\data_init\\touch_init_data.py"
+    file_path = os.getcwd() + "\\src\\my_sqlite\\data_init\\touch_init_data.py"
     init_file_path = os.path.join(os.path.dirname(__file__), file_path)
     try:
         # 执行初始化文件
