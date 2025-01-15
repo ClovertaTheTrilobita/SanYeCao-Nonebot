@@ -1,8 +1,6 @@
 import pickle
 import time
 from pathlib import Path
-
-from lazy_object_proxy.utils import await_
 from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.adapters.qq import   MessageSegment,MessageEvent
@@ -24,8 +22,11 @@ async def handle_function(msg: MessageEvent):
         await music.send("登录失效，请联系管理员进行登录")
         unikey = get_qr_key(session)
         path = create_qr_code(unikey)
+
         """是否要发送到QQ上面登录 """
         # await music.send(MessageSegment.file_image(Path(path)))
+        """是否要发送到QQ上面登录 """
+
         while True:
             code = check_qr_code(unikey, session)
             if '801' in str(code):
