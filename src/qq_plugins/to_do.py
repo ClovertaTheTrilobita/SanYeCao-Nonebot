@@ -17,7 +17,7 @@ async def show_todo_list(message: MessageEvent):
 
     result = get_user_todo_list(member_openid)
     if result is False:
-        await get_todo_list.finish("您还未创建任何待办\n尝试使用 /新建待办 创建一份吧")
+        await get_todo_list.finish("\n您还未创建待办\n快使用 /新建待办 创建一份吧")
 
     todo_list = ""
     count = 0
