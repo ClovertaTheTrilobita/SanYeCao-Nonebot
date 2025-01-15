@@ -82,16 +82,19 @@ DRIVER=~fastapi+~httpx+~websockets
 
 QQ_IS_SANDBOX=false
 
-QQ_BOTS='[{
-    "id": "",
-    "token": "",
-    "secret": "",
+QQ_BOTS='
+[
+  {
+    "id": "xxx",
+    "token": "xxx",
+    "secret": "xxx",
     "intent": {
-        "guild_messages": true,
-        "c2c_group_at_messages": true
-        },
-    	"use_websocket": true
-    }]'
+      "c2c_group_at_messages": true
+    },
+    "use_websocket": false
+  }
+]
+'
 ```
 分别在id、token、secret处填写你的机器人ID，机器人Token和Apple Secret，需从[QQ开放平台](https://q.qq.com/)获取。
 
