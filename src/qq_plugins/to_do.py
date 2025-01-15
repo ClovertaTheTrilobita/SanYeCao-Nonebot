@@ -1,6 +1,3 @@
-from pathlib import Path
-
-from debugpy.server.cli import switches
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
