@@ -75,7 +75,7 @@ npm install crypto-js
 
 ### ✒️二、配置所需文件
 
-在一切开始前，你需要将项目根目录下的 [example.env.prod](example.env.prod)文件更名为***.env.prod***，这是机器人的账号配置文件。
+在一切开始前，你需要将项目根目录下的 [example.env.prod](example.env.prod)文件更名为<b><i>.env.prod</i></b>，这是机器人的账号配置文件。
 
 ```
 DRIVER=~fastapi+~httpx+~websockets
