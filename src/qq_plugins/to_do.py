@@ -24,7 +24,6 @@ async def show_todo_list(message: MessageEvent):
 
     todo_list = ""
     count = 0
-    print(result)
     for each_content in result:
         count += 1
         todo_content = "\n" + str(count) + "." + str(each_content).lstrip("('").rstrip("',)") + "\n"

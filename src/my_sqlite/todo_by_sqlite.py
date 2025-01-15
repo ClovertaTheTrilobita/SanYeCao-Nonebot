@@ -106,11 +106,3 @@ checkUserTodoLength = text(
 # 查找用户待办
 selectUserTodo = text(
     "select content from user_todo_list where user_id = :member_openid")
-
-if __name__ == '__main__':
-    print('test:')
-    # insert_user_todo_list('111', '123')
-    # print(get_user_todo_list('111'))
-    # del_line_num = '1'
-    # delete_user_todo('111', int(del_line_num))
-    # print(get_user_todo_list('111'))
