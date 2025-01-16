@@ -6,3 +6,4 @@ node_modules
 chat_bot.db
 cloud_music_cookies.cookie
 /src/music/qrcode.png
+/src/image/config/image.yaml
