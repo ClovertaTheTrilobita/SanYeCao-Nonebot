@@ -16,7 +16,7 @@
 - 多种个性化用法，如天气、每日运势(~~机器人时尚单品~~)、点歌、编辑个人待办等，后续功能开发中🔧
 - 使用轻量化数据库sqlite管理数据，实现为每位用户单独存取数据🔍
 
-
+<br>
 
 ## 🌈目前功能:
 
@@ -29,14 +29,14 @@
 - [ ] 今日老婆
 - [ ] 群老婆
 
-
+<br>
 
 
 ## 🛠️使用
 
 - 关于Nonebot完整部署使用方法，请查看[官方文档](https://nonebot.dev/)
 
-
+<br>
 
 
 ### ⚙️一、环境配置
@@ -53,7 +53,7 @@ conda create --name chatbot python=3.11
 
 **🚫注意：**机器人**不**支持<img alt="Static Badge" src="https://img.shields.io/badge/Python-3.13/+-blue">的发行版，推荐使用<img alt="Static Badge" src="https://img.shields.io/badge/Python-3.11%2F3.12-blue">
 
-
+<br>
 
 此机器人运行所需依赖已全部打包至***requirements.txt***，您只需回到项目根目录
 
@@ -65,7 +65,7 @@ pip install -r requirements.txt
 
 安装所需依赖。
 
-
+<br>
 
 **使用网易云点歌需要另外安装：**
 
@@ -73,7 +73,7 @@ pip install -r requirements.txt
 npm install crypto-js
 ```
 
-
+<br>
 
 ### ✒️二、配置所需文件
 
@@ -100,7 +100,7 @@ QQ_BOTS='
 ```
 分别在id、token、secret处填写你的机器人ID，机器人Token和Apple Secret，需从[QQ开放平台](https://q.qq.com/)获取。
 
-
+<br>
 
 ### 📍二、启动机器人
 
@@ -112,7 +112,7 @@ python bot.by
 
 或者选择编译器启动，便可以启动机器人。
 
-
+<br>
 
 ### 🗒️三、项目结构
 
@@ -189,7 +189,7 @@ python bot.by
 - 基本插件存储在qq_plugins目录中，启动即可使用
 - 部分插件通过调用其它目录中的方法完成其功能
 
-
+<br>
 
 ### 🎈四、更多功能
 
@@ -216,13 +216,13 @@ user_list
 user_todo_list
 ```
 
-初始化相关脚本存放在 <b><i>/src/my_sqlite/data_init</i></b> 目录下。
+初始化相关脚本存放在 [<b>src/my_sqlite/data_init</b>](src/my_sqlite/data_init) 目录下。
 
 每次启动机器人，程序会自动检查上述六张表是否存在，有表缺失则会在数据库中自动创建对应的表。
 
 对已存在的表不做处理。
 
-
+<br>
 
 #### ⛅从图床发送图片
 
@@ -252,3 +252,31 @@ image:
 将你的机器人app_id，smms图床Token和聚合图床Token替换上述<i>\<KEY></i>（可以根据自身需求选填）
 
 之后在[<B>get_image.py</B>](src/image/get_image.py)中找到对应的方法，根据自身需求调用。
+
+<br>
+
+#### 🎵使用网易云API实现点歌
+
+##### 介绍：
+
+机器人支持在线点歌，将音乐文件以QQ语音的形式发送至群聊。
+
+快点一首你喜欢的歌给群友听吧！
+
+<br>
+
+*PC端QQ由于未知原因可能会出现播放失败的问题，<u>这绝对不是咱的问题，绝对不是！</u>*
+
+##### 使用：
+
+若您是初次使用点歌功能，在群聊中@机器人后，机器人会提示：
+
+```
+登录失效，请联系管理员进行登录
+```
+
+此时会在[<b>src/music</b>](src/music)目录下生成一张<i><b>qrcode.png</b></i>，您需要使用手机端网易云音乐**扫码**该二维码，登录您的网易云账号。
+
+<br>
+
+**🚨注意：**目前点歌的实现方法为获取请求到的第一首歌，并且自动跳过无法下载（付费）歌曲，若您想点的歌原唱为付费，可能会随机到一首翻唱或其它版本。
