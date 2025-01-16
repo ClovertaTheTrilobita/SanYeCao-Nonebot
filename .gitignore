@@ -5,3 +5,4 @@ node_modules
 .idea
 chat_bot.db
 cloud_music_cookies.cookie
+/src/music/qrcode.png

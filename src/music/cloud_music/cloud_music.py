@@ -174,7 +174,6 @@ def netease_music_download(song_id,song_name,singer,session):
     data = requests.get(url, stream=True)
     file_path = os.path.join(save_path, f"{song_name}-{singer}.mp3")
     file_name = os.path.basename(f"{song_name}-{singer}.mp3")
-    print(file_path)
     with open(file_path, "wb") as f:
         f.write(data.content)
     if data.status_code == 200:

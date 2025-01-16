@@ -2,7 +2,7 @@ import os
 import yaml
 import random
 import requests
-
+from PIL import Image, ImageDraw
 
 with open(os.getcwd() +'/src/image/config/image.yaml', 'r', encoding='utf-8') as f:
     image = yaml.load(f.read(), Loader=yaml.FullLoader).get('image')
@@ -13,6 +13,9 @@ with open(os.getcwd() +'/src/image/config/image.yaml', 'r', encoding='utf-8') as
     ju_he_token = image.get('ju_he_token')
     ju_he_image_list = image.get('ju_he_image_list')
     app_id = image.get('app_id')
+    bot_account = image.get('bot_account')
+
+qq_image_save__path = os.getcwd()+'/'+image_local_qq_image_path
 
 """本地图片"""
 def get_image_names():
@@ -28,9 +31,27 @@ def get_image_names():
 
 """获取QQ头像"""
 def download_qq_image(member_open_id):
-    save_path = os.getcwd() + '/' + image_local_qq_image_path + '/' + member_open_id + '.jpg'
+    if not os.path.exists(qq_image_save__path):
+        os.makedirs(qq_image_save__path)
+
+    save_path = qq_image_save__path + '/' + member_open_id + '.jpg'
     size = 640 #尺寸 40、100、140、640
     url = f"https://q.qlogo.cn/qqapp/{app_id}/{member_open_id}/{size}"
+    response = requests.get(url)  # 发送 GET 请求获取图片资源
+    if response.status_code == 200:  # 判断请求是否成功
+        with open(save_path, 'wb') as file:  # 以二进制写入模式打开文件
+            file.write(response.content)  # 将响应内容写入文件
+        return save_path
+
+"""获取QQ头像"""
+def download_qq_image_by_account(account):
+    if not os.path.exists(qq_image_save__path):
+        os.makedirs(qq_image_save__path)
+    if account is None:
+        account = bot_account
+    save_path = qq_image_save__path + '/' + account + '.jpg'
+    size = 640  # 尺寸 40、100、140、640
+    url = f"https://q2.qlogo.cn/headimg_dl?dst_uin={account}&spec={size}"
     response = requests.get(url)  # 发送 GET 请求获取图片资源
     if response.status_code == 200:  # 判断请求是否成功
         with open(save_path, 'wb') as file:  # 以二进制写入模式打开文件
@@ -60,7 +81,72 @@ def get_juhe_image_url():
     return random_url
 
 
+""" rua 头动图生成"""
+class rua():
+    def __init__(self, img_file):
+        self.author = Image.open(img_file)
+
+    def add_png(self, png_d):
+        # 重置图片大小
+        author = self.author.resize((png_d[0], png_d[1] - png_d[2]))
+
+        # 载入素材
+        rua_p1 = Image.open(png_d[3])
+
+        # 创建背景模板
+        rua_png1 = Image.new('RGBA', (110, 110), (255, 255, 255, 255))
+
+        # 使用预定义的参数：jd，合成一帧的样例
+        rua_png1.paste(author, (110 - png_d[0], 110 - png_d[1] + png_d[2]), author)
+        rua_png1.paste(rua_p1, (0, 110 - png_d[1] - png_d[2]), rua_p1)
+        return rua_png1
+
+    def add_gif(self):
+        # 获取素材路径
+        png_dir = os.getcwd() +'/src/image/rua/'
+
+        # 获取素材列表
+        pst = os.listdir(png_dir)
+        for i in range(len(pst)):
+            pst[i] = png_dir + pst[i]
+
+        # 预调试好的参数，传入素材列表
+        jd = [[90, 90, 5, pst[0]],
+              [90, 87, 5, pst[2]],
+              [90, 84, 10, pst[3]],
+              [90, 81, 8, pst[4]],
+              [90, 78, 5, pst[5]],
+              [90, 75, 5, pst[6]],
+              [90, 72, 8, pst[7]],
+              [90, 74, 8, pst[8]],
+              [90, 77, 9, pst[9]],
+              [90, 80, 8, pst[1]]]
+
+        # 重置要生成的图片大小
+        self.author = self.author.resize((90, 90))
+
+        # 绘制模板
+        alpha_layer = Image.new('L', (90, 90), 0)
+        draw = ImageDraw.Draw(alpha_layer)
+        draw.ellipse((0, 0, 90, 90), fill=255)
+        self.author.putalpha(alpha_layer)
+
+        # gif列表
+        gifs = []
+        for i in range(len(jd)):
+            # 将参数传递给生成方法
+            # 添加到gif列表
+            gifs.append(self.add_png(jd[i]))
+
+        # 文件名,是否保存所有,图片列表,fps/ms
+        gifs[0].save(os.getcwd() + '/' + image_local_qq_image_path + '/rua.gif', "GIF", save_all=True, append_images=gifs, duration=35, loop=0)
+        self.author.close()
+        return os.getcwd() + '/' + image_local_qq_image_path + '/rua.gif'
+
+
 if __name__ == '__main__':
     print(get_smms_image_url())
     print(get_juhe_image_url())
     print(get_image_names())
+    file_path = '8A91A2F3BE5B5AF3FEC97FB5AA6D9B38.jpg'
+    au = rua(file_path).add_gif()

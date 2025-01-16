@@ -23,9 +23,10 @@
 - [x] 待办
 - [x] 天气 
 - [x] 今日运势
+- [ ] 今日塔罗
 - [x] 点歌（网易云 需扫码登录 在 src\music 目录下）*PC端 QQ可能播放不出来 原因不明*
 - [x] 图（返回图库中的图片）
-- [ ] 摸摸头（待实现动图）
+- [x] 摸摸头（待实现动图）
 - [ ] 今日老婆
 - [ ] 群老婆
 
@@ -91,7 +92,7 @@ QQ_BOTS='
     "intent": {
       "c2c_group_at_messages": true
     },
-    "use_websocket": false
+    "use_websocket": true
   }
 ]
 '

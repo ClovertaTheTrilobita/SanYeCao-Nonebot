@@ -36,7 +36,6 @@ async def get_today_fortune(message: MessageEvent):
 
     msg = Message([
         MessageSegment.file_image(Path(local_image_path)),
-        # MessageSegment.image(url),
         MessageSegment.text(content),
     ])
     await fortune_by_sqlite.finish(msg)
