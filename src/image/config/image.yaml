@@ -1,5 +1,6 @@
 image:
   app_id: "<KEY>"
+  bot_account: "<KEY>"
   image_local_qq_image_path: "src/image/qq_image"
   image_local_path: "src/image/MaoYuNa"
   #SMMS图床相关配置
