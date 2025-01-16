@@ -2,13 +2,14 @@ import os
 import yaml
 import openai
 
-# with open(os.getcwd() +'/src/ai_chat/config/openai.yaml', 'r', encoding='utf-8') as f:
-#     chat = yaml.load(f.read(), Loader=yaml.FullLoader).get('openai')
-#     base_url = chat.get('base_url')
-#     api_key = chat.get('api_key')
+with open(os.getcwd() +'/src/ai_chat/config/openai.yaml', 'r', encoding='utf-8') as f:
+    chat = yaml.load(f.read(), Loader=yaml.FullLoader).get('openai')
+    base_url = chat.get('base_url')
+    api_key = chat.get('api_key')
 
-openai.api_key = "sk-iFEJzlBCdcq3OCvIFaF6797865854f729eA0B3CcEb406bAb"
-openai.base_url = "https://free.v36.cm"
+openai.base_url = base_url
+openai.api_key = api_key
+
 openai.default_headers = {"x-foo": "true"}
 
 setting = "接下来，你将进行模拟一个扮演动漫角色。你不再是一个语言模型，" \

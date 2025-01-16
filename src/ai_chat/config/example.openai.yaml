@@ -1,6 +1,6 @@
 openai:
-  url: "<KEY>"
-  key: "<KEY>"
+  base_url: "<KEY>"
+  api_key: "<KEY>"
 
 
 
