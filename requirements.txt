@@ -20,3 +20,4 @@ pillow
 pyyaml
 qrcode
 lazy_object_proxy
+openai
