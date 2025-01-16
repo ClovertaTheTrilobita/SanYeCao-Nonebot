@@ -4,6 +4,7 @@ from nonebot.rule import Rule, to_me
 from nonebot import  on_message
 from nonebot.adapters.qq import Message
 from nonebot.adapters import Bot, Event
+from src.ai_chat import ai_chat
 
 menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办"]
 async def check_value_in_menu(event: Event) -> bool:
@@ -18,7 +19,11 @@ rule = Rule(check_value_in_menu)
 check = on_message(rule=to_me() & rule ,block=True)
 @check.handle()
 async def check(bot: Bot, event: Event):
-    await bot.send(message=Message(random.choice(text_list)),event=event)
+    print(event.get_plaintext())
+    msg = ai_chat.gpt(event.get_plaintext())
+    print(msg)
+    await bot.send(message=msg,event=event)
+    # await bot.send(message=Message(random.choice(text_list)),event=event)
 
 text_list = [
     "是什么呢？猫猫没有识别到,喵~"+'\n'+"(๑＞ڡ＜)☆ 给个准信，别让我瞎猜",
