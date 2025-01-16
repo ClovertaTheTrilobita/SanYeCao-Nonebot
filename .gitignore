@@ -7,4 +7,4 @@ chat_bot.db
 cloud_music_cookies.cookie
 /src/music/qrcode.png
 /src/image/config/image.yaml
-/src/ai_chat/config/openai.yaml
+/src/ai_chat/config/chat_ai.yaml

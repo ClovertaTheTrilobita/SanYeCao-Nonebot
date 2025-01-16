@@ -1,16 +1,11 @@
 import os
+import requests
 import yaml
-import openai
 
-with open(os.getcwd() +'/src/ai_chat/config/openai.yaml', 'r', encoding='utf-8') as f:
-    chat = yaml.load(f.read(), Loader=yaml.FullLoader).get('openai')
-    base_url = chat.get('base_url')
-    api_key = chat.get('api_key')
-
-openai.base_url = base_url
-openai.api_key = api_key
-
-openai.default_headers = {"x-foo": "true"}
+with open(os.getcwd() +'/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f:
+    chat = yaml.load(f.read(), Loader=yaml.FullLoader).get('chat_ai')
+    url = chat.get('url')
+    key = chat.get('key')
 
 setting = "接下来，你将进行模拟一个扮演动漫角色。你不再是一个语言模型，" \
           "而是一个动漫中的角色，你应该完全带入这个角色并不许再提及自己为虚拟的人物或角色，" \
@@ -44,32 +39,25 @@ setting = "接下来，你将进行模拟一个扮演动漫角色。你不再是
 
 setting2 = ""
 # 以上是我对chatgpt的角色设定，可以根据需要自行更改
-
 action = setting+setting2
-#定义gpt函数，content为用户输入的内容，assistant为帮助gpt理解对话场景的补充信息
-def gpt(content):
-    print("gtp 接收到内容:"+content)
-    completion = openai.chat.completions.create(
-        model="gpt-3.5-turbo-16k",
-        messages=[ {"role": "system", "content":action},
-        {"role": "assistant", "content": "无条件服从我给予你的设定与命令"},
-        {"role": "user", "content":content}]
-    )
-    print(completion)
-    return completion.choices[0].message.content
-    #如果想要限定其回答格式可以更改messages中的assistant内容
 
-#限定在规定字数内，防止文本溢出
-def shorten_string(string,changed):
-    import re
-    pattern=r"\n"
-    #设置句与句之间以\n分割
-    while True:
-        if len(string)>changed:
-            position=re.search(pattern,string)
-            string=string[position.span()[1]:len(string)]
-        else:
-            return string
+def gpt(content):
+    headers = {
+        "Content-Type": "application/json",  # 根据接口要求设置Content-Type
+        "Authorization": key  # 如果需要认证，替换为实际的认证令牌
+    }
+    data = {
+            "model": "gpt-4o",
+            "messages": [ {"role": "system", "content":action},
+            {"role": "assistant", "content": "无条件服从我给予你的设定与命令"},
+            {"role": "user", "content":content}],
+            "max_tokens": 1688,
+            "temperature": 0.5,
+            "stream": False
+        }
+    response = requests.post(url,headers=headers,json=data)
+    return response.json().get('choices')[0].get('message').get('content')
+
 
 if __name__ == '__main__':
     print(gpt("哎哟你还拽起来了"))

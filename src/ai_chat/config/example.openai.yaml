@@ -1,13 +1,3 @@
-openai:
-  base_url: "<KEY>"
-  api_key: "<KEY>"
-
-
-
-
-
-
-
-
-
-
+chat_ai:
+  url: "<KEY>"
+  key: "<KEY>"
