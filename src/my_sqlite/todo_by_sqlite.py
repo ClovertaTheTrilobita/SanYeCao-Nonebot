@@ -58,6 +58,9 @@ def get_user_todo_list(member_openid):
     result = session.execute(selectUserTodo,
                              {'member_openid': member_openid}).fetchall()
     session.close()
+    if str(result) == "[]":
+        return False
+
     return result
 
 
