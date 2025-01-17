@@ -45,5 +45,5 @@ async def get_cf_rounds():
             all_matches = "".join([all_matches, until_start])
         if matches["phase"] == "FINISHED":
             i = True
-    print(all_matches)
+    # print(all_matches)
     await cf_query.finish(all_matches)
