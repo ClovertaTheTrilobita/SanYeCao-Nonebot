@@ -22,6 +22,22 @@ async def check_value_in_menu(event: Event) -> bool:
     else:
         return True
 
+
+def change_chatai_yaml_availability_to(is_available):
+    with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f1:
+        dic_temp = yaml.load(f1, Loader=yaml.FullLoader)
+        dic_temp['chat_ai']['active'] = is_available
+    with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'w', encoding='utf-8') as f1:
+        yaml.dump(dic_temp, f1)
+        print(dic_temp)
+        f1.close()
+
+def is_ai():
+    with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f:
+        state = yaml.load(f.read(), Loader=yaml.FullLoader).get('chat_ai').get('active')
+    return state
+
+
 rule = Rule(check_value_in_menu)
 
 
@@ -78,16 +94,3 @@ async def change_ai_availability(message: MessageEvent):
             await ai_is_available.finish("成功开启语言模型对话功能。一起来聊天吧~")
 
 
-def change_chatai_yaml_availability_to(is_available):
-    with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f1:
-        dic_temp = yaml.load(f1, Loader=yaml.FullLoader)
-        dic_temp['chat_ai']['active'] = is_available
-    with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'w', encoding='utf-8') as f1:
-        yaml.dump(dic_temp, f1)
-        print(dic_temp)
-        f1.close()
-
-def is_ai():
-    with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f:
-        state = yaml.load(f.read(), Loader=yaml.FullLoader).get('chat_ai').get('active')
-    return state
