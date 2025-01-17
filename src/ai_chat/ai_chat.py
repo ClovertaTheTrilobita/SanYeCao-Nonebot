@@ -20,10 +20,18 @@ MaoYuNaSetting = character_settings.settings['MaoYuNa'][0]
 """回复历史文件"""
 filename = os.getcwd() + '/src/ai_chat/chat_history.txt'
 
+
+def check_file_exists():
+    if os.path.exists(filename):
+        return True
+    else:
+        with open(filename, 'w', encoding='utf-8'):
+            pass
+        return True
+
 # 读取历史记录
-
-
 def read_chat_history():
+    check_file_exists()
     with open(filename, 'r', encoding='utf-8') as file:
         line_count = 1
         for line in file:  # 遍历文件中的每一行
@@ -41,8 +49,6 @@ def chat_history(line,content):
 来源：https://api.v36.cm
 """
 def v3_chat(content):
-    if not os.path.exists(filename):
-        os.makedirs(filename)
     line,txt = read_chat_history()
     lines = MaoYuNaSetting + "".join(txt)
     headers = {"Content-Type": "application/json", "Authorization": key}
@@ -68,8 +74,6 @@ def v3_chat(content):
 来源:https://api.deepseek.com
 """
 def deepseek_chat(content):
-    if not os.path.exists(filename):
-        os.makedirs(filename)
 
     line,txt = read_chat_history()
     lines = MaoYuNaSetting + "".join(txt)
