@@ -20,12 +20,18 @@ MaoYuNaSetting = character_settings.settings['MaoYuNa'][0]
 """回复历史文件"""
 filename = os.getcwd() + '/src/ai_chat/chat_history.txt'
 
+
+def check_file_exists():
+    if os.path.exists(filename):
+        return True
+    else:
+        with open(filename, 'w', encoding='utf-8'):
+            pass
+        return False
+
 # 读取历史记录
-
-
 def read_chat_history():
-    with open(filename, 'w', encoding='utf-8'):
-        pass
+    check_file_exists()
     with open(filename, 'r', encoding='utf-8') as file:
         line_count = 1
         for line in file:  # 遍历文件中的每一行
