@@ -13,6 +13,7 @@ def init_all():
     data_init.QrFortune_init()
     data_init.touch_init()
     data_init.todo_init()
+    data_init.admin_init()
 
 if __name__ == "__main__":
     init_all()

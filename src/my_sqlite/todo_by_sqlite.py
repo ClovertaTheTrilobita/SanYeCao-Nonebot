@@ -1,6 +1,5 @@
-from sqlalchemy import Column, Integer, String, Date, create_engine, text
-from sqlalchemy.orm import declarative_base, sessionmaker
-import sqlite3
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import sessionmaker
 
 
 class SqliteSqlalchemy(object):

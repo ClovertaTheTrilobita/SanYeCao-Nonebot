@@ -90,6 +90,31 @@ def execute_init_file3():
     except subprocess.CalledProcessError as e:
         print(f"执行初始化文件时出错: {e}")
 
+
+def admin_init():
+    session = SqliteSqlalchemy().session
+    # 检查某个表是否存在
+    table_exists = session.execute(selectAdminList).fetchone()
+    if table_exists:
+        return print("管理员表状态正常。")
+    else:
+        print("管理员表不存在，开始执行初始化文件。")
+        execute_init_file4()
+        return ""
+
+
+def execute_init_file4():
+    # 拼接文件的完整路径
+    file_path = os.getcwd() + "/src/my_sqlite/data_init/admin_init.py"
+    init_file_path = os.path.join(os.path.dirname(__file__), file_path)
+    try:
+        # 执行初始化文件
+        subprocess.run(["python", init_file_path], check=True)
+        print("初始化文件已成功执行。")
+    except subprocess.CalledProcessError as e:
+        print(f"执行初始化文件时出错: {e}")
+
+
 # 查询初始化表是否存在
 selectQrFortune = text( "SELECT name FROM sqlite_master WHERE type='table' AND name='qr_fortune';")
 
@@ -102,3 +127,6 @@ selectTodoTable = text(
     "SELECT name FROM sqlite_master WHERE type='table' AND name='user_todo_list';")
 selectUserList = text(
     "SELECT name FROM sqlite_master WHERE type='table' AND name='user_list';")
+
+# 查询管理员表是否存在
+selectAdminList = text("SELECT name FROM sqlite_master WHERE type='table' AND name='admin_list';")
