@@ -1,12 +1,13 @@
-from nonebot.plugin import on_command, on_keyword
+import os
+import yaml
 import random
-from nonebot.rule import Rule, to_me
 from nonebot import  on_message
+from nonebot.rule import Rule, to_me
+from nonebot.plugin import on_command, on_keyword
 from nonebot.adapters.qq import Message, MessageEvent
 from nonebot.adapters import Bot, Event
 from src.ai_chat import ai_chat
-import os
-import yaml
+from src.ai_chat.chat_history import init_character_setting
 from src.my_sqlite.admin_manage_by_sqlite import insert_administrator, check_admin_access
 
 """
@@ -14,7 +15,8 @@ from src.my_sqlite.admin_manage_by_sqlite import insert_administrator, check_adm
 """
 admin_passwd = "1234"
 
-menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办", "/activate_ai", "/cf", "/管理员确认"]
+menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '/初始化聊天',
+        '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办", "/activate_ai", "/cf", "/管理员确认"]
 async def check_value_in_menu(event: Event) -> bool:
     value = event.get_plaintext().strip().split(" ")
     if value[0] in menu:
@@ -44,7 +46,7 @@ rule = Rule(check_value_in_menu)
 check = on_message(rule=to_me() & rule ,block=True)
 @check.handle()
 async def check(bot: Bot, event: Event):
-    if is_ai() == "True":
+    if is_ai():
         msg = ai_chat.deepseek_chat(event.get_plaintext())
         await bot.send(message=msg,event=event)
     else:
@@ -57,6 +59,13 @@ text_list = [
     "是特殊信号？猫猫听不懂，喵～" + '\n' + "(๑・̀︶・́)و 下个明确指令，喵~",
     "难道是新指令？猫猫一脸茫然，喵～" + '\n' + "(๑＞ڡ＜)☆ 说详细点，别这么隐晦，喵～",
 ]
+
+character_setting_init = on_command("初始化聊天", rule=to_me(), priority=10, block=True)
+@character_setting_init.handle()
+async def chat_init():
+    init_character_setting()
+    await character_setting_init.finish("角色初始化聊天成功。")
+
 
 love = on_keyword({"我喜欢你", "❤"}, rule=to_me(), priority=10, block=True)
 @love.handle()
@@ -86,11 +95,10 @@ async def change_ai_availability(message: MessageEvent):
     if result is None:
         await ai_is_available.finish(message=Message(random.choice(text_list)))
     elif str(result).lstrip("('").rstrip("',)") == member_openid:
-        if is_ai() == "True":
-            change_chatai_yaml_availability_to("False")
+        if is_ai():
+            change_chatai_yaml_availability_to(False)
             await ai_is_available.finish("成功关闭语言模型对话功能。")
         else:
-            change_chatai_yaml_availability_to("True")
+            change_chatai_yaml_availability_to(True)
             await ai_is_available.finish("成功开启语言模型对话功能。一起来聊天吧~")
-
 
