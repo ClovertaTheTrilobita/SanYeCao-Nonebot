@@ -24,6 +24,8 @@ filename = os.getcwd() + '/src/ai_chat/chat_history.txt'
 
 
 def read_chat_history():
+    with open(filename, 'w', encoding='utf-8'):
+        pass
     with open(filename, 'r', encoding='utf-8') as file:
         line_count = 1
         for line in file:  # 遍历文件中的每一行
@@ -41,8 +43,6 @@ def chat_history(line,content):
 来源：https://api.v36.cm
 """
 def v3_chat(content):
-    if not os.path.exists(filename):
-        os.makedirs(filename)
     line,txt = read_chat_history()
     lines = MaoYuNaSetting + "".join(txt)
     headers = {"Content-Type": "application/json", "Authorization": key}
@@ -68,8 +68,6 @@ def v3_chat(content):
 来源:https://api.deepseek.com
 """
 def deepseek_chat(content):
-    if not os.path.exists(filename):
-        os.makedirs(filename)
 
     line,txt = read_chat_history()
     lines = MaoYuNaSetting + "".join(txt)
