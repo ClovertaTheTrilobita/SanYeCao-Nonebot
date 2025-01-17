@@ -15,6 +15,7 @@
 - 基于[Nonebot2](https://nonebot.dev/)，使用[QQ官方API](https://bot.q.qq.com/wiki/)，更稳定、高效✨
 - 多种个性化用法，如天气、每日运势(~~机器人时尚单品~~)、点歌、编辑个人待办等，后续功能开发中🔧
 - 使用轻量化数据库sqlite管理数据，实现为每位用户单独存取数据🔍
+- 接入第三方大语言模型，实现AI交互💡
 
 <br>
 
@@ -26,7 +27,8 @@
 - [ ] 今日塔罗
 - [x] 点歌（网易云 需扫码登录 在 src\music 目录下）*PC端 QQ可能播放不出来 原因不明*
 - [x] 图（返回图库中的图片）
-- [x] 摸摸头（待实现动图）
+- [x] 摸摸头
+- [x] 接入语言模型
 - [ ] 今日老婆
 - [ ] 群老婆
 
@@ -118,73 +120,35 @@ python bot.by
 ### 🗒️三、项目结构
 
 ```
+├─node_modules
+│  └─crypto-js
+│      └─docs
 └─src
+    ├─ai_chat
+    │  ├─config
     ├─common_plugins
     │  ├─cloud_music
-    │  │          
     │  └─img
-    │              
     ├─image
-    │  │  get_image.py
-    │  │  
     │  ├─config
-    │  │      image.yaml
-    │  │      
     │  ├─MaoYuNa
-    │  │      
+    │  ├─qq_image
+    │  ├─rua
     │  ├─tarot
-    │     ├─sideTarotImages
-    │     │      
-    │     └─TarotImages
-    │          
+    │  │  ├─sideTarotImages
+    │  │  └─TarotImages
     ├─music
-    │  │  qrcode.png
-    │  │  
     │  ├─cloud_music
-    │  │     agent.py
-    │  │     cloud_music.py
-    │  │     jsdm.js
-    │  │          
     │  └─netease_music
-    |
     ├─my_sqlite
-    │  │  chat_bot.db
-    │  │  fortune_by_sqlite.py
-    │  │  todo_by_sqlite.py
-    │  │  touch_by_sqlite.py
-    │  │  
     │  ├─data_init
-    │        chat_bot.db
-    │        data_init.py
-    │        fortune_init_data.py
-    │        todo_init.py
-    │        touch_init_data.py
-    │        
-    │          
+    |
     ├─onebot_plugins
-    │  │  tarot.py
-    │  │  test.py
-    │  │  welcome.py
-    │  │  
     │  └─config
-    │          controller.yaml
-    │          
     ├─plugins
-    │          
     └─qq_plugins
-        │  check.py
-        │  cloudMusic.py
-        │  fortune.py
-        │  image.py
-        │  today_wife.py
-        │  touch.py
-        │  to_do.py
-        │  weather.py
-        │  
         ├─data_init
-        │          
         ├─test
-               a-testMain.py
 ```
 
 - 基本插件存储在qq_plugins目录中，启动即可使用
@@ -199,7 +163,7 @@ python bot.by
 机器人的指令列表在[<B>src/qq_plugins/check.py</B>](src/qq_plugins/check.py)中，有如下指令：
 
 ```python
-menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办"]
+menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办", "/activate_ai", "/cf", "/管理员确认"]
 ```
 
 输入其它指令机器人会回复听不懂哦。
@@ -210,7 +174,7 @@ menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/�
 
 机器人中已经配置好数据库初始化的脚本。若您是第一次启动机器人。会在项目根目录下自动创建<b><i>chat_bot.db</i></b>（数据库文件）
 
-chat_bot.db中包括六张表：
+chat_bot.db中包括七张表：
 
 ```sql
 --摸一摸文本数据
@@ -227,11 +191,14 @@ qr_fortune_log
 user_list
 --用户待办表
 user_todo_list
+
+--管理员表
+admin_list
 ```
 
 初始化相关脚本存放在 [<b>src/my_sqlite/data_init</b>](src/my_sqlite/data_init) 目录下。
 
-每次启动机器人，程序会自动检查上述六张表是否存在，有表缺失则会在数据库中自动创建对应的表。
+每次启动机器人，程序会自动检查上述七张表是否存在，有表缺失则会在数据库中自动创建对应的表。
 
 对已存在的表不做处理。
 
@@ -293,3 +260,94 @@ image:
 <br>
 
 <b>🚨注意：</b>目前点歌的实现方法为获取请求到的第一首歌，并且自动跳过无法下载（付费）歌曲，若您想点的歌原唱为付费，可能会随机到一首翻唱或其它版本。
+
+<br>
+
+#### 💡使用第三方语言模型
+
+打开[<b>src/ai_chat/config/example.chat_ai.yaml</b>](src/ai_chat/config/chat_ai.yaml)
+
+```yaml
+chat_ai:
+  v3url: "<key>"
+  v3key: "<key>"
+  deepseek_url: "<key>"
+  deepseek_key: "<key>"
+  active: "False" # True为启动ai功能，False为关闭功能
+```
+
+将你自己的deepseek url和api填入，并将文件重命名为<b><i>chat_ai.yaml</i></b>。
+
+起用ai功能请将active改为True，或详见下一节。
+
+<br>
+
+#### ✋实现管理员身份认证
+
+##### 介绍：
+
+机器人现已更新管理员机制，机器人管理员可以控制是否使用第三方大语言模型进行交互。
+
+后续其它功能更新中。
+
+<br>
+
+##### 使用：
+
+###### 1.注册为管理员
+
+在[<b>src/qq_plugins/check.py</b>](src/qq_plugins/check.py)内，找到
+
+```python
+"""
+设置管理员鉴权密码
+"""
+admin_passwd = "1234"
+```
+
+在这里，你可以修改你的管理员密码*（默认为1234）*
+
+<br>
+
+设置好你的密码后，在qq中at你的机器人，格式为
+
+```
+@<机器人名称> /管理员确认 <密码>
+```
+
+例如，使用默认密码对三叶草进行管理员注册时，假如密码是1234，需要
+
+```
+@三叶草 /管理员确认 1234
+```
+
+<br>
+
+<b>🚨注意：</b>管理员密码请不要泄露给其他人，建议单独创建一个群用于注册管理员。
+
+<br>
+
+注册成为管理员之后，你的member_openid将会被保存至<i>chatbot.db下的admin_list</i>表中。
+
+<br>
+
+###### 2.控制语言模型是否可用
+
+在已经是管理员的情况下，你可以对机器人发送
+
+```
+@<机器人名称> /activate_ai
+```
+
+实现对AI功能的开关。若此前AI功能处于关闭状态，则机器人会回复
+
+```
+成功开启语言模型对话功能。一起来聊天吧~
+```
+
+表示AI功能启动成功。反之则回复
+
+```
+成功关闭语言模型对话功能。
+```
+
