@@ -1,0 +1,4 @@
+chat_ai:
+  url: "<KEY>"
+  key: "<KEY>"
+  active: "False" # True为启动ai功能，False为关闭功能
