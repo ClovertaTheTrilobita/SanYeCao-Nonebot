@@ -23,8 +23,9 @@ with open(os.getcwd() +'/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8'
 check = on_message(rule=to_me() & rule ,block=True)
 @check.handle()
 async def check(bot: Bot, event: Event):
-    msg = ai_chat.deepseek_chat(event.get_plaintext())
+
     if is_ai == "True":
+        msg = ai_chat.deepseek_chat(event.get_plaintext())
         await bot.send(message=msg,event=event)
     else:
         await bot.send(message=Message(random.choice(text_list)),event=event)
