@@ -1,4 +1,6 @@
 chat_ai:
-  url: "<KEY>"
-  key: "<KEY>"
+  v3url: "<key>"
+  v3key: "<key>"
+  deepseek_url: "<key>"
+  deepseek_key: "<key>"
   active: "False" # True为启动ai功能，False为关闭功能
