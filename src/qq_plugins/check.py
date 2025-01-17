@@ -8,7 +8,7 @@ from src.ai_chat import ai_chat
 import os
 import yaml
 
-menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办", "/openai", "/cf"]
+menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办", "/openai"]
 async def check_value_in_menu(event: Event) -> bool:
     value = event.get_plaintext().strip().split(" ")
     if value[0] in menu:
@@ -23,10 +23,8 @@ with open(os.getcwd() +'/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8'
 check = on_message(rule=to_me() & rule ,block=True)
 @check.handle()
 async def check(bot: Bot, event: Event):
+    msg = ai_chat.deepseek_chat(event.get_plaintext())
     if is_ai == "True":
-        print(event.get_plaintext())
-        msg = ai_chat.gpt(event.get_plaintext())
-        print(msg)
         await bot.send(message=msg,event=event)
     else:
         await bot.send(message=Message(random.choice(text_list)),event=event)
