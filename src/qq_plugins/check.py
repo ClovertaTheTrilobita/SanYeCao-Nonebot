@@ -8,7 +8,7 @@ from src.ai_chat import ai_chat
 import os
 import yaml
 
-menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办", "/openai"]
+menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办", "/openai", "/cf"]
 async def check_value_in_menu(event: Event) -> bool:
     value = event.get_plaintext().strip().split(" ")
     if value[0] in menu:
