@@ -25,7 +25,7 @@ async def check_value_in_menu(event: Event) -> bool:
         return True
 
 
-def change_chatai_yaml_availability_to(is_available):
+def change_chatai_yaml_active_to(is_available):
     with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f1:
         dic_temp = yaml.load(f1, Loader=yaml.FullLoader)
         dic_temp['chat_ai']['active'] = is_available
@@ -96,9 +96,9 @@ async def change_ai_availability(message: MessageEvent):
         await ai_is_available.finish(message=Message(random.choice(text_list)))
     elif str(result).lstrip("('").rstrip("',)") == member_openid:
         if is_ai():
-            change_chatai_yaml_availability_to(False)
+            change_chatai_yaml_active_to(False)
             await ai_is_available.finish("成功关闭语言模型对话功能。")
         else:
-            change_chatai_yaml_availability_to(True)
+            change_chatai_yaml_active_to(True)
             await ai_is_available.finish("成功开启语言模型对话功能。一起来聊天吧~")
 
