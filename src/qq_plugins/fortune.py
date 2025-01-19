@@ -31,7 +31,7 @@ async def get_today_fortune(message: MessageEvent):
                result.fortune_summary + "\n" +
                result.lucky_star + "\n" +
                "签文：" + result.sign_text + "\n" +
-               "————————————————————" + "\n" +
+               "————————————" + "\n" +
                "解签：" + result.un_sign_text)
 
     msg = Message([
