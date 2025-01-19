@@ -4,8 +4,11 @@ node_modules
 .xml
 .idea
 chat_bot.db
+chat_bot.db-wal
+chat_bot.db-shm
 cloud_music_cookies.cookie
+chat_history.json
 /src/music/qrcode.png
 /src/image/config/image.yaml
 /src/ai_chat/config/chat_ai.yaml
-src/ai_chat/chat_history.json
+

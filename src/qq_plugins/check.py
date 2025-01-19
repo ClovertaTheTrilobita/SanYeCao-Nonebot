@@ -7,16 +7,16 @@ from nonebot.plugin import on_command, on_keyword
 from nonebot.adapters.qq import Message, MessageEvent
 from nonebot.adapters import Bot, Event
 from src.ai_chat import ai_chat
-from src.ai_chat.chat_history import init_character_setting
-from src.my_sqlite.admin_manage_by_sqlite import insert_administrator, check_admin_access
+from src.ai_chat.chat_history import relace_character_setting,character_settings
+from src.my_sqlite.admin_manage_by_sqlite import *
 
-"""
-设置管理员鉴权密码
-"""
-admin_passwd = "1234"
+with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f1:
+    chat = yaml.load(f1, Loader=yaml.FullLoader).get('chat_ai')
+    admin_password = chat.get('admin_password')
 
-menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '/初始化聊天',
-        '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办", "/activate_ai", "/cf", "/管理员确认"]
+
+menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '/切换角色',
+        '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办", "/开启ai","/关闭ai", "/cf", "/管理员确认"]
 async def check_value_in_menu(event: Event) -> bool:
     value = event.get_plaintext().strip().split(" ")
     if value[0] in menu:
@@ -25,28 +25,11 @@ async def check_value_in_menu(event: Event) -> bool:
         return True
 
 
-def change_chatai_yaml_active_to(is_available):
-    with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f1:
-        dic_temp = yaml.load(f1, Loader=yaml.FullLoader)
-        dic_temp['chat_ai']['active'] = is_available
-    with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'w', encoding='utf-8') as f1:
-        yaml.dump(dic_temp, f1)
-        print(dic_temp)
-        f1.close()
-
-def is_ai():
-    with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f:
-        state = yaml.load(f.read(), Loader=yaml.FullLoader).get('chat_ai').get('active')
-    return state
-
-
-rule = Rule(check_value_in_menu)
-
-
-check = on_message(rule=to_me() & rule ,block=True)
+check = on_message(rule=to_me() & Rule(check_value_in_menu) ,block=True)
 @check.handle()
 async def check(bot: Bot, event: Event):
-    if is_ai():
+    status = select_status(event.get_session_id().split('_')[1])
+    if  status.is_on:
         msg = ai_chat.deepseek_chat(event.get_plaintext())
         await bot.send(message=msg,event=event)
     else:
@@ -60,11 +43,21 @@ text_list = [
     "难道是新指令？猫猫一脸茫然，喵～" + '\n' + "(๑＞ڡ＜)☆ 说详细点，别这么隐晦，喵～",
 ]
 
-character_setting_init = on_command("初始化聊天", rule=to_me(), priority=10, block=True)
-@character_setting_init.handle()
-async def chat_init():
-    init_character_setting()
-    await character_setting_init.finish("角色初始化聊天成功。")
+replace_character = on_command("切换角色", rule=to_me(), priority=10, block=True)
+@replace_character.handle()
+async def function(message: MessageEvent):
+    status = select_status(message.get_session_id().split('_')[1])
+    if not status.is_on:
+        await replace_character.finish("当前群未开启ai聊天。")
+    character = message.get_plaintext().replace("/切换角色", "").strip(" ")
+    if character == "":
+        await replace_character.finish("请输入角色名称。")
+    else:
+        if character in character_settings.settings:
+            relace_character_setting(character)
+            await replace_character.finish("角色切换成功。")
+        else:
+            await replace_character.finish("角色不存在。")
 
 
 love = on_keyword({"我喜欢你", "❤"}, rule=to_me(), priority=10, block=True)
@@ -81,24 +74,25 @@ verification = on_command("管理员确认", rule=to_me(), priority=10, block=Tr
 @verification.handle()
 async def verify_as_administrator(message: MessageEvent):
     passwd = message.get_plaintext().replace("/管理员确认", "").strip(" ")
-    if passwd == admin_passwd:
-        insert_administrator(message.get_user_id())
+    if passwd == admin_password:
+        insert_administrator(message.get_user_id(), message.get_session_id().split('_')[1])
         await verification.finish("成功注册为管理员。")
     else:
-        await verification.finish("管理员鉴权失败。")
+        await verification.finish("管理员认证密码错误。")
 
-ai_is_available = on_command("activate_ai", rule=to_me(), priority=10, block=True)
-@ai_is_available.handle()
+
+ai_on = on_command("开启ai",aliases={'关闭ai'}, rule=to_me(), priority=10, block=True)
+@ai_on.handle()
 async def change_ai_availability(message: MessageEvent):
-    member_openid = message.get_user_id()
-    result = check_admin_access(member_openid)
-    if result is None:
-        await ai_is_available.finish(message=Message(random.choice(text_list)))
-    elif str(result).lstrip("('").rstrip("',)") == member_openid:
-        if is_ai():
-            change_chatai_yaml_active_to(False)
-            await ai_is_available.finish("成功关闭语言模型对话功能。")
-        else:
-            change_chatai_yaml_active_to(True)
-            await ai_is_available.finish("成功开启语言模型对话功能。一起来聊天吧~")
 
+    result = check_admin_access(message.get_user_id(), message.get_session_id().split('_')[1])
+    if result is None:
+        await ai_on.finish("当前群无权限，请联系管理员")
+    elif (not result.is_on) & (message.get_plaintext() == "/开启ai"):
+        update_administrator(message.get_session_id().split('_')[1], True)
+        await ai_on.finish("成功开启语言模型对话功能。一起来聊天吧~")
+    elif not result.is_on :
+        await ai_on.finish("当前群未开启ai聊天。")
+    else:
+        update_administrator(message.get_session_id().split('_')[1], False)
+        await ai_on.finish("成功关闭语言模型对话功能。")

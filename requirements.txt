@@ -4,7 +4,7 @@ nonebot2[fastapi]
 nonebot2[httpx]
 nonebot2[websockets]
 
-sqlalchemy~=2.0.34
+sqlalchemy
 autopep8
 graiax-silkcoder[ffmpeg]
 Crypto~=1.4.1
@@ -14,8 +14,9 @@ fake_useragent
 pycryptodome~=3.21.0
 PyExecJS~=1.5.1
 gradio_client
+tortoise-orm
 
-requests~=2.31.0
+requests
 pillow
 pyyaml
 qrcode
