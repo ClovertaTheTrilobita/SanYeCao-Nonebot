@@ -95,10 +95,11 @@ def admin_init():
     session = SqliteSqlalchemy().session
     # 检查某个表是否存在
     table_exists = session.execute(selectAdminList).fetchone()
-    if table_exists:
-        return print("管理员表状态正常。")
+    table_exists2 = session.execute(selectGroupList).fetchone()
+    if table_exists and table_exists2:
+        return print("管理员表和群聊表状态正常。")
     else:
-        print("管理员表不存在，开始执行初始化文件。")
+        print("管理员表或群聊表不存在，开始执行初始化文件。")
         execute_init_file4()
         return ""
 
@@ -130,3 +131,5 @@ selectUserList = text(
 
 # 查询管理员表是否存在
 selectAdminList = text("SELECT name FROM sqlite_master WHERE type='table' AND name='admin_list';")
+# 查询群聊表是否存在
+selectGroupList = text("SELECT name FROM sqlite_master WHERE type='table' AND name='group_list';")

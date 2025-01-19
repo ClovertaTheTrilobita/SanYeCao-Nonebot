@@ -20,7 +20,11 @@
 <br>
 
 ###### 我是菜比🏳️🏳️，纯新手写的python 问题肯定多 ，若有兴趣可以帮忙一起完善功能 <br>
-###### QQ交流群：[710101225](https://qm.qq.com/q/AQyepzKUJq) <br>
+###### QQ交流群：[710101225](https://qm.qq.com/q/AQyepzKUJq) 
+
+###### <br>
+
+- ↑sly是代码领域大神，别信他
 
 ## 🌈目前功能:
 
@@ -272,16 +276,16 @@ image:
 
 ```yaml
 chat_ai:
+  admin_password: "<key>" # 设置管理员认证密码
   v3url: "<key>"
   v3key: "<key>"
   deepseek_url: "<key>"
   deepseek_key: "<key>"
-  active: "False" # True为启动ai功能，False为关闭功能
 ```
 
 将你自己的deepseek url和api填入，并将文件重命名为<b><i>chat_ai.yaml</i></b>。
 
-起用ai功能请将active改为True，或详见[下一节](#ai_control)。
+再设置一个管理员认证密码，详见[下一节](#admin_control)。
 
 <br>
 
@@ -295,28 +299,25 @@ chat_ai:
 
 ##### 使用：
 
-###### 1.注册为管理员
+###### 1.注册为管理员<a id="admin_control"></a>
 
-在[<b>src/qq_plugins/check.py</b>](src/qq_plugins/check.py)内，找到
+在[<b>src/ai_chat/config/example.chat_ai.yaml</b>](src/ai_chat/config/chat_ai.yaml)内，找到
 
-```python
-"""
-设置管理员鉴权密码
-"""
-admin_passwd = "1234"
+```yaml
+  admin_password: "<key>" # 设置管理员认证密码
 ```
 
-在这里，你可以修改你的管理员密码*（默认为1234）*
+在上述<i>"\<key>'"</i>中填入你的密码。
 
 <br>
 
-设置好你的密码后，在qq中at你的机器人，格式为
+设置好密码后，在qq中at你的机器人，格式为
 
 ```
 @<机器人名称> /管理员确认 <密码>
 ```
 
-例如，使用默认密码对三叶草进行管理员注册时，假如密码是1234，需要
+例如，对三叶草进行管理员注册时，假如密码是1234，需要
 
 ```
 @三叶草 /管理员确认 1234
@@ -337,7 +338,7 @@ admin_passwd = "1234"
 在已经是管理员的情况下，你可以对机器人发送
 
 ```
-@<机器人名称> /activate_ai
+@<机器人名称> /启动ai
 ```
 
 实现对AI功能的开关。若此前AI功能处于关闭状态，则机器人会回复
@@ -351,6 +352,8 @@ admin_passwd = "1234"
 ```
 成功关闭语言模型对话功能。
 ```
+
+AI功能为每个群单独启动，默认关闭。
 
 <br>
 

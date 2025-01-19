@@ -75,7 +75,7 @@ verification = on_command("管理员确认", rule=to_me(), priority=10, block=Tr
 async def verify_as_administrator(message: MessageEvent):
     passwd = message.get_plaintext().replace("/管理员确认", "").strip(" ")
     if passwd == admin_password:
-        insert_administrator(message.get_user_id(), message.get_session_id().split('_')[1])
+        insert_administrator(message.get_user_id())
         await verification.finish("成功注册为管理员。")
     else:
         await verification.finish("管理员认证密码错误。")
@@ -84,15 +84,15 @@ async def verify_as_administrator(message: MessageEvent):
 ai_on = on_command("开启ai",aliases={'关闭ai'}, rule=to_me(), priority=10, block=True)
 @ai_on.handle()
 async def change_ai_availability(message: MessageEvent):
-
-    result = check_admin_access(message.get_user_id(), message.get_session_id().split('_')[1])
+    result = check_admin_access(message.get_user_id())
+    result_group = select_status(message.get_session_id().split('_')[1])
     if result is None:
         await ai_on.finish("当前群无权限，请联系管理员")
-    elif (not result.is_on) & (message.get_plaintext() == "/开启ai"):
-        update_administrator(message.get_session_id().split('_')[1], True)
+    elif (result_group is None or not result_group.is_on) and (message.get_plaintext() == "/开启ai"):
+        update_ai_availability(message.get_session_id().split('_')[1], True)
         await ai_on.finish("成功开启语言模型对话功能。一起来聊天吧~")
-    elif not result.is_on :
+    elif not result_group.is_on:
         await ai_on.finish("当前群未开启ai聊天。")
     else:
-        update_administrator(message.get_session_id().split('_')[1], False)
+        update_ai_availability(message.get_session_id().split('_')[1], False)
         await ai_on.finish("成功关闭语言模型对话功能。")

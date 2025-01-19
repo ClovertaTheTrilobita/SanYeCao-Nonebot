@@ -8,8 +8,15 @@ c = conn.cursor()
 c.execute("""
 
 CREATE TABLE IF NOT EXISTS admin_list (
-    user_id VARCHAR(100) PRIMARY KEY,
-    group_id VARCHAR(100),
+    user_id VARCHAR(100) PRIMARY KEY
+);
+
+""")
+
+c.execute("""
+
+CREATE TABLE IF NOT EXISTS group_list (
+    group_id VARCHAR(100) PRIMARY KEY,
     is_on BOOLEAN DEFAULT false
 );
 
