@@ -29,7 +29,7 @@ check = on_message(rule=to_me() & Rule(check_value_in_menu) ,block=True)
 @check.handle()
 async def check(bot: Bot, event: Event):
     status = select_status(event.get_session_id().split('_')[1])
-    if  status.is_on:
+    if status is not None and status.is_on:
         msg = ai_chat.deepseek_chat(event.get_plaintext())
         await bot.send(message=msg,event=event)
     else:
