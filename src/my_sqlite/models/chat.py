@@ -108,7 +108,7 @@ class GroupChatRole(Model):
         table_description = "群聊ai对应的角色设定"
 
     @classmethod
-    async def blind_admin(cls ,admin_list: str | None,group_id: str | None) -> str | None:
+    async def blind_admin(cls ,admin_list: list | None,group_id: str | None) -> str | None:
         """
         初次绑定ai
         :param admin_list:
@@ -118,7 +118,9 @@ class GroupChatRole(Model):
         # 创建初始化的角色设定
         existing_record = await cls.filter(group_id=group_id).first()
         if existing_record:
-            existing_record.admin_id.append([admin_list])
+            if admin_list[0] in existing_record.admin_id:
+                return "您已经是管理员，请勿重复注册"
+            existing_record.admin_id.append(admin_list[0])
             await existing_record.save()
         else:
             role_name = '初始模型'

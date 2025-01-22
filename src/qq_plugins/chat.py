@@ -23,7 +23,7 @@ async def handle_function(message: MessageEvent):
     member_openid, group_openid = message.author.id, message.group_openid
     password = message.get_plaintext().replace("/管理员注册", "").strip()
     if password == admin_password:
-        result = await GroupChatRole.blind_admin(member_openid, group_openid)
+        result = await GroupChatRole.blind_admin([member_openid], group_openid)
         await t1.finish(result)
     else:
         await t1.finish("管理员注册密码错误。")
