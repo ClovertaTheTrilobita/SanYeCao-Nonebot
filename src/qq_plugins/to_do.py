@@ -1,8 +1,8 @@
-from nonebot.rule import to_me
+from nonebot.adapters.qq import MessageEvent
 from nonebot.plugin import on_command
-from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
-from src.my_sqlite.todo_by_sqlite import *
+from nonebot.rule import to_me
 
+from src.my_sqlite.todo_by_sqlite import *
 
 get_todo_list = on_command("待办查询", rule=to_me(), priority=10, block=True, aliases={"代办", "daiban"})
 @get_todo_list.handle()

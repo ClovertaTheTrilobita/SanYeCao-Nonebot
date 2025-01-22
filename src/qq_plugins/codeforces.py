@@ -1,13 +1,17 @@
 import requests
-from nonebot.rule import to_me
 from nonebot.plugin import on_command
-from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
+from nonebot.rule import to_me
 
 cf_query = on_command("cf", rule=to_me(), priority=10, block=True)
 @cf_query.handle()
 async def get_cf_rounds():
-    result = requests.get('https://codeforces.com/api/contest.list?gym=false').json()
-    print("正在请求codefoeces比赛API")
+    await cf_query.send("正在为您整理近期比赛信息哦~\n请稍等💭💡🎈")
+    try:
+        result = requests.get('https://codeforces.com/api/contest.list?gym=false').json()
+    except:
+        await cf_query.finish("API请求失败，这绝对不是咱的错，绝对不是！")
+
+    print("正在请求codeforces比赛API")
     i = False
     all_matches = ""
     for matches in result['result']:

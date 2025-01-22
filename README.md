@@ -195,18 +195,20 @@ qr_fortune
 --今日运势日志，存储该用户是否已经查询过运势
 qr_fortune_log
 
---用户列表
+--用户表
 user_list
 --用户待办表
 user_todo_list
 
 --管理员表
 admin_list
+--群聊表
+group_list
 ```
 
 初始化相关脚本存放在 [<b>src/my_sqlite/data_init</b>](src/my_sqlite/data_init) 目录下。
 
-每次启动机器人，程序会自动检查上述七张表是否存在，有表缺失则会在数据库中自动创建对应的表。
+每次启动机器人，程序会自动检查上述8张表是否存在，有表缺失则会在数据库中自动创建对应的表。
 
 对已存在的表不做处理。
 
@@ -308,7 +310,7 @@ chat_ai:
   admin_password: "<key>" # 设置管理员认证密码
 ```
 
-在上述<i>"\<key>'"</i>中填入你的密码。
+在上述<i>"\<key>"</i>中填入你的密码。
 
 <br>
 
