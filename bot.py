@@ -13,7 +13,6 @@ driver.on_shutdown(disconnect)
 
 def init_all():
     # 初始化数据库
-    data_init.QrFortune_init()
     data_init.touch_init()
     data_init.todo_init()
     data_init.admin_init()

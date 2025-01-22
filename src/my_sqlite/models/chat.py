@@ -113,7 +113,6 @@ class GroupChatRole(Model):
         初次绑定ai
         :param admin_list:
         :param group_id: 群聊ID
-        :param role_name: 角色名称
         :return: 无
         """
         # 创建初始化的角色设定
@@ -127,18 +126,17 @@ class GroupChatRole(Model):
         return "注册成功"
 
     @classmethod
-    async def remove_admin(cls ,admin_list: list | None,group_id: str | None) -> str | None:
+    async def remove_admin(cls ,admin_list: str | None,group_id: str | None) -> str | None:
         """
         初次绑定ai
         :param admin_list:
         :param group_id: 群聊ID
-        :param role_name: 角色名称
         :return: 无
         """
         # 创建初始化的角色设定
         existing_record = await cls.filter(group_id=group_id).first()
         if existing_record:
-            existing_record.admin_id.append(admin_list)
+            existing_record.admin_id.remove(admin_list)
             await existing_record.save()
             return "已经创建"
         else:
