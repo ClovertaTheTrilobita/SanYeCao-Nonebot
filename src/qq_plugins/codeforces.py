@@ -8,46 +8,39 @@ async def get_cf_rounds():
     await cf_query.send("正在为您整理近期比赛信息哦~\n请稍等💭💡🎈")
     try:
         result = requests.get('https://codeforces.com/api/contest.list?gym=false').json()
-    except:
+    except BaseException:
         await cf_query.finish("API请求失败，这绝对不是咱的错，绝对不是！")
-
-    print("正在请求codeforces比赛API")
-    i = False
     all_matches = ""
     for matches in result['result']:
-        if i:
-            break
-        if matches["phase"] == "BEFORE":
-            phase = "未开始"
-        elif matches["phase"] == "FINISHED":
-            phase = "已结束"
-        elif matches["phase"] == "CODING":
-            phase = "进行中"
-        elif matches["phase"] == "PENDING_SYSTEM_TEST":
-            phase = "等待判题"
-        elif matches["phase"] == "SYSTEM_TEST":
-            phase = "判题中"
-        elif matches["phase"] == "FINISHED":
-            phase = "已结束"
-        else:
-            phase = "未知"
-        one_match = ("\n比赛：" + str(matches["name"]) +
-                     "\n状态：" + phase +
-                     "\n时长：" + str(int(matches["durationSeconds"]) / 3600) + "h\n")
+        phase = get_match_phase(matches["phase"])
+        one_match = ("\n比赛：" + str(matches["name"]) + "\n状态：" + phase + "\n时长：" + str(int(matches["durationSeconds"]) / 3600) +"h\n")
         all_matches = "".join([all_matches, one_match])
-
         if phase == "未开始":
             until_start_time_min = 0 - int(matches["relativeTimeSeconds"]) / 60
-            if until_start_time_min <= 180:
-                until_start = "距开始：" + str(int(until_start_time_min)) + "min\n"
-            elif 180 < until_start_time_min <= 1440:
-                until_start = "距开始：" + str(int(until_start_time_min / 60)) + "h\n"
-            elif until_start_time_min > 1440:
-                until_start = "距开始：" + str(int(until_start_time_min / 60 / 24)) + "days\n"
-            else:
-                until_start = "距开始：未知\n"
+            until_start = get_until_start_time(until_start_time_min)
             all_matches = "".join([all_matches, until_start])
         if matches["phase"] == "FINISHED":
-            i = True
-    # print(all_matches)
+            break
     await cf_query.finish(all_matches)
+
+
+def get_match_phase(phase):
+    phase_map = {
+        "BEFORE": "未开始",
+        "FINISHED": "已结束",
+        "CODING": "进行中",
+        "PENDING_SYSTEM_TEST": "等待判题",
+        "SYSTEM_TEST": "判题中",
+    }
+    return phase_map.get(phase, "未知")
+
+
+def get_until_start_time(until_start_time_min):
+    if until_start_time_min <= 180:
+        return "距开始：" + str(int(until_start_time_min)) + "min\n"
+    elif 180 < until_start_time_min <= 1440:
+        return "距开始：" + str(int(until_start_time_min / 60)) + "h\n"
+    elif until_start_time_min > 1440:
+        return "距开始：" + str(int(until_start_time_min / 60 / 24)) + "days\n"
+    else:
+        return "距开始：未知\n"
