@@ -1,6 +1,5 @@
 import nonebot
 from nonebot.adapters.qq import Adapter as QQAdapter
-from src.my_sqlite.data_init import data_init
 
 nonebot.init()
 driver = nonebot.get_driver()
@@ -11,10 +10,6 @@ from src.my_sqlite.data_init.db_connect import disconnect, init
 driver.on_startup(init)
 driver.on_shutdown(disconnect)
 
-def init_all():
-    # 初始化数据库
-    data_init.todo_init()
 
 if __name__ == "__main__":
-    init_all()
     nonebot.run()
