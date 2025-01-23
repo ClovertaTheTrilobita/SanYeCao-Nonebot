@@ -1,10 +1,12 @@
 import os
+from pathlib import Path
+
 import yaml
 import random
 from nonebot import  on_message
 from nonebot.rule import Rule, to_me
 from nonebot.plugin import on_command, on_keyword
-from nonebot.adapters.qq import Message, MessageEvent
+from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
 from src.ai_chat import ai_chat
 from src.my_sqlite.models.chat import GroupChatRole
 
@@ -14,7 +16,7 @@ with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8
 
 
 menu = ['/今日运势','/图','/点歌','/摸摸头','/群老婆','/今日老婆', "/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册",
-        '/待办', '/test','/天气','我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办"  ,"/cf", "/奶龙", "奶龙"]
+        '/待办', '/test','/天气','我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办"  ,"/cf", "/奶龙", "/repo"]
 
 
 async def check_value_in_menu(message: MessageEvent) -> bool:
@@ -25,7 +27,7 @@ async def check_value_in_menu(message: MessageEvent) -> bool:
         return True
 
 
-check = on_message(rule=to_me() & Rule(check_value_in_menu) ,block=True)
+check = on_message(rule=to_me() & Rule(check_value_in_menu) ,block=True, priority=10)
 @check.handle()
 async def handle_function(message: MessageEvent):
 
@@ -46,7 +48,7 @@ text_list = [
 ]
 
 
-love = on_keyword({"我喜欢你", "❤"}, rule=to_me(), priority=10, block=False)
+love = on_keyword({"我喜欢你", "❤"}, rule=to_me(), priority=2, block=True)
 @love.handle()
 async def spread_love():
     await love.finish("我也喜欢你。")
@@ -56,7 +58,7 @@ test = on_command("test", rule=to_me(), priority=10, block=True)
 async def bot_on_ready():
     await test.finish("\nBoost & Magnum, ready fight!!!")
 
-nai_loong = on_keyword({"奶龙"}, rule=to_me(), priority=10, block=False)
+nai_loong = on_keyword({"奶龙"}, rule=to_me(), priority=1, block=True)
 @nai_loong.handle()
 async def not_nai_loong():
     await nai_loong.finish(message=Message(random.choice(text_list1)))
@@ -68,3 +70,14 @@ text_list1 = [
     "今夜星光闪闪✨️我爱你的心满满🤩",
     "唐",
 ]
+
+repository = on_command("repo", rule=to_me(), priority=10)
+@repository.handle()
+async def github_repo():
+
+    content = "👆三叶草bot仓库地址\n一起来搭个机器人吧😆"
+    msg = Message([
+        MessageSegment.file_image(Path("src/image/github_repo/SanYeCao-Nonebot.png")),
+        MessageSegment.text(content),
+    ])
+    await repository.finish(msg)
