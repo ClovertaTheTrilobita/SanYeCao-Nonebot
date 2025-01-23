@@ -34,8 +34,11 @@ async def insert_todo_list(message: MessageEvent):
     member_openid = message.get_user_id()
     content = message.get_plaintext().replace("/新建待办", "").strip(" ")
     # insert_user_todo_list(member_openid, content)
-    await ToDoList.insert_todo_list(member_openid, content)
-    await insert_todo.finish("成功添加待办，今后也要加油哦(ง •_•)ง")
+    success = await ToDoList.insert_todo_list(member_openid, content)
+    if success:
+        await insert_todo.finish("成功添加待办，今后也要加油哦(ง •_•)ง")
+    else:
+        await insert_todo.finish("\n请输入 /新建待办+待办内容 哦")
 
 
 delete_todo = on_command("删除待办", rule=to_me(), priority=10, block=True)

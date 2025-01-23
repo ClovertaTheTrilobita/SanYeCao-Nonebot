@@ -35,18 +35,26 @@ class ToDoList(Model):
             return False
 
     @classmethod
-    async def insert_todo_list(cls, user_id: str | None, content: str | None):
+    async def insert_todo_list(cls, user_id: str | None, content: str | None) -> bool:
+
+        is_user = await UserList.get_user_data(user_id)
+        if not is_user:
+            await UserList.insert_user(user_id)
+
+        if content.lstrip(" ") == "":
+            return False
         data = {
             "user_id": user_id,
             "content": content
         }
         await cls.create(**data)
+        return True
 
     @classmethod
     async def delete_user_todo(cls, user_id: str | None, del_line_num: int | None) -> int:
         todo_table = await cls._get_data(user_id)
 
-        if todo_table is None:
+        if not todo_table:
             return -1
 
         max_length = len(todo_table)
@@ -57,4 +65,28 @@ class ToDoList(Model):
         await cls.filter(id=del_id).delete()
         return 0
 
+
+class UserList(Model):
+    user_id = fields.CharField(max_length=100, description="用户member_openid")
+
+    class Meta:
+        table = "user_list"
+        table_description = "用户表"
+
+    @classmethod
+    async def get_user_data(cls, user_id: str | None) -> list | None:
+        if not user_id:
+            print("用户id为空")
+        else:
+            return (
+                await cls.filter(user_id=user_id).order_by("id").values_list("user_id")
+            )
+
+
+    @classmethod
+    async def insert_user(cls, user_id: str | None):
+        data = {
+            "user_id": user_id
+        }
+        await cls.create(**data)
 
