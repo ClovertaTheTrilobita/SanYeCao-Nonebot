@@ -34,6 +34,9 @@ class QrFortune(Model):
 
 
 class QrFortuneLog(Model):
+    """
+    获取运势日志表
+    """
     id = fields.IntField(primary_key=True, generated=True, auto_increment=True)
     fortune_summary = fields.CharField(max_length=64, description="运势总结", null=True)
     lucky_star = fields.CharField(max_length=64, description="幸运星", null=True)
