@@ -10,6 +10,10 @@ music = on_command("点歌", rule=to_me(), priority=10, block=True)
 @music.handle()
 async def handle_function(msg: MessageEvent):
     keyword = msg.get_plaintext().replace("/点歌", "").strip(" ")
+
+    if keyword == "":
+        await music.finish("\n请输入“/点歌+歌曲名”喔🎶")
+
     #获取登录信息 可以获取更换高音质
     session = requests.session()
     if not os.path.exists('cloud_music_cookies.cookie'):
