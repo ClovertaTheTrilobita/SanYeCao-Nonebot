@@ -3,6 +3,7 @@ from nonebot.plugin import on_command
 from nonebot.rule import to_me
 
 from src.my_sqlite.todo_by_sqlite import *
+from src.my_sqlite.models.to_do import ToDoList
 
 get_todo_list = on_command("待办查询", rule=to_me(), priority=10, block=True, aliases={"代办", "daiban"})
 @get_todo_list.handle()
@@ -15,7 +16,8 @@ async def show_todo_list(message: MessageEvent):
     """
     member_openid = message.get_user_id()
 
-    result = get_user_todo_list(member_openid)
+    # result = get_user_todo_list(member_openid)
+    result = await ToDoList.get_todo_list(member_openid)
     if result is False:
         await get_todo_list.finish("\n您还未创建待办\n快使用 /新建待办 创建一份吧")
 
@@ -33,7 +35,8 @@ insert_todo = on_command("新建待办", rule=to_me(), priority=10, block=True)
 async def insert_todo_list(message: MessageEvent):
     member_openid = message.get_user_id()
     content = message.get_plaintext().replace("/新建待办", "").strip(" ")
-    insert_user_todo_list(member_openid, content)
+    # insert_user_todo_list(member_openid, content)
+    await ToDoList.insert_todo_list(member_openid, content)
     await insert_todo.finish("成功添加待办，今后也要加油哦(ง •_•)ง")
 
 
@@ -46,7 +49,8 @@ async def del_todo(message: MessageEvent):
         del_line_num = int(del_line_str)
     except:
         await delete_todo.finish("请检查您的输入是否正确。\n请输入 /删除待办+数字 哦。")
-    result = delete_user_todo(member_openid, int(del_line_num))
+    # result = delete_user_todo(member_openid, int(del_line_num))
+    result = await ToDoList.delete_user_todo(member_openid, del_line_num)
     if result == -1:
         await delete_todo.finish("您还未创建过待办哦。")
     elif result == 0:

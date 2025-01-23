@@ -5,7 +5,7 @@ from nonebot.plugin import on_command
 from nonebot.adapters import Message
 from nonebot.params import CommandArg
 from nonebot.adapters.qq import MessageEvent
-
+import datetime
 
 weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10, block=True)
 
@@ -57,7 +57,7 @@ def format_weather(location):
         realtime_weather = weather_data['realtime']
         result = f"实时天气:" + "\n" +  f"{realtime_weather['info']}, 温度: {realtime_weather['temperature']}℃, 湿度: {realtime_weather['humidity']}%, 风向: {realtime_weather['direct']}, 风力: {realtime_weather['power']}级, AQI: {realtime_weather['aqi']}"
         # 未来几天的天气
-        result = result + "\n" + "未来几天的天气:"
+        result = result + "\n" + "未来几天的天气:🌤⛈️☔️"
         for day in weather_data['future']:
             result = result + "\n" + f"日期: {day['date']}, 天气: {day['weather']}, 温度: {day['temperature']}, 风向: {day['direct']}"
         return result

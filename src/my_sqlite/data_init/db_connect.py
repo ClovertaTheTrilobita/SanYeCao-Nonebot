@@ -23,10 +23,9 @@ class Model(Model_):
 async def init():
     """
         初始化数据库
-        :return:
     """
     await Tortoise.init(
-            db_url="sqlite://chat.db",
+            db_url="sqlite://chat_bot.db",
             modules={"models": MODELS},
             timezone="Asia/Shanghai",
         )
