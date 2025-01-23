@@ -61,9 +61,9 @@ async def bot_on_ready():
 nai_loong = on_keyword({"奶龙"}, rule=to_me(), priority=1, block=True)
 @nai_loong.handle()
 async def not_nai_loong():
-    await nai_loong.finish(message=Message(random.choice(text_list1)))
+    await nai_loong.finish(message=Message(random.choice(text_list_nailoong)))
 
-text_list1 = [
+text_list_nailoong = [
     "我是？你是？😨",
     "你才是奶龙😡",
     "你是奶龙？🤔我是奶龙？😨你才是奶龙！😱",
@@ -71,7 +71,7 @@ text_list1 = [
     "唐",
 ]
 
-repository = on_command("repo", rule=to_me(), priority=10)
+repository = on_command("repo", rule=to_me(), priority=10, block=True)
 @repository.handle()
 async def github_repo():
 
