@@ -51,7 +51,7 @@ async def handle_function(msg: MessageEvent):
     if song_id is None:
         await music.finish("\n没有找到歌曲，或检索到的歌曲均为付费喔qwq\n这绝对不是我的错，绝对不是！")
     else:
-        await music.send(MessageSegment.text(f" 来源：网易云音乐\n歌曲：{song_name} - {singer}\n请稍等喔🎵\n\n注意：PC端QQ可能会出现无法播放情况，建议使用移动端"))
+        await music.send(MessageSegment.text(f" 来源：网易云音乐\n歌曲：{song_name} - {singer}\n请稍等喔🎵"))
         #返回转换后的歌曲路径
         output_silk_path = netease_music_download(song_id, song_name, singer,session)
         await music.send(MessageSegment.file_audio(Path(output_silk_path)))
