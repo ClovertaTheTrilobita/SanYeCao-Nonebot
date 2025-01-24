@@ -9,6 +9,8 @@ from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
 from src.ai_chat import ai_chat
 from src.my_sqlite.models.chat import GroupChatRole
 from src.my_sqlite.models.user import UserList
+import platform
+import psutil
 
 with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f1:
     chat = yaml.load(f1, Loader=yaml.FullLoader).get('chat_ai')
@@ -16,7 +18,7 @@ with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8
 
 
 menu = ['/今日运势','/图','/点歌','/摸摸头','/群老婆','/今日老婆', "/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册",
-        '/待办', '/test','/天气','我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办"  ,"/cf", "/奶龙", "/repo"]
+        '/待办', '/test','/天气','我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办"  ,"/cf", "/奶龙", "/repo", "/info"]
 
 
 async def check_value_in_menu(message: MessageEvent) -> bool:
@@ -50,7 +52,7 @@ text_list = [
 ]
 
 
-love = on_keyword({"我喜欢你", "❤"}, rule=to_me(), priority=2, block=True)
+love = on_keyword({"我喜欢你", "❤"}, rule=to_me(), priority=2, block=False)
 @love.handle()
 async def spread_love():
     await love.finish("我也喜欢你。")
@@ -83,3 +85,17 @@ async def github_repo():
         MessageSegment.text(content),
     ])
     await repository.finish(msg)
+
+platform_info = on_command("info", rule=to_me(), priority=10, block=True)
+@platform_info.handle()
+async def get_platform_info():
+    # 获取操作系统名称
+    os_name = platform.system()
+    os_version = platform.version()
+    processor_name = platform.processor()
+    processor_architecture = platform.architecture()
+    python_version = platform.python_version()
+    memory = psutil.virtual_memory().total
+
+    content = "\n操作系统：" + os_name + "\n系统版本：" + os_version + "\n处理器架构：" + processor_architecture[0] + ", " + processor_architecture[1] + "\n内存：" + str(format(memory / (1024 ** 3), ".1f")) + "GB" +  "\nPython版本：" + python_version
+    await platform_info.finish(content)
