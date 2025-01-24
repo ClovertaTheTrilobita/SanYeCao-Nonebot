@@ -5,7 +5,7 @@ from src.my_sqlite.data_init.db_connect import Model
 
 class ToDoList(Model):
     id = fields.IntField(primary_key=True, generated=True, auto_increment=True)
-    user_id = fields.CharField(max_length=100,description="用户member_openid")
+    user_id = fields.CharField(max_length=64, description="用户member_openid")
     content = fields.TextField()
 
     class Meta:
@@ -18,17 +18,14 @@ class ToDoList(Model):
             获取对应用户的待办
         """
         if not user_id:
-            print("用户id为空")
+            return None
         else:
-            return (
-                await cls.filter(user_id=user_id).order_by("id").values_list("id","user_id","content")
-            )
+            return await cls.filter(user_id=user_id).order_by("id").values_list("id", "user_id", "content")
 
     @classmethod
     async def get_todo_list(cls, user_id: str | None) -> Self | None:
         todo_table = await cls._get_data(user_id)
         todo_list = [row[2] for row in todo_table]
-        # print(todo_list)
         if todo_list:
             return todo_list
         else:
@@ -36,10 +33,6 @@ class ToDoList(Model):
 
     @classmethod
     async def insert_todo_list(cls, user_id: str | None, content: str | None) -> bool:
-
-        is_user = await UserList.get_user_data(user_id)
-        if not is_user:
-            await UserList.insert_user(user_id)
 
         if content.lstrip(" ") == "":
             return False
@@ -64,29 +57,3 @@ class ToDoList(Model):
         del_id = todo_table[del_line_num - 1][0]
         await cls.filter(id=del_id).delete()
         return 0
-
-
-class UserList(Model):
-    user_id = fields.CharField(max_length=100, description="用户member_openid")
-
-    class Meta:
-        table = "user_list"
-        table_description = "用户表"
-
-    @classmethod
-    async def get_user_data(cls, user_id: str | None) -> list | None:
-        if not user_id:
-            print("用户id为空")
-        else:
-            return (
-                await cls.filter(user_id=user_id).order_by("id").values_list("user_id")
-            )
-
-
-    @classmethod
-    async def insert_user(cls, user_id: str | None):
-        data = {
-            "user_id": user_id
-        }
-        await cls.create(**data)
-

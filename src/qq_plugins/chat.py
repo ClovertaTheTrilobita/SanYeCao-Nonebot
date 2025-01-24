@@ -74,14 +74,14 @@ async def handle_function(message: MessageEvent):
         await t2.finish("您没有权限使用此功能。")
     value = message.get_plaintext().strip().split(" ")
     action, role_name = value[0], value[1]
-    if len(value[1])>10:
-        await t2.finish("角色名称过长，请重新输入")
     if action == "/删除人设":
         result = await ChatRole.delete_role(role_name)
         await t2.finish(result)
     if action == "/切换人设":
         result = await GroupChatRole.set_chat_role(group_openid,role_name)
         await t2.finish(result)
+    if len(value[1])>10:
+        await t2.finish("角色名称过长，请重新输入")
     if len(value) < 3:
         await t2.finish("请输入角色名称和设定，格式为：命令 角色名称 角色设定")
     role_setting = re.sub(r'[\n\\n\s"‘’]', '', ''.join(value[2:]))

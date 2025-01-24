@@ -1,14 +1,14 @@
 import os
-from pathlib import Path
-
 import yaml
 import random
+from pathlib import Path
 from nonebot import  on_message
 from nonebot.rule import Rule, to_me
 from nonebot.plugin import on_command, on_keyword
 from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
 from src.ai_chat import ai_chat
 from src.my_sqlite.models.chat import GroupChatRole
+from src.my_sqlite.models.user import UserList
 
 with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f1:
     chat = yaml.load(f1, Loader=yaml.FullLoader).get('chat_ai')
@@ -21,6 +21,8 @@ menu = ['/今日运势','/图','/点歌','/摸摸头','/群老婆','/今日老�
 
 async def check_value_in_menu(message: MessageEvent) -> bool:
     value = message.get_plaintext().strip().split(" ")
+    #缓存用户id
+    await UserList.insert_user(message.author.id,message.group_openid)
     if value[0] in menu:
         return False
     else:
@@ -58,10 +60,6 @@ test = on_command("test", rule=to_me(), priority=10, block=True)
 async def bot_on_ready():
     await test.finish("\nBoost & Magnum, ready fight!!!")
 
-nai_loong = on_keyword({"奶龙"}, rule=to_me(), priority=1, block=True)
-@nai_loong.handle()
-async def not_nai_loong():
-    await nai_loong.finish(message=Message(random.choice(text_list_nailoong)))
 
 text_list_nailoong = [
     "我是？你是？😨",

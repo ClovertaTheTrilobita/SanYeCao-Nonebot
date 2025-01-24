@@ -13,19 +13,12 @@ async def show_todo_list(message: MessageEvent):
     :return:
     """
     member_openid = message.get_user_id()
-
-    # result = get_user_todo_list(member_openid)
     result = await ToDoList.get_todo_list(member_openid)
-    if result is False:
+    if not result:
         await get_todo_list.finish("\n您还未创建待办\n快使用 /新建待办 创建一份吧")
 
-    todo_list = ""
-    count = 0
-    for each_content in result:
-        count += 1
-        todo_content = "\n" + str(count) + "." + str(each_content).lstrip("('").rstrip("',)") + "\n"
-        todo_list = "".join([todo_list, todo_content])
-    await get_todo_list.finish("您的待办有如下哦：⭐\n" + todo_list)
+    todo_list = "\n\n".join([f"{i + 1}. {content}" for i, content in enumerate(result)])
+    await get_todo_list.finish(f"您的待办有如下哦：⭐\n\n{todo_list}")
 
 
 insert_todo = on_command("新建待办", rule=to_me(), priority=10, block=True)
@@ -33,7 +26,6 @@ insert_todo = on_command("新建待办", rule=to_me(), priority=10, block=True)
 async def insert_todo_list(message: MessageEvent):
     member_openid = message.get_user_id()
     content = message.get_plaintext().replace("/新建待办", "").strip(" ")
-    # insert_user_todo_list(member_openid, content)
     success = await ToDoList.insert_todo_list(member_openid, content)
     if success:
         await insert_todo.finish("成功添加待办，今后也要加油哦(ง •_•)ง")
@@ -48,9 +40,8 @@ async def del_todo(message: MessageEvent):
     del_line_str = message.get_plaintext().replace("/删除待办", "").strip(" ")
     try:
         del_line_num = int(del_line_str)
-    except:
+    except BaseException:
         await delete_todo.finish("请检查您的输入是否正确。\n请输入 /删除待办+数字 哦。")
-    # result = delete_user_todo(member_openid, int(del_line_num))
     result = await ToDoList.delete_user_todo(member_openid, del_line_num)
     if result == -1:
         await delete_todo.finish("您还未创建过待办哦。")
