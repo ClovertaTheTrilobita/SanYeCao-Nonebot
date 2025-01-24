@@ -23,3 +23,4 @@ qrcode
 lazy_object_proxy
 openai
 typing_extensions
+psutil
