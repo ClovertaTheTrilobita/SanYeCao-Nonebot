@@ -172,8 +172,8 @@ def netease_music_download(song_id,song_name,singer,session):
     url = session.post(download_url, headers=headers,data=data).json()['data'][0]['url']
     #下载歌曲
     data = requests.get(url, stream=True)
-    file_path = os.path.join(save_path, f"{song_name}-{singer}.mp3")
-    file_name = os.path.basename(f"{song_name}-{singer}.mp3")
+    file_path = os.path.join(save_path, f"{song_name}-{singer}.wav")
+    file_name = os.path.basename(f"{song_name}-{singer}.wav")
     with open(file_path, "wb") as f:
         f.write(data.content)
     if data.status_code == 200:
@@ -182,7 +182,7 @@ def netease_music_download(song_id,song_name,singer,session):
                 file.write(chunk)
         output_silk_path = os.path.join(save_path, os.path.splitext(file_name)[0] + ".silk")
         # 使用 graiax-silkcoder 进行转换
-        silkcoder.encode(file_path, output_silk_path)
+        silkcoder.encode(file_path, output_silk_path,tencent=True,ios_adaptive=True)
         return output_silk_path
     else:
         return None
