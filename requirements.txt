@@ -22,6 +22,4 @@ pyyaml
 qrcode
 lazy_object_proxy
 openai
-
-yaml
 typing_extensions
