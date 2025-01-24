@@ -7,12 +7,12 @@ nonebot2[websockets]
 sqlalchemy
 autopep8
 graiax-silkcoder[ffmpeg]
-Crypto~=1.4.1
+Crypto
 graiax-silkcoder
 Crypto
 fake_useragent
-pycryptodome~=3.21.0
-PyExecJS~=1.5.1
+pycryptodome
+PyExecJS
 gradio_client
 tortoise-orm
 
@@ -22,3 +22,6 @@ pyyaml
 qrcode
 lazy_object_proxy
 openai
+
+yaml
+typing_extensions

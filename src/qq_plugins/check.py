@@ -60,6 +60,10 @@ test = on_command("test", rule=to_me(), priority=10, block=True)
 async def bot_on_ready():
     await test.finish("\nBoost & Magnum, ready fight!!!")
 
+nai_loong = on_keyword({"奶龙"}, rule=to_me(), priority=1, block=True)
+@nai_loong.handle()
+async def not_nai_loong():
+    await nai_loong.finish(message=Message(random.choice(text_list_nailoong)))
 
 text_list_nailoong = [
     "我是？你是？😨",
@@ -73,7 +77,7 @@ repository = on_command("repo", rule=to_me(), priority=10, block=True)
 @repository.handle()
 async def github_repo():
 
-    content = "👆三叶草bot仓库地址\n一起来搭个机器人吧😆"
+    content = "三叶草bot仓库地址\n一起来搭个机器人吧😆"
     msg = Message([
         MessageSegment.file_image(Path("src/image/github_repo/SanYeCao-Nonebot.png")),
         MessageSegment.text(content),
