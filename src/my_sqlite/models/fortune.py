@@ -12,7 +12,7 @@ class QrFortune(Model):
     fortune_summary = fields.CharField(max_length=64, description="运势总结", null=True)
     lucky_star = fields.CharField(max_length=64, description="幸运星", null=True)
     sign_text = fields.CharField(max_length=64, description="签文", null=True)
-    un_sign_text = fields.CharField(max_length=100, description="解签", null=True)
+    un_sign_text = fields.CharField(max_length=200, description="解签", null=True)
 
     class Meta:
         # 指定表名
@@ -41,7 +41,7 @@ class QrFortuneLog(Model):
     fortune_summary = fields.CharField(max_length=64, description="运势总结", null=True)
     lucky_star = fields.CharField(max_length=64, description="幸运星", null=True)
     sign_text = fields.CharField(max_length=64, description="签文", null=True)
-    un_sign_text = fields.CharField(max_length=100, description="解签", null=True)
+    un_sign_text = fields.CharField(max_length=200, description="解签", null=True)
     user_id = fields.CharField(max_length=64, description="用户id", null=True)
     extract_time = fields.DateField(description="获取签文日期", null=True)
 
