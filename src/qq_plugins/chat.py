@@ -19,6 +19,8 @@ with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8
 t1 = on_command("管理员注册", rule=to_me(), priority=10, block=True)
 @t1.handle()
 async def handle_function(message: MessageEvent):
+    if not hasattr(message, 'group_openid'):
+        await t1.finish("暂未在当前场景下开放此功能。")
 
     member_openid, group_openid = message.author.id, message.group_openid
     password = message.get_plaintext().replace("/管理员注册", "").strip()
@@ -32,6 +34,9 @@ async def handle_function(message: MessageEvent):
 t3 = on_command("开启ai",aliases={"关闭ai"},rule=to_me(),priority=10,block=True)
 @t3.handle()
 async def handle_function(message: MessageEvent):
+
+    if not hasattr(message, 'group_openid'):
+        await t3.finish("暂未在当前场景下开放此功能。")
 
     member_openid, group_openid, content = message.author.id, message.group_openid, message.get_plaintext()
     # 判断是否为管理员
@@ -55,6 +60,9 @@ tt = on_command("角色列表", rule=to_me(), priority=10, block=True)
 @tt.handle()
 async def handle_function(message: MessageEvent):
 
+    if not hasattr(message, 'group_openid'):
+        await tt.finish("暂未在当前场景下开放此功能。")
+
     member_openid, group_openid = message.author.id, message.group_openid
     if not await GroupChatRole.get_admin_list(group_openid, member_openid):
         await tt.finish("您没有权限使用此功能。")
@@ -68,6 +76,9 @@ async def handle_function(message: MessageEvent):
 t2 = on_command("添加人设",aliases={"更新人设","删除人设","切换人设"},rule=to_me(),priority=10,block=True)
 @t2.handle()
 async def handle_function(message: MessageEvent):
+
+    if not hasattr(message, 'group_openid'):
+        await t3.finish("暂未在当前场景下开放此功能。")
 
     member_openid, group_openid = message.author.id, message.group_openid
     if not await GroupChatRole.get_admin_list(group_openid, member_openid):
