@@ -25,7 +25,7 @@ import requests
 
 def get_weather(location):
     # 设置请求的URL和参数
-    url = f'https://apis.juhe.cn/simpleWeather/query?key=50a3bd415158e186903d6e6994157589&city={location}'
+    url = f'https://apis.juhe.cn/simpleWeather/query?key=50a3bd415158e186903d6e6994157589&city={location.rstrip("市").rstrip("县").rstrip("区")}'
     # 发送GET请求
     response = requests.get(url)
     # 检查请求是否成功
@@ -34,7 +34,7 @@ def get_weather(location):
         data = response.json()
 
         # 检查是否查询成功
-        if data['reason'] == '查询成功!':
+        if data['reason'] == '查询成功!' or data['reason'] == '查询成功':
             # 返回天气数据
             return data['result']
         else:
@@ -55,7 +55,7 @@ def format_weather(location):
     else:
         # 实时天气
         realtime_weather = weather_data['realtime']
-        result = f"实时天气:" + "\n" +  f"{realtime_weather['info']}, 温度: {realtime_weather['temperature']}℃, 湿度: {realtime_weather['humidity']}%, 风向: {realtime_weather['direct']}, 风力: {realtime_weather['power']}级, AQI: {realtime_weather['aqi']}"
+        result = "\n" + location.rstrip("市").rstrip("县").rstrip("区") + f"实时天气:" + "\n" +  f"{realtime_weather['info']}, 温度: {realtime_weather['temperature']}℃, 湿度: {realtime_weather['humidity']}%, 风向: {realtime_weather['direct']}, 风力: {realtime_weather['power']}级, AQI: {realtime_weather['aqi']}"
         # 未来几天的天气
         result = result + "\n" + "未来几天的天气:🌤⛈️☔️"
         for day in weather_data['future']:
