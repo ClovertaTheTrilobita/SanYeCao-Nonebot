@@ -23,8 +23,12 @@ menu = ['/今日运势','/图','/点歌','/摸摸头','/群老婆','/今日老�
 
 async def check_value_in_menu(message: MessageEvent) -> bool:
     value = message.get_plaintext().strip().split(" ")
+    if hasattr(message, 'group_openid'): # 是否有属性group_openid，即是否为群聊消息
+        group_id = message.group_openid
+    else:
+        group_id = "C2C" # 非群聊消息，存为c2c
     #缓存用户id
-    await UserList.insert_user(message.author.id,message.group_openid)
+    await UserList.insert_user(message.author.id,group_id)
     if value[0] in menu:
         return False
     else:
@@ -35,7 +39,12 @@ check = on_message(rule=to_me() & Rule(check_value_in_menu) ,block=True, priorit
 @check.handle()
 async def handle_function(message: MessageEvent):
 
-    member_openid, group_openid,content = message.author.id, message.group_openid,message.get_plaintext()
+    if hasattr(message, 'group_openid'):
+        group_openid = message.group_openid
+    else:
+        group_openid = "C2C"
+
+    member_openid, content = message.author.id, message.get_plaintext()
     status = await GroupChatRole.is_on(group_openid)
     if status:
         msg = await ai_chat.deepseek_chat(group_openid,content)
