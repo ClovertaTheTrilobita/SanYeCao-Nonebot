@@ -14,3 +14,4 @@ chat_history.json
 /chat.db
 /chat_bot.db-wal
 /chat_bot.db-shm
+error.log
