@@ -170,6 +170,10 @@ def netease_music_download(song_id,song_name,singer,session):
     data = {'params': result['encText'], 'encSecKey': result['encSecKey'],}
     download_url = 'https://music.163.com/weapi/song/enhance/player/url/v1?br=999000'
     url = session.post(download_url, headers=headers,data=data).json()['data'][0]['url']
+
+    if url is None:
+        return -1
+
     #下载歌曲
     data = requests.get(url, stream=True)
     file_path = os.path.join(save_path, f"{song_name}-{singer}.wav")

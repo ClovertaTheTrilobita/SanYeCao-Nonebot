@@ -54,7 +54,14 @@ async def handle_function(msg: MessageEvent):
         await music.send(MessageSegment.text(f" 来源：网易云音乐\n歌曲：{song_name} - {singer}\n请稍等喔🎵"))
         #返回转换后的歌曲路径
         output_silk_path = netease_music_download(song_id, song_name, singer,session)
-        await music.send(MessageSegment.file_audio(Path(output_silk_path)))
+
+        if output_silk_path == -1:
+            await music.send("歌曲音频获取失败：登录信息失效。")
+        elif output_silk_path is None:
+            await music.send("歌曲音频获取失败了Σヽ(ﾟД ﾟ; )ﾉ，请重试。")
+        else:
+            await music.send(MessageSegment.file_audio(Path(output_silk_path)))
+
         #删除临时文件
         netease_music_delete()
         await music.finish()
