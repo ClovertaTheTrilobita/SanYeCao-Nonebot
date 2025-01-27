@@ -6,11 +6,13 @@ from nonebot import  on_message
 from nonebot.rule import Rule, to_me
 from nonebot.plugin import on_command, on_keyword
 from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
+
 from src.ai_chat import ai_chat
 from src.my_sqlite.models.chat import GroupChatRole
 from src.my_sqlite.models.user import UserList
 import platform
 import psutil
+import time
 
 with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f1:
     chat = yaml.load(f1, Loader=yaml.FullLoader).get('chat_ai')
@@ -105,6 +107,15 @@ async def get_platform_info():
     processor_architecture = platform.architecture()
     python_version = platform.python_version()
     memory = psutil.virtual_memory().total
+    memory_usage = psutil.virtual_memory().percent
+    cpu_usage = psutil.cpu_percent()
 
-    content = "\n操作系统：" + os_name + "\n系统版本：" + os_version + "\n处理器架构：" + processor_architecture[0] + ", " + processor_architecture[1] + "\n内存：" + str(format(memory / (1024 ** 3), ".1f")) + "GB" +  "\nPython版本：" + python_version
+    content = ("\n[操作系统]: " + os_name + "\n[系统版本]: " + os_version + "\n[开机时长]: " + str(format((time.time() - psutil.boot_time()) / 3600, ".1f")) + "h" +
+               "\n[服务器时间]: \n" + time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()) +
+               "\n\n[CPU架构]: " + processor_architecture[0] + ", " + processor_architecture[1] +
+               "\n[CPU占用]: " + str(cpu_usage) + "%" +
+               "\n\n[物理内存]: " + str(format(memory / (1024 ** 3), ".1f")) + "GB" +
+               "\n[内存占用]: " + str(memory_usage) + "%"
+               "\n\n[Python版本]: " + python_version +
+               "\n\n[Bot源码]: 请发送 /repo \n[联系我们]: cloverta@petalmail·com")
     await platform_info.finish(content)
