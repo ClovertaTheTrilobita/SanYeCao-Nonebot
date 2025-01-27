@@ -92,7 +92,7 @@ async def github_repo():
 
     content = "三叶草bot仓库地址\n一起来搭个机器人吧😆"
     msg = Message([
-        MessageSegment.file_image(Path("src/image/github_repo/SanYeCao-Nonebot2.png")),
+        MessageSegment.file_image(Path("src/image/github_repo/SanYeCao-Nonebot2.jpg")),
         MessageSegment.text(content),
     ])
     await repository.finish(msg)
