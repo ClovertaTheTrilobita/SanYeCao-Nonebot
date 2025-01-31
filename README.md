@@ -6,7 +6,8 @@
 🚀使用Nonebot2+官方API搭建的QQ群聊机器人🚀<br><br>
 <img alt="Static Badge" src="https://img.shields.io/badge/Python-3.11%2F3.12-blue">
 <img alt="Static Badge" src="https://img.shields.io/badge/Nonebot-2.0-green">
-<img src="https://img.shields.io/github/last-commit/ClovertaTheTrilobita/SanYeCao-Nonebot" alt="last-commit" /><img alt="Static Badge" src="https://img.shields.io/badge/QQ%E7%BE%A4-710101225-orange"><br><br>
+<img src="https://img.shields.io/github/last-commit/ClovertaTheTrilobita/SanYeCao-Nonebot" alt="last-commit" />
+<img alt="Static Badge" src="https://img.shields.io/badge/QQ%E7%BE%A4-710101225-orange"><br><br>
 </p>
 
 
