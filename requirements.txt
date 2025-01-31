@@ -5,6 +5,7 @@ nonebot2[httpx]
 nonebot2[websockets]
 
 sqlalchemy
+selenium
 autopep8
 graiax-silkcoder[ffmpeg]
 Crypto
