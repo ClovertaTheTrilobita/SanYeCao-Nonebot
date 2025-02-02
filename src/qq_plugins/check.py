@@ -20,7 +20,7 @@ with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8
 
 
 menu = ['/今日运势','/图','/点歌','/摸摸头','/群老婆','/今日老婆', "/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册",
-        '/待办', '/test','/天气','我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办"  ,"/cf", "/奶龙", "/repo", "/info", "/B站搜索"]
+        '/待办', '/test','/天气','我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办"  ,"/cf", "/奶龙", "/repo", "/info", "/B站搜索", "/BV搜索"]
 
 
 async def check_value_in_menu(message: MessageEvent) -> bool:
@@ -92,7 +92,7 @@ async def github_repo():
 
     content = "三叶草bot仓库地址\n一起来搭个机器人吧😆"
     msg = Message([
-        MessageSegment.file_image(Path("src/image/github_repo/SanYeCao-Nonebot2.jpg")),
+        MessageSegment.file_image(Path("src/image/github_repo/SanYeCao-Nonebot3.png")),
         MessageSegment.text(content),
     ])
     await repository.finish(msg)

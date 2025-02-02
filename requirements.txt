@@ -4,6 +4,7 @@ nonebot2[fastapi]
 nonebot2[httpx]
 nonebot2[websockets]
 
+ffmpeg-python
 sqlalchemy
 selenium
 autopep8
