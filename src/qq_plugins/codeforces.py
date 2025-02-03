@@ -1,6 +1,8 @@
 import requests
 from nonebot.plugin import on_command
 from nonebot.rule import to_me
+from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
+from pathlib import Path
 
 cf_query = on_command("cf", rule=to_me(), priority=10, block=True)
 @cf_query.handle()
@@ -21,7 +23,14 @@ async def get_cf_rounds():
             all_matches = "".join([all_matches, until_start])
         if matches["phase"] == "FINISHED":
             break
-    await cf_query.finish(all_matches)
+
+    cf_image_path = './src/image/codeforces/cfContestQR.png'
+    msg = Message([
+        MessageSegment.file_image(Path(cf_image_path)),
+        MessageSegment.text(all_matches),
+    ])
+
+    await cf_query.finish(msg)
 
 
 def get_match_phase(phase):
