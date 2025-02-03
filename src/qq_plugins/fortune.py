@@ -2,10 +2,10 @@
 from pathlib import Path
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
-from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
-
+from nonebot.adapters.qq import Message, MessageEvent, MessageSegment,exception
 from src.image.get_image import get_image_names
 from src.my_sqlite.models.fortune import QrFortune,QrFortuneLog
+from src.my_sqlite.models.tarot import MajorArcana
 
 fortune_by_sqlite = on_command("今日运势", rule=to_me(), priority=10, block=True)
 @fortune_by_sqlite.handle()
@@ -32,7 +32,10 @@ async def get_today_fortune(message: MessageEvent):
         MessageSegment.file_image(Path(local_image_path)),
         MessageSegment.text(content),
     ])
-    await fortune_by_sqlite.finish(msg)
+    try:
+        await fortune_by_sqlite.finish(msg)
+    except exception.ActionFailed:
+        await fortune_by_sqlite.finish("您的今日运势被外星人抢走啦，请重试。这绝对不是咱的错，绝对不是！")
 
 
 tarot = on_command("今日塔罗", rule=to_me(), priority=10, block=True)
