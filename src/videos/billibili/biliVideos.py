@@ -1,6 +1,7 @@
 import os
 import pickle
 
+import ffmpeg
 import requests
 import hashlib
 import urllib.parse
@@ -31,9 +32,7 @@ headers = {
 
 appkey = '1d8b6e7d45233436'
 appsec = '560c52ccd288fed045859ed18bffd973'
-params = {
-    'search_type':'video'
-}
+
 
 def appsign(params, appkey, appsec):
     """为请求参数进行 APP 签名"""
@@ -45,17 +44,105 @@ def appsign(params, appkey, appsec):
     return params
 
 
-def get(keyword):
+def get_video_info(keyword):
+    params = {
+        'search_type': 'video'
+    }
+
     signed_params = appsign(params, appkey, appsec)
     query = urllib.parse.urlencode(signed_params)
     url = f"https://api.bilibili.com/x/web-interface/search/type?keyword={keyword}&"
+
     session = requests.session()
     session.get("https://www.bilibili.com/", headers=headers)
     response = session.get(url + query, headers=headers).json()
     # print(response['code'])
     return response
-# print(signed_params)
-# print(query)
+
+def get_video_info_bv(keyword):
+    params = {
+        'bvid': keyword
+    }
+
+    signed_params = appsign(params, appkey, appsec)
+    query = urllib.parse.urlencode(signed_params)
+    url = "https://api.bilibili.com/x/web-interface/view?&"
+    session = requests.session()
+    session.get("https://www.bilibili.com/", headers=headers)
+    response = session.get(url + query, headers=headers).json()
+    return response
+
+def get_video_pages_info(keyword):
+    """
+    通过BV号获取视频信息
+
+    :param keyword:
+
+    :return:
+        len(vid_pages_info_list): 视频集数->int
+        vid_pages_info_list: 视频分集信息->dict
+        vid_title: 视频标题->str
+        vid_author: 视频UP主->str
+        vid_pic: 视频封面URL->str
+    """
+    response = get_video_info_bv(keyword)
+    vid_pages_info_list = response['data']['pages']
+    vid_title = response['data']['title']
+    vid_author = response['data']['owner']['name']
+    vid_pic = response['data']['pic']
+    return len(vid_pages_info_list), vid_pages_info_list, vid_title, vid_author, vid_pic
+
+def get_video_pages_cid(vid_pages_info_list, num):
+    cid = vid_pages_info_list[num - 1]['cid']
+    return cid
+
+def get_video_file_url(bvid, cid):
+    params = {
+        'bvid': bvid,
+        'cid': cid,
+        'qn': '16',
+        'platform': 'html5'
+    }
+
+    signed_params = appsign(params, appkey, appsec)
+    query = urllib.parse.urlencode(signed_params)
+    url = "https://api.bilibili.com/x/player/playurl?&"
+
+    session = requests.session()
+    session.get("https://www.bilibili.com/", headers=headers)
+    response = session.get(url + query, headers=headers).json()
+
+    file_url = response['data']['durl'][0]['url']
+
+    return file_url
+
+def video_download(file_url, cid):
+    response = requests.get(file_url, headers=headers)
+    # 检查请求是否成功
+    if response.status_code == 200:
+        # 将视频保存到本地文件
+        with open(f'{cid}.mp4', 'wb') as file:
+            for chunk in response.iter_content(chunk_size=1024):
+                if chunk:
+                    file.write(chunk)
+        print("视频下载完成")
+    else:
+        print(f"下载失败，状态码：{response.status_code}")
+
+def transcode_video(input_file, output_file):
+    try:
+        # 转码视频为 H.264 编码
+        (
+            ffmpeg.input(input_file)
+            .output(output_file, c="libx264", crf=23, preset="veryfast")
+            .run(capture_stdout=True, capture_stderr=True)
+        )
+        print(f"视频转码完成，输出文件：{output_file}")
+    except ffmpeg.Error as e:
+        print(f"转码失败：{e.stderr.decode()}")
 
 if __name__ == "__main__":
-    print(get('海南某211台风过后现状111'))
+    print(get_video_info('海南某211台风过后现状111'))
+    print(get_video_file_url('BV1y7411Q7Eq', '171776208'))
+
+    print(get_video_pages_info('BV1y7411Q7Eq'))

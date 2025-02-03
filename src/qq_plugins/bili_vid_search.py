@@ -1,6 +1,8 @@
 # https://api.bilibili.com/x/web-interface/search/type?keyword=av28465342&search_type=video&page=1
 
 import time
+from pathlib import Path
+import requests
 from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.adapters.qq import   MessageSegment,MessageEvent, Message
@@ -10,7 +12,7 @@ bili_vid = on_command("B站搜索",rule=to_me(), priority=10, block=True)
 @bili_vid.handle()
 async def get_bili_vid_info(message: MessageEvent):
     content = message.get_plaintext().replace("/B站搜索", "").strip()
-    response = biliVideos.get(content)
+    response = biliVideos.get_video_info(content)
     if response['code'] != 0:
         bili_vid.finish(response['message'])
     search_result = response['data']['result']
@@ -37,3 +39,59 @@ async def get_bili_vid_info(message: MessageEvent):
         time.sleep(0.5)
 
     await bili_vid.finish(f"展示{len(search_result)}条结果中的前3条。")
+
+
+bili_bv_search = on_command("BV搜索", rule=to_me(), priority=10, block=True)
+@bili_bv_search.handle()
+async def get_video_file(message: MessageEvent):
+    keyword = message.get_plaintext().replace("/BV搜索", "").strip().split()
+    P_num, pages, vid_title, vid_author, vid_pic = biliVideos.get_video_pages_info(keyword[0])
+    if len(keyword) == 1:
+
+        if P_num > 1:
+            content = "\n标题:" + vid_title + "\nup主: " + vid_author + "\n该视频为多P播放：\n"
+            for page in pages:
+                content = content + "P" + str(page['page']) + ": " + page['part'] + "\n时长: " + str(page['duration']) + "s\n\n"
+
+            content = content + "请选择您想播放的集数。\n决定好后麻烦回复 /BV搜索+BV号+序号 哦。\n"
+            await bili_bv_search.finish(content)
+
+        elif P_num == 1:
+
+            content = ("\n标题: " + vid_title + "\nup主: " + vid_author + "\n视频加载中~请稍后~~~")
+            msg = Message([
+                MessageSegment.image(vid_pic),
+                MessageSegment.text(content),
+            ])
+            await bili_bv_search.send(msg)
+
+            cid = pages[0]['cid']
+            video_url = biliVideos.get_video_file_url(keyword[0], cid)
+            biliVideos.video_download(video_url, cid)
+            # biliVideos.transcode_video(f"{cid}.mp4",f"{cid}-o.mp4")
+            await bili_bv_search.send(Message(MessageSegment.file_video(Path(f"{cid}.mp4"))))
+
+    elif len(keyword) >= 2:
+
+        try:
+            page_num = int(keyword[1])
+        except:
+            await bili_bv_search.finish("输入有误\n请确认是否为 /BV搜索+BV号+序号(数字) ")
+
+        if page_num > len(pages):
+            page_num = len(pages)
+        elif page_num < 1:
+            page_num = 1
+
+        content = ("\n标题: " + vid_title + "\nup主: " + vid_author + "\n正在播放共" + str(P_num) + "P中的第" + str(page_num) + "P" + "\n视频加载中~请稍后~~~")
+        msg = Message([
+            MessageSegment.image(vid_pic),
+            MessageSegment.text(content),
+        ])
+        await bili_bv_search.send(msg)
+
+        cid = pages[page_num - 1]['cid']
+        video_url = biliVideos.get_video_file_url(keyword[0], cid)
+        biliVideos.video_download(video_url, cid)
+
+        await bili_bv_search.send(Message(MessageSegment.file_video(Path(f"{cid}.mp4"))))
