@@ -77,6 +77,7 @@ def netease_cloud_music_is_login(session):
         try:
             loginurl = session.post(f'https://music.163.com/weapi/w/nuser/account/get?csrf_token={csrf_token}',data={'params': login_params(None), 'encSecKey': login_encSecKey()}, headers=headers).json()
             if '200' in str(loginurl['code']):
+                print(loginurl)
                 print('登录成功')
                 return session, True
             else:
@@ -170,9 +171,6 @@ def netease_music_download(song_id,song_name,singer,session):
     data = {'params': result['encText'], 'encSecKey': result['encSecKey'],}
     download_url = 'https://music.163.com/weapi/song/enhance/player/url/v1?br=999000'
     url = session.post(download_url, headers=headers,data=data).json()['data'][0]['url']
-
-    if url is None:
-        return -1
 
     #下载歌曲
     data = requests.get(url, stream=True)
