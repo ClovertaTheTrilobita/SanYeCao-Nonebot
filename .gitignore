@@ -15,5 +15,6 @@ chat_history.json
 /chat_bot.db-wal
 /chat_bot.db-shm
 error.log
+bili.cookie
 *.log
 .mp4
