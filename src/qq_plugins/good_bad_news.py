@@ -1,7 +1,7 @@
 from pathlib import Path
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
-from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
+from nonebot.adapters.qq import Message, MessageEvent, MessageSegment, exception
 import urllib.parse, requests
 import httpx
 
@@ -33,5 +33,8 @@ async def good_news_img(message: MessageEvent):
     # except BaseException:
     #     await good_news.finish("出错啦，请重试。")
 
-    await good_news.finish(MessageSegment.image(img_url))
+    try:
+        await good_news.finish(MessageSegment.image(img_url))
+    except exception.ActionFailed:
+        await good_news.finish("图片发送失败，请重试。这绝对不是咱的错，绝对不是！")
 

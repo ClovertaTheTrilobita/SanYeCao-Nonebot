@@ -2,7 +2,7 @@
 from pathlib import Path
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
-from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
+from nonebot.adapters.qq import Message, MessageEvent, MessageSegment, exception
 
 from src.image.get_image import get_image_names
 from src.my_sqlite.models.fortune import QrFortune,QrFortuneLog
@@ -32,4 +32,8 @@ async def get_today_fortune(message: MessageEvent):
         MessageSegment.file_image(Path(local_image_path)),
         MessageSegment.text(content),
     ])
-    await fortune_by_sqlite.finish(msg)
+
+    try:
+        await fortune_by_sqlite.finish(msg)
+    except exception.ActionFailed:
+        await fortune_by_sqlite.finish("您的今日运势被外星人抢走啦，请重试。这绝对不是咱的错，绝对不是！")
