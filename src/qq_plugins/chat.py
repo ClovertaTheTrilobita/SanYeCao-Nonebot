@@ -78,7 +78,7 @@ t2 = on_command("添加人设",aliases={"更新人设","删除人设","切换人
 async def handle_function(message: MessageEvent):
 
     if not hasattr(message, 'group_openid'):
-        await t3.finish("暂未在当前场景下开放此功能。")
+        await t2.finish("暂未在当前场景下开放此功能。")
 
     member_openid, group_openid = message.author.id, message.group_openid
     if not await GroupChatRole.get_admin_list(group_openid, member_openid):
