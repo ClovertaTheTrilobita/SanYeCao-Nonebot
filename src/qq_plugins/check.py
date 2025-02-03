@@ -20,7 +20,7 @@ with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8
 
 
 menu = ['/今日运势','/图','/点歌','/摸摸头','/群老婆','/今日老婆', "/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册",
-        '/待办', '/test','/天气','我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办"  ,"/cf", "/奶龙", "/repo", "/info", "/B站搜索", "/BV搜索"]
+        '/待办', '/test','/天气','我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办"  ,"/cf", "/奶龙", "/repo", "/info", "/B站搜索", "/BV搜索", "/喜报", "/悲报"]
 
 
 async def check_value_in_menu(message: MessageEvent) -> bool:
