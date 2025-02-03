@@ -100,7 +100,7 @@ def get_video_file_url(bvid, cid):
     params = {
         'bvid': bvid,
         'cid': cid,
-        'qn': '16',
+        'qn': '64',
         'platform': 'html5'
     }
 
@@ -121,13 +121,25 @@ def video_download(file_url, cid):
     # 检查请求是否成功
     if response.status_code == 200:
         # 将视频保存到本地文件
-        with open(f'{cid}.mp4', 'wb') as file:
+        with open(f'./src/videos/file/{cid}.mp4', 'wb') as file:
             for chunk in response.iter_content(chunk_size=1024):
                 if chunk:
                     file.write(chunk)
         print("视频下载完成")
     else:
         print(f"下载失败，状态码：{response.status_code}")
+
+def delete_video(cid):
+    # 指定要删除的文件路径
+    file_path = f"src/videos/file/{cid}.mp4"
+
+    # 检查文件是否存在
+    if os.path.exists(file_path):
+        # 删除文件
+        os.remove(file_path)
+        print(f"文件 {file_path} 已被删除。")
+    else:
+        print(f"文件 {file_path} 不存在。")
 
 def transcode_video(input_file, output_file):
     try:
@@ -143,6 +155,6 @@ def transcode_video(input_file, output_file):
 
 if __name__ == "__main__":
     print(get_video_info('海南某211台风过后现状111'))
-    print(get_video_file_url('BV1y7411Q7Eq', '171776208'))
+    print(get_video_file_url('BV1p2PDeEENs', '28194047730'))
 
-    print(get_video_pages_info('BV1y7411Q7Eq'))
+    print(get_video_pages_info('BV1p2PDeEENs'))
