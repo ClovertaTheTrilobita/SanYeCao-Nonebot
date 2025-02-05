@@ -2,24 +2,17 @@
 from pathlib import Path
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
-from nonebot.adapters.qq import Message, MessageEvent, MessageSegment, exception
-
+from nonebot.adapters.qq import Message, MessageEvent, MessageSegment,exception
 from src.image.get_image import get_image_names
 from src.my_sqlite.models.fortune import QrFortune,QrFortuneLog
+from src.my_sqlite.models.tarot import MajorArcana
 
 fortune_by_sqlite = on_command("今日运势", rule=to_me(), priority=10, block=True)
 @fortune_by_sqlite.handle()
 async def get_today_fortune(message: MessageEvent):
 
     local_image_path = get_image_names()
-    member_openid = message.get_user_id()
-    # 查询今日是否已经获取过今日运势，如果获取过则直接从日志取
-    result = await QrFortuneLog.is_get_fortune_log(member_openid)
-    if result is None:
-        # 获取 运势说明
-        result = await QrFortune.get_fortune()
-        # 把抽取的今日运势插入日志
-        await QrFortuneLog.insert_fortune_log(result, member_openid)
+    result = await QrFortune.get_fortune(message.get_user_id())
 
     content = ("\n" + "您的今日运势为：" + "\n" +
                result.fortune_summary + "\n" +
@@ -32,8 +25,23 @@ async def get_today_fortune(message: MessageEvent):
         MessageSegment.file_image(Path(local_image_path)),
         MessageSegment.text(content),
     ])
-
     try:
         await fortune_by_sqlite.finish(msg)
     except exception.ActionFailed:
         await fortune_by_sqlite.finish("您的今日运势被外星人抢走啦，请重试。这绝对不是咱的错，绝对不是！")
+
+
+tarot = on_command("今日塔罗", rule=to_me(), priority=10, block=True)
+@tarot.handle()
+async def tarot(message: MessageEvent):
+    result = await MajorArcana.tarotChoice(message.get_user_id())
+
+    content = ("\n" + result.ints + "\n" +
+               result.name + "\n" +
+               "含义：" + result.meaning)
+
+    msg = Message([
+        MessageSegment.file_image(Path(result.image)),
+        MessageSegment.text(content),
+    ])
+    await fortune_by_sqlite.finish(msg)

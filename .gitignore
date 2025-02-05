@@ -18,3 +18,4 @@ error.log
 bili.cookie
 *.log
 .mp4
+/bili.cookie

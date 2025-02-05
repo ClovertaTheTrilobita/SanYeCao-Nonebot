@@ -20,17 +20,23 @@ class QrFortune(Model):
         table_description = "运势表"
 
     @classmethod
-    async def get_fortune(cls) -> Self | None:
+    async def get_fortune(cls,member_openid:str | None) -> Self | None:
         """
         随机获取运势
         :return:
         """
-        fortunes = await cls.all()
-        if not fortunes:
-            # 执行初始化
-            await cls.bulk_create(Fortune_initial_data)
-            fortunes = await cls.all()
-        return random.choice(fortunes) if fortunes else None
+        # 查询今日是否已经获取过今日运势，如果获取过则直接从日志取
+        result = await QrFortuneLog.is_get_fortune_log(member_openid)
+        if result is None:
+            result = await cls.all()
+            if not result:
+                # 执行初始化
+                await cls.bulk_create(Fortune_initial_data)
+                result = random.choice(await cls.all())
+                # 把抽取的今日运势插入日志
+                await QrFortuneLog.insert_fortune_log(result, member_openid)
+                return
+        return result
 
 
 class QrFortuneLog(Model):

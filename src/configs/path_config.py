@@ -18,10 +18,10 @@ TEMP_PATH = Path() / "resources" / "temp"
 TEMPLATE_PATH = Path() / "resources" / "template"
 
 
-IMAGE_PATH.mkdir(parents=True, exist_ok=True)
-RECORD_PATH.mkdir(parents=True, exist_ok=True)
-TEXT_PATH.mkdir(parents=True, exist_ok=True)
-LOG_PATH.mkdir(parents=True, exist_ok=True)
-FONT_PATH.mkdir(parents=True, exist_ok=True)
-DATA_PATH.mkdir(parents=True, exist_ok=True)
-TEMP_PATH.mkdir(parents=True, exist_ok=True)
+# IMAGE_PATH.mkdir(parents=True, exist_ok=True)
+# RECORD_PATH.mkdir(parents=True, exist_ok=True)
+# TEXT_PATH.mkdir(parents=True, exist_ok=True)
+# LOG_PATH.mkdir(parents=True, exist_ok=True)
+# FONT_PATH.mkdir(parents=True, exist_ok=True)
+# DATA_PATH.mkdir(parents=True, exist_ok=True)
+# TEMP_PATH.mkdir(parents=True, exist_ok=True)
