@@ -1,10 +1,7 @@
 # https://api.bilibili.com/x/web-interface/search/type?keyword=av28465342&search_type=video&page=1
 
 import time
-from pathlib import Path
-
 import nonebot.adapters.qq.exception
-import requests
 from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.adapters.qq import   MessageSegment,MessageEvent, Message
@@ -75,7 +72,8 @@ async def get_video_file(message: MessageEvent):
             try:
                 # await bili_bv_search.send(Message(MessageSegment.file_video(Path(f"./src/videos/file/{cid}.mp4"))))
                 await bili_bv_search.send(MessageSegment.video(video_url))
-            except nonebot.adapters.qq.exception.ActionFailed:
+            except nonebot.adapters.qq.exception.ActionFailed as e:
+                print("\033[32m" + str(time.strftime("%m-%d %H:%M:%S")) +"\033[0m [" + "\033[31;1mFAILED\033[0m" + "]" + "\033[31;1m nonebot.adapters.qq.exception.ActionFailed \033[0m" + str(e))
                 await bili_bv_search.finish("发送失败惹，可能是视频过长，请尽量搜索1分钟以内的视频吧。")
 
             # biliVideos.delete_video(cid)
@@ -106,7 +104,10 @@ async def get_video_file(message: MessageEvent):
         try:
             # await bili_bv_search.send(Message(MessageSegment.file_video(Path(f"./src/videos/file/{cid}.mp4"))))
             await bili_bv_search.send(MessageSegment.video(video_url))
-        except nonebot.adapters.qq.exception.ActionFailed:
+        except nonebot.adapters.qq.exception.ActionFailed as e:
+            print("\033[32m" + str(time.strftime("%m-%d %H:%M:%S")) +
+                  "\033[0m [" + "\033[31;1mFAILED\033[0m" + "]" +
+                  "\033[31;1m nonebot.adapters.qq.exception.ActionFailed \033[0m" + str(e))
             await bili_bv_search.finish("发送失败惹，可能是视频过长，请尽量搜索1分钟以内的视频吧。")
 
         # biliVideos.delete_video(cid)
