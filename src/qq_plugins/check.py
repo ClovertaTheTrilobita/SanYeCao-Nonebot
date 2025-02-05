@@ -20,7 +20,7 @@ with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8
 
 
 menu = ['/今日运势','/今日塔罗','/图','/点歌','/摸摸头','/群老婆','/今日老婆', "/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册",
-        '/待办', '/test','/天气','我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办"  ,"/cf", "/奶龙", "/repo", "/info", "/B站搜索", "/BV搜索", "/喜报", "/悲报"]
+        '/待办', '/test','/天气','我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办" ,"/cf","/B站搜索", "/BV搜索", "/喜报", "/悲报", "/奶龙", "/repo", "/info", "/menu"]
 
 
 async def check_value_in_menu(message: MessageEvent) -> bool:
@@ -119,3 +119,14 @@ async def get_platform_info():
                "\n\n[Python版本]: " + python_version +
                "\n\n[Bot源码]: 请发送 /repo \n[联系我们]: cloverta@petalmail·com")
     await platform_info.finish(content)
+
+get_menu = on_command("menu", rule=to_me(), priority=10, block=True)
+@get_menu.handle()
+async def send_menu_list():
+    content = "\n"
+    for command in menu:
+        if command in ["/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册", '/待办', '/test', '我喜欢你', "❤", "/menu"]:
+            continue
+        content += command + "\n"
+
+    await get_menu.finish(content)
