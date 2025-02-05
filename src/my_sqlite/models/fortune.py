@@ -32,10 +32,11 @@ class QrFortune(Model):
             if not result:
                 # 执行初始化
                 await cls.bulk_create(Fortune_initial_data)
-                result = random.choice(await cls.all())
-                # 把抽取的今日运势插入日志
-                await QrFortuneLog.insert_fortune_log(result, member_openid)
-                return
+            result = random.choice(await cls.all())
+            # 把抽取的今日运势插入日志
+            await QrFortuneLog.insert_fortune_log(result, member_openid)
+            return result
+        print(result)
         return result
 
 
@@ -64,6 +65,7 @@ class QrFortuneLog(Model):
         :return:
         """
         existing_record = await cls.get_or_none(user_id=member_openid, extract_time=datetime.now().date())
+        print(existing_record)
         return existing_record
 
     @classmethod
