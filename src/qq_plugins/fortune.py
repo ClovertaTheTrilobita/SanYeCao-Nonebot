@@ -27,13 +27,14 @@ async def get_today_fortune(message: MessageEvent):
     ])
     try:
         await fortune_by_sqlite.finish(msg)
-    except exception.ActionFailed:
+    except exception.ActionFailed as e:
+        print(e)
         await fortune_by_sqlite.finish("您的今日运势被外星人抢走啦，请重试。这绝对不是咱的错，绝对不是！")
 
 
 tarot = on_command("今日塔罗", rule=to_me(), priority=10, block=True)
 @tarot.handle()
-async def tarot(message: MessageEvent):
+async def get_tarot(message: MessageEvent):
     result = await MajorArcana.tarotChoice(message.get_user_id())
 
     content = ("\n" + result.ints + "\n" +
@@ -44,4 +45,8 @@ async def tarot(message: MessageEvent):
         MessageSegment.file_image(Path(result.image)),
         MessageSegment.text(content),
     ])
-    await fortune_by_sqlite.finish(msg)
+    try:
+        await tarot.finish(msg)
+    except exception.ActionFailed as e:
+        print(e)
+        await tarot.finish("您的塔罗拍被未来人抢走啦，请重试。这绝对不是咱的错，绝对不是！")

@@ -35,6 +35,7 @@ async def good_news_img(message: MessageEvent):
 
     try:
         await good_news.finish(MessageSegment.image(img_url))
-    except exception.ActionFailed:
+    except exception.ActionFailed as e:
+        print(e)
         await good_news.finish("图片发送失败，请重试。这绝对不是咱的错，绝对不是！")
 
