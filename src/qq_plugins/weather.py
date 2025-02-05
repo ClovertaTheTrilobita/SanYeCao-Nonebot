@@ -1,11 +1,7 @@
-import nonebot
-from nonebot import Bot
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.adapters import Message
 from nonebot.params import CommandArg
-from nonebot.adapters.qq import MessageEvent
-import datetime
 
 weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10, block=True)
 
