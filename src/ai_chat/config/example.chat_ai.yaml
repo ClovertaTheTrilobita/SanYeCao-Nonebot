@@ -1,6 +1,0 @@
-chat_ai:
-  admin_password: "<key>" # 设置管理员认证密码
-  v3url: "<key>"
-  v3key: "<key>"
-  deepseek_url: "<key>"
-  deepseek_key: "<key>"

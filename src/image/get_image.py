@@ -1,22 +1,11 @@
 import os
-import yaml
 import random
 import requests
 from PIL import Image, ImageDraw,ImageFont
+
 from src.configs.path_config import image_local_path,image_local_qq_image_path,rua_png
+from src.configs.api_config import smms_token,smms_image_upload_history,ju_he_token,ju_he_image_list,app_id,bot_account
 
-with open(os.getcwd() +'/src/image/config/image.yaml', 'r', encoding='utf-8') as f:
-    image = yaml.load(f.read(), Loader=yaml.FullLoader).get('image')
-    # image_local_path = image.get('image_local_path')
-    # image_local_qq_image_path = image.get('image_local_qq_image_path')
-    smms_token = image.get('smms_token')
-    smms_image_upload_history = image.get('smms_image_upload_history')
-    ju_he_token = image.get('ju_he_token')
-    ju_he_image_list = image.get('ju_he_image_list')
-    app_id = image.get('app_id')
-    bot_account = image.get('bot_account')
-
-# qq_image_save__path = os.getcwd()+'/'+image_local_qq_image_path
 
 """本地图片"""
 def get_image_names():

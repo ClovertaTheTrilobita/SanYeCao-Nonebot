@@ -1,19 +1,9 @@
 import re
-import os
-import yaml
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.adapters.qq import MessageEvent
 from src.my_sqlite.models.chat import ChatRole, GroupChatRole
-
-with open(os.getcwd() + '/src/ai_chat/config/chat_ai.yaml', 'r', encoding='utf-8') as f1:
-    chat = yaml.load(f1, Loader=yaml.FullLoader).get('chat_ai')
-    admin_password = chat.get('admin_password')
-
-
-
-
-
+from src.configs.api_config import admin_password
 
 
 t1 = on_command("管理员注册", rule=to_me(), priority=10, block=True)

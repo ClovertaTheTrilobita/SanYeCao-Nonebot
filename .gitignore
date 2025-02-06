@@ -9,8 +9,6 @@ chat_bot.db-shm
 cloud_music_cookies.cookie
 chat_history.json
 /src/music/qrcode.png
-/src/image/config/image.yaml
-/src/ai_chat/config/chat_ai.yaml
 /chat.db
 /chat_bot.db-wal
 /chat_bot.db-shm
@@ -19,3 +17,4 @@ bili.cookie
 *.log
 .mp4
 /bili.cookie
+/src/configs/api_config.py
