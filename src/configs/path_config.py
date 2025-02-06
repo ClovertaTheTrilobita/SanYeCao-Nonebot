@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-path = os.getcwd()+'/src/resources/image'
+path = os.getcwd()+'/src/resources/clover_image'
 
 
 #塔罗牌图片路径
@@ -16,7 +16,7 @@ rua_png = path+'/rua/'
 
 
 # 图片路径
-IMAGE_PATH = Path() / "resources" / "image"
+IMAGE_PATH = Path() / "resources" / "clover_image"
 # 语音路径
 RECORD_PATH = Path() / "resources" / "record"
 # 文本路径

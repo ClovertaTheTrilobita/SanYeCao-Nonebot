@@ -8,18 +8,18 @@ bot_account= "<KEY>"
 
 # SMMS图床相关配置
 smms_token= "<KEY>"  # sm.ms图床的token
-smms_image_upload_history= "https=//sm.ms/api/v2/upload_history"  # sm.ms图床获取上传图片历史API地址
+smms_image_upload_history= "https://sm.ms/api/v2/upload_history"  # sm.ms图床获取上传图片历史API地址
 
 # 聚合图床相关配置
 ju_he_token= "<KEY>"  # 聚合图床的token
-ju_he_image_list= "https=//api.superbed.cn/timeline"  # 聚合图床获取上传图片历史API地址
+ju_he_image_list= "https://api.superbed.cn/timeline"  # 聚合图床获取上传图片历史API地址
 
 """
 AI
 """
 admin_password= "123456"#默认注册管理员密码
 # 图灵机器人相关配置
-v3url= "https=//api.vveai.com/v1/chat/completions"
+v3url= "https://api.vveai.com/v1/chat/completions"
 v3key= "<KEY>"
 # DeepSeek相关配置
 deepseek_url= "https://api.deepseek.com"

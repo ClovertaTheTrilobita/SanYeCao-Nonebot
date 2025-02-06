@@ -8,7 +8,7 @@ chat_bot.db-wal
 chat_bot.db-shm
 cloud_music_cookies.cookie
 chat_history.json
-/src/music/qrcode.png
+/src/clover_music/qrcode.png
 /chat.db
 /chat_bot.db-wal
 /chat_bot.db-shm

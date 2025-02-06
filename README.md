@@ -168,7 +168,7 @@ python bot.by
 
 #### 📲所有指令
 
-机器人的指令列表在[<B>src/qq_plugins/check.py</B>](src/qq_plugins/check.py)中，有如下指令：
+机器人的指令列表在[<B>src/qq_plugins/check.py</B>](src/plugins/check.py)中，有如下指令：
 
 ```python
 menu = ['/今日运势','/天气','/图','/点歌','/摸摸头','/群老婆','/今日老婆', '/待办', '/test', '我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办", "/开启ai", "/关闭ai", "/cf", "/管理员确认"]
@@ -207,7 +207,7 @@ admin_list
 group_list
 ```
 
-初始化相关脚本存放在 [<b>src/my_sqlite/data_init</b>](src/my_sqlite/data_init) 目录下。
+初始化相关脚本存放在 [<b>src/my_sqlite/data_init</b>](src/clover_sqlite/data_init) 目录下。
 
 每次启动机器人，程序会自动检查上述8张表是否存在，有表缺失则会在数据库中自动创建对应的表。
 
@@ -221,17 +221,17 @@ group_list
 
 机器人支持[<b>SMMS图床</b>](https://sm.ms/)、[<b>聚合图床</b>](https://www.superbed.cn/)、从**本地**发送图片。
 
-获取图片的方法统一编写在[<B>src/image/get_image.py</B>](src/image/get_image.py)下。
+获取图片的方法统一编写在[<B>src/image/get_image.py</B>](src/clover_image/get_image.py)下。
 
 ##### 使用：
 
-首先找到[<b>src/image/config/image.yaml</b>](src/image/config/image.yaml)
+首先找到[<b>src/image/config/image.yaml</b>](src/clover_image/config/image.yaml)
 
 ```yaml
 image:
   app_id: "<KEY>"
-  image_local_qq_image_path: "src/image/qq_image"
-  image_local_path: "src/image/MaoYuNa"
+  image_local_qq_image_path: "src/clover_image/qq_image"
+  image_local_path: "src/clover_image/MaoYuNa"
   #SMMS图床相关配置
   smms_token: "<KEY>" # sm.ms图床的token
   smms_image_upload_history: "https://sm.ms/api/v2/upload_history" # sm.ms图床获取上传图片历史API地址
@@ -242,7 +242,7 @@ image:
 
 将你的机器人app_id，smms图床Token和聚合图床Token替换上述<i>\<KEY></i>（可以根据自身需求选填）
 
-之后在[<B>get_image.py</B>](src/image/get_image.py)中找到对应的方法，根据自身需求调用。
+之后在[<B>get_image.py</B>](src/clover_image/get_image.py)中找到对应的方法，根据自身需求调用。
 
 <br>
 
@@ -266,7 +266,7 @@ image:
 登录失效，请联系管理员进行登录
 ```
 
-此时会在[<b>src/music</b>](src/music)目录下生成一张<i><b>qrcode.png</b></i>，您需要使用手机端网易云音乐**扫码**该二维码，登录您的网易云账号。
+此时会在[<b>src/music</b>](src/clover_music)目录下生成一张<i><b>qrcode.png</b></i>，您需要使用手机端网易云音乐**扫码**该二维码，登录您的网易云账号。
 
 <br>
 
@@ -276,7 +276,7 @@ image:
 
 #### 💡使用第三方语言模型
 
-打开[<b>src/ai_chat/config/example.chat_ai.yaml</b>](src/ai_chat/config/chat_ai.yaml)
+打开[<b>src/ai_chat/config/example.chat_ai.yaml</b>](src/clover_openai/config/chat_ai.yaml)
 
 ```yaml
 chat_ai:
@@ -305,7 +305,7 @@ chat_ai:
 
 ###### 1.注册为管理员<a id="admin_control"></a>
 
-在[<b>src/ai_chat/config/example.chat_ai.yaml</b>](src/ai_chat/config/chat_ai.yaml)内，找到
+在[<b>src/ai_chat/config/example.chat_ai.yaml</b>](src/clover_openai/config/chat_ai.yaml)内，找到
 
 ```yaml
   admin_password: "<key>" # 设置管理员认证密码
