@@ -24,7 +24,7 @@ async def get_cf_rounds():
         if matches["phase"] == "FINISHED":
             break
 
-    cf_image_path = './src/image/codeforces/cfContestQR.png'
+    cf_image_path = './src/resources/image/codeforces/cfContestQR.png'
     msg = Message([
         MessageSegment.file_image(Path(cf_image_path)),
         MessageSegment.text(all_matches),

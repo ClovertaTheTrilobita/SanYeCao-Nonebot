@@ -51,7 +51,7 @@ class UserList(Model):
         """
         user_table = await cls.filter(user_id=user_id, group_id=group_id).first()
         if user_table:
-            user_table.use_time = datetime.now().date()
+            user_table.last_used_time = datetime.now().date()
             await user_table.save()
         else:
             await cls.create(user_id=user_id,group_id=group_id,last_used_time=datetime.now().date())

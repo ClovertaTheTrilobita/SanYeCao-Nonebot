@@ -4,9 +4,7 @@ from datetime import datetime
 from tortoise import fields
 from typing_extensions import Self
 from src.my_sqlite.data_init.db_connect import Model
-
-
-tarots_img_path = os.getcwd()+'/src/image/tarot/TarotImages/'
+from src.configs.path_config import tarots_img_path
 
 
 class MajorArcanaLog:

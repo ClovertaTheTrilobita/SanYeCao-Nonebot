@@ -1,8 +1,6 @@
 image:
   app_id: "<KEY>"
   bot_account: "<KEY>"
-  image_local_qq_image_path: "src/image/qq_image"
-  image_local_path: "src/image/MaoYuNa"
   #SMMS图床相关配置
   smms_token: "<KEY>" # sm.ms图床的token
   smms_image_upload_history: "https://sm.ms/api/v2/upload_history" # sm.ms图床获取上传图片历史API地址

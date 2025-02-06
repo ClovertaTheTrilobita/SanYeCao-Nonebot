@@ -1,4 +1,19 @@
+import os
 from pathlib import Path
+
+path = os.getcwd()+'/src/resources/image'
+
+
+#塔罗牌图片路径
+image_local_qq_image_path =  path+'/qq_image'
+#个人图片路径
+image_local_path= path+"/MaoYuNa"
+#塔罗牌图片路径
+tarots_img_path = path+'/tarot/TarotImages/'
+#摸摸头图片路径
+rua_png = path+'/rua/'
+
+
 
 # 图片路径
 IMAGE_PATH = Path() / "resources" / "image"

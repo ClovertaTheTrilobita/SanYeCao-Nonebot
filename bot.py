@@ -7,7 +7,7 @@ nonebot.init()
 driver = nonebot.get_driver()
 driver.register_adapter(QQAdapter)  # 注册QQ适配器
 nonebot.load_from_toml("pyproject.toml")
-logger.add("error.log", level="ERROR", format=default_format, rotation="1 week")
+logger.add("src/resources/log/error.log", level="ERROR", format=default_format, rotation="1 week")
 
 from src.my_sqlite.data_init.db_connect import disconnect, init
 driver.on_startup(init)

@@ -2,12 +2,13 @@ import os
 import yaml
 import random
 import requests
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw,ImageFont
+from src.configs.path_config import image_local_path,image_local_qq_image_path,rua_png
 
 with open(os.getcwd() +'/src/image/config/image.yaml', 'r', encoding='utf-8') as f:
     image = yaml.load(f.read(), Loader=yaml.FullLoader).get('image')
-    image_local_path = image.get('image_local_path')
-    image_local_qq_image_path = image.get('image_local_qq_image_path')
+    # image_local_path = image.get('image_local_path')
+    # image_local_qq_image_path = image.get('image_local_qq_image_path')
     smms_token = image.get('smms_token')
     smms_image_upload_history = image.get('smms_image_upload_history')
     ju_he_token = image.get('ju_he_token')
@@ -15,26 +16,26 @@ with open(os.getcwd() +'/src/image/config/image.yaml', 'r', encoding='utf-8') as
     app_id = image.get('app_id')
     bot_account = image.get('bot_account')
 
-qq_image_save__path = os.getcwd()+'/'+image_local_qq_image_path
+# qq_image_save__path = os.getcwd()+'/'+image_local_qq_image_path
 
 """本地图片"""
 def get_image_names():
     image_extensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp']  # 定义常见的图片文件扩展名
     image_names = []
-    for root, dirs, files in os.walk(os.getcwd()+'/'+image_local_path):
+    for root, dirs, files in os.walk(image_local_path):
         for file in files:
             if any(file.endswith(ext) for ext in image_extensions):  # 检查文件是否是图片文件
                 image_names.append(file)
     random.choice(image_names)  # 随机选取一张图片
-    local_image_path = os.getcwd() + '/' + image_local_path + '/' + random.choice(image_names)  # 随机选取一张图片的路径
+    local_image_path = image_local_path + '/' + random.choice(image_names)  # 随机选取一张图片的路径
     return local_image_path
 
 """获取QQ头像"""
 def download_qq_image(member_open_id):
-    if not os.path.exists(qq_image_save__path):
-        os.makedirs(qq_image_save__path)
+    if not os.path.exists(image_local_qq_image_path):
+        os.makedirs(image_local_qq_image_path)
 
-    save_path = qq_image_save__path + '/' + member_open_id + '.jpg'
+    save_path = image_local_qq_image_path + '/' + member_open_id + '.jpg'
     size = 640 #尺寸 40、100、140、640
     url = f"https://q.qlogo.cn/qqapp/{app_id}/{member_open_id}/{size}"
     response = requests.get(url)  # 发送 GET 请求获取图片资源
@@ -45,11 +46,11 @@ def download_qq_image(member_open_id):
 
 """获取QQ头像"""
 def download_qq_image_by_account(account):
-    if not os.path.exists(qq_image_save__path):
-        os.makedirs(qq_image_save__path)
+    if not os.path.exists(image_local_qq_image_path):
+        os.makedirs(image_local_qq_image_path)
     if account is None:
         account = bot_account
-    save_path = qq_image_save__path + '/' + account + '.jpg'
+    save_path = image_local_qq_image_path + '/' + account + '.jpg'
     size = 640  # 尺寸 40、100、140、640
     url = f"https://q2.qlogo.cn/headimg_dl?dst_uin={account}&spec={size}"
     response = requests.get(url)  # 发送 GET 请求获取图片资源
@@ -102,13 +103,11 @@ class rua():
         return rua_png1
 
     def add_gif(self):
-        # 获取素材路径
-        png_dir = os.getcwd() +'/src/image/rua/'
 
         # 获取素材列表
-        pst = os.listdir(png_dir)
+        pst = os.listdir(rua_png)
         for i in range(len(pst)):
-            pst[i] = png_dir + pst[i]
+            pst[i] = rua_png + pst[i]
 
         # 预调试好的参数，传入素材列表
         jd = [[90, 90, 5, pst[0]],
@@ -139,9 +138,31 @@ class rua():
             gifs.append(self.add_png(jd[i]))
 
         # 文件名,是否保存所有,图片列表,fps/ms
-        gifs[0].save(os.getcwd() + '/' + image_local_qq_image_path + '/rua.gif', "GIF", save_all=True, append_images=gifs, duration=35, loop=0)
+        gifs[0].save(image_local_qq_image_path + '/rua.gif', "GIF", save_all=True, append_images=gifs, duration=35, loop=0)
         self.author.close()
-        return os.getcwd() + '/' + image_local_qq_image_path + '/rua.gif'
+        return image_local_qq_image_path + '/rua.gif'
+
+"""
+图文合成
+"""
+def add_text_to_image(image_path, text, output_path, font_size):
+    # 打开图片
+    image = Image.open(image_path)
+    # 创建一个可用于绘制的对象
+    draw = ImageDraw.Draw(image)
+
+    # 设置字体和字体大小
+    font = ImageFont.truetype("arial.ttf", font_size)  # 这里使用 Arial 字体，你可以替换为其他字体文件路径
+    # 设置文本的位置和颜色
+    position = (50, 50)
+    text_color = (255, 0, 0)  # 红色
+
+    # 在图片上绘制文本
+    draw.text(position, text, font=font, fill=text_color)
+
+    # 保存合成后的图片
+    image.save(output_path)
+    print(f"合成后的图片已保存到 {output_path}")
 
 
 if __name__ == '__main__':
@@ -150,3 +171,7 @@ if __name__ == '__main__':
     print(get_image_names())
     file_path = '8A91A2F3BE5B5AF3FEC97FB5AA6D9B38.jpg'
     au = rua(file_path).add_gif()
+    image_path = "Justice.jpg"
+    text = "Hello, World!"
+    output_path = "output.jpg"
+    add_text_to_image(image_path, text, output_path, font_size=48)
