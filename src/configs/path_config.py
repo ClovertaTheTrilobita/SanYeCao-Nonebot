@@ -22,16 +22,22 @@ font_path = path+'/font/'
 temp_path = os.getcwd()+'/src/resources/temp/'
 
 
-# 图片路径
-IMAGE_PATH = Path() / "resources" / "image"
 # 语音路径
-RECORD_PATH = Path() / "resources" / "record"
+RECORD_PATH = Path() / "src" / "resources" / "record"
 # 文本路径
-TEXT_PATH = Path() / "resources" / "text"
+TEXT_PATH = Path() / "src" / "resources" / "text"
+# 日志路径
+LOG_PATH = Path() / "src" / "log"
+# 字体路径
+FONT_PATH = Path() / "src" / "resources" / "font"
 # 数据路径
-DATA_PATH = Path() / "data"
+DATA_PATH = Path() / "src" / "data"
+# 临时数据路径
+TEMP_PATH = Path() / "src" / "resources" / "temp"
 # 网页模板路径
-TEMPLATE_PATH = Path() / "resources" / "template"
+TEMPLATE_PATH = Path() / "src" / "resources" / "template"
+# 视频路径
+VIDEO_PATH = Path() / "src" / "resources" / "videos"
 
 
 # IMAGE_PATH.mkdir(parents=True, exist_ok=True)
