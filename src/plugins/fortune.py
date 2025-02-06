@@ -4,7 +4,7 @@ from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.adapters.qq import Message, MessageEvent, MessageSegment,exception
 from src.clover_image.get_image import get_image_names
-from src.clover_sqlite.models.fortune import QrFortune,QrFortuneLog
+from src.clover_sqlite.models.fortune import QrFortune, QrFortuneLog
 from src.clover_sqlite.models.tarot import MajorArcana
 import time
 
@@ -54,4 +54,4 @@ async def get_tarot(message: MessageEvent):
         print("\033[32m" + str(time.strftime("%m-%d %H:%M:%S")) +
               "\033[0m [" + "\033[31;1mFAILED\033[0m" + "]" +
               "\033[31;1m nonebot.adapters.qq.exception.ActionFailed \033[0m" + str(e))
-        await tarot.finish("您的塔罗拍被未来人抢走啦，请重试。这绝对不是咱的错，绝对不是！")
+        await tarot.finish("您的塔罗牌被未来人抢走啦，请重试。这绝对不是咱的错，绝对不是！")

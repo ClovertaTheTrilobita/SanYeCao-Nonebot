@@ -17,7 +17,7 @@ ju_he_image_list= "https://api.superbed.cn/timeline"  # 聚合图床获取上传
 """
 AI
 """
-admin_password= "123456"#默认注册管理员密码
+admin_password= "123456" # 默认注册管理员密码
 # 图灵机器人相关配置
 v3url= "https://api.vveai.com/v1/chat/completions"
 v3key= "<KEY>"

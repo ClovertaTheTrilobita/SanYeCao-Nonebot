@@ -43,6 +43,7 @@ class MajorArcana(Model):
             await cls.bulk_create(Major_arcana_initial_data)
             arcana = await cls.all()
         tarots = random.choice(arcana)
+        print(tarots.image)
         # 正位
         if ints == 0:
             return await MajorArcanaLog.insertTarotLog(tarots, user_id, tarots_img_path+tarots.image,"正位")

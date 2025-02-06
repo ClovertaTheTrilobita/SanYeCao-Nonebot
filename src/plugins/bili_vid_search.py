@@ -1,11 +1,14 @@
 # https://api.bilibili.com/x/web-interface/search/type?keyword=av28465342&search_type=video&page=1
 
 import time
+from pathlib import Path
+
 import nonebot.adapters.qq.exception
 from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.adapters.qq import   MessageSegment,MessageEvent, Message
 import src.clover_videos.billibili.biliVideos as biliVideos
+from src.configs.path_config import VIDEO_PATH
 
 bili_vid = on_command("B站搜索",rule=to_me(), priority=10, block=True)
 @bili_vid.handle()
@@ -67,10 +70,10 @@ async def get_video_file(message: MessageEvent):
             cid = pages[0]['cid']
             video_url = biliVideos.get_video_file_url(keyword[0], cid)
             # biliVideos.video_download(video_url, cid)
-            # biliVideos.transcode_video(f"{cid}.mp4",f"{cid}-o.mp4")
+            # biliVideos.transcode_video(f"./src/resources/videos/{cid}.mp4",f"./src/resources/videos/{cid}-o.mp4")
 
             try:
-                # await bili_bv_search.send(Message(MessageSegment.file_video(Path(f"./src/clover_videos/file/{cid}.mp4"))))
+                # await bili_bv_search.send(Message(MessageSegment.file_video(Path(VIDEO_PATH / f"{cid}-o.mp4"))))
                 await bili_bv_search.send(MessageSegment.video(video_url))
             except nonebot.adapters.qq.exception.ActionFailed as e:
                 print("\033[32m" + str(time.strftime("%m-%d %H:%M:%S")) +"\033[0m [" + "\033[31;1mFAILED\033[0m" + "]" + "\033[31;1m nonebot.adapters.qq.exception.ActionFailed \033[0m" + str(e))
@@ -100,9 +103,10 @@ async def get_video_file(message: MessageEvent):
         cid = pages[page_num - 1]['cid']
         video_url = biliVideos.get_video_file_url(keyword[0], cid)
         # biliVideos.video_download(video_url, cid)
+        # biliVideos.transcode_video(VIDEO_PATH / f"{cid}.mp4", VIDEO_PATH / f"{cid}-o.mp4")
 
         try:
-            # await bili_bv_search.send(Message(MessageSegment.file_video(Path(f"./src/clover_videos/file/{cid}.mp4"))))
+            # await bili_bv_search.send(Message(MessageSegment.file_video(Path(VIDEO_PATH / f"{cid}.mp4"))))
             await bili_bv_search.send(MessageSegment.video(video_url))
         except nonebot.adapters.qq.exception.ActionFailed as e:
             print("\033[32m" + str(time.strftime("%m-%d %H:%M:%S")) +
