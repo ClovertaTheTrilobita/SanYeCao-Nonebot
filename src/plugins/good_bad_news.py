@@ -43,8 +43,8 @@ good_news = on_command("喜报", rule=to_me(), priority=10, block=True, aliases=
 async def function(message: MessageEvent):
     value = message.get_plaintext().split(" ")
     keyword,content  = value[0], value[1]
-    if value[1] == "":
-        await good_news.finish("请输入 /喜(悲)报+内容 哦。")
+    if len(value) < 2 or len(value) > 2:
+        await good_news.finish("请输入 正确的格式哦~ /喜报+内容 或者 /悲报+内容")
     if keyword == "/喜报":
         await add_text_to_image(image_path=good_bad + "good_news.png", output_path=temp_path+"good_news.png", content=content,
                                 font_path=font_path + "msyh.ttc", font_size=64, text_color=(255, 0, 0),
