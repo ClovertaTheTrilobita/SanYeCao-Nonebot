@@ -7,7 +7,7 @@ import hashlib
 import urllib.parse
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from src.configs.path_config import VIDEO_PATH
+from src.configs.path_config import video_path
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")
@@ -118,12 +118,13 @@ def get_video_file_url(bvid, cid):
     return file_url
 
 def video_download(file_url, cid):
-    response = requests.get(file_url, headers=headers)
+    response = requests.get(file_url, headers=headers,stream=True)
+
     # 检查请求是否成功
     if response.status_code == 200:
         # 将视频保存到本地文件
-        with open(VIDEO_PATH / f'{cid}.mp4', 'wb') as file:
-            for chunk in response.iter_content(chunk_size=1024):
+        with open(video_path + f'/{cid}.mp4', 'wb') as file:
+            for chunk in response.iter_content(chunk_size=8192):
                 if chunk:
                     file.write(chunk)
         print("视频下载完成")
@@ -132,7 +133,7 @@ def video_download(file_url, cid):
 
 def delete_video(cid):
     # 指定要删除的文件路径
-    file_path = VIDEO_PATH / f"{cid}.mp4"
+    file_path = video_path + f"/{cid}.mp4"
 
     # 检查文件是否存在
     if os.path.exists(file_path):

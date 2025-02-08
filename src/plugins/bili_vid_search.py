@@ -8,7 +8,7 @@ from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.adapters.qq import   MessageSegment,MessageEvent, Message
 import src.clover_videos.billibili.biliVideos as biliVideos
-from src.configs.path_config import VIDEO_PATH
+from src.configs.path_config import video_path
 
 bili_vid = on_command("B站搜索",rule=to_me(), priority=10, block=True)
 @bili_vid.handle()
@@ -73,7 +73,7 @@ async def get_video_file(message: MessageEvent):
             # biliVideos.transcode_video(f"./src/resources/videos/{cid}.mp4",f"./src/resources/videos/{cid}-o.mp4")
 
             try:
-                # await bili_bv_search.send(Message(MessageSegment.file_video(Path(VIDEO_PATH / f"{cid}-o.mp4"))))
+                # await bili_bv_search.send(Message(MessageSegment.file_video(Path(video_path + f"/{cid}-o.mp4"))))
                 await bili_bv_search.send(MessageSegment.video(video_url))
             except nonebot.adapters.qq.exception.ActionFailed as e:
                 print("\033[32m" + str(time.strftime("%m-%d %H:%M:%S")) +"\033[0m [" + "\033[31;1mFAILED\033[0m" + "]" + "\033[31;1m nonebot.adapters.qq.exception.ActionFailed \033[0m" + str(e))

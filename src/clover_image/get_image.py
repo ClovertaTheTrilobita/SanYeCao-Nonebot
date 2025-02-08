@@ -3,9 +3,8 @@ import random
 import requests
 from PIL import Image, ImageDraw,ImageFont
 
-from src.configs.path_config import image_local_path,image_local_qq_image_path,rua_png
+from src.configs.path_config import image_local_path,image_local_qq_image_path,rua_png,temp_path
 from src.configs.api_config import smms_token,smms_image_upload_history,ju_he_token,ju_he_image_list,app_id,bot_account
-
 
 """本地图片"""
 def get_image_names():
@@ -134,33 +133,79 @@ class rua():
 """
 图文合成
 """
-def add_text_to_image(image_path, text, output_path, font_size):
+async def add_text_to_image(image_path, output_path,content,font_path, font_size, text_color, position):
+    """
+    给图片添加文字
+    :param image_path: 输入图片的路径
+    :param output_path: 合成后的图片名称
+    :param content: 要添加的文字内容
+    :param font_path: 字体文件路径
+    :param font_size: 文字的字体大小
+    :param text_color: 文字颜色 (255, 0, 0) "#FF0000" "red"
+    :param position: 文字位置，可选值："left", "right", "center", "top", "bottom", "top left corner", "top right corner", "bottom left corner", "bottom right corner"
+    :return:
+    """
     # 打开图片
     image = Image.open(image_path)
     # 创建一个可用于绘制的对象
     draw = ImageDraw.Draw(image)
-
     # 设置字体和字体大小
-    font = ImageFont.truetype("arial.ttf", font_size)  # 这里使用 Arial 字体，你可以替换为其他字体文件路径
-    # 设置文本的位置和颜色
-    position = (50, 50)
-    text_color = (255, 0, 0)  # 红色
+    font = ImageFont.truetype(font_path, font_size)
+
+    wrapped_text,current_width = "",0
+
+    # 遍历文本中的每个字符
+    for char in content:
+        # 获取字符的宽度
+        char_width, _ = draw.textbbox((0, 0), char, font=font)[2:]
+        # 如果当前行的宽度加上字符宽度超过图片指定宽度，则换行
+        if current_width + char_width > image.width // 2:  # 这里是图片的一半
+            wrapped_text += "\n"
+            current_width = 0
+        # 将字符添加到当前行
+        wrapped_text += char
+        # 更新当前行的宽度
+        current_width += char_width
+
+    # 获取换行后文本的宽度和高度
+    text_width, text_height = draw.textbbox((0, 0), wrapped_text, font=font)[2:]
+
+    # 根据位置参数计算文本的位置
+    if position == "left":
+        position = (0, (image.height - text_height) // 2)
+    elif position == "right":
+        position = (image.width - text_width, (image.height - text_height) // 2)
+    elif position == "center":
+        position = ((image.width - text_width) // 2, (image.height - text_height) // 2)
+    elif position == "top":
+        position = ((image.width - text_width) // 2, 0)
+    elif position == "bottom":
+        position = ((image.width - text_width) // 2, image.height - text_height)
+    elif position == "top left corner":
+        position = (0, 0)
+    elif position == "top right corner":
+        position = (image.width - text_width, 0)
+    elif position == "bottom left corner":
+        position = (0, image.height - text_height)
+    elif position == "bottom right corner":
+        position = (image.width - text_width, image.height - text_height)
 
     # 在图片上绘制文本
-    draw.text(position, text, font=font, fill=text_color)
-
+    draw.multiline_text(position, wrapped_text, font=font, fill=text_color, align="center")
     # 保存合成后的图片
     image.save(output_path)
-    print(f"合成后的图片已保存到 {output_path}")
+    # 关闭图片
+    # image.close()
+
 
 
 if __name__ == '__main__':
-    print(get_smms_image_url())
-    print(get_juhe_image_url())
-    print(get_image_names())
-    file_path = '8A91A2F3BE5B5AF3FEC97FB5AA6D9B38.jpg'
-    au = rua(file_path).add_gif()
-    image_path = "Justice.jpg"
-    text = "Hello, World!"
-    output_path = "output.jpg"
-    add_text_to_image(image_path, text, output_path, font_size=48)
+    # print(get_smms_image_url())
+    # print(get_juhe_image_url())
+    # print(get_image_names())
+    # file_path = '8A91A2F3BE5B5AF3FEC97FB5AA6D9B38.jpg'
+    # au = rua(file_path).add_gif()
+    image_path = "021.png"
+    content = "你是很大的哈设计开发哈卡斯萨夫卡是大华饭店不是的话覆盖过海宿管会啊傻瓜金佛上帝海水淡化你是很大的哈设计开发哈卡斯萨夫卡是大华饭店不是的话覆盖u过海宿管会啊傻瓜金佛上帝海水淡化你"
+    output_path = "output.png"
+    add_text_to_image(image_path, content, output_path, "微软雅黑.ttc",text_color = (255, 0, 0),font_size=48,position="top")
