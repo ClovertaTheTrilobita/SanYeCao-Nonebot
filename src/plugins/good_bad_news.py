@@ -49,13 +49,13 @@ async def function(message: MessageEvent):
     if keyword == "/喜报":
         filename = "good_news.png"
         await add_text_to_image(image_path=good_bad + filename, output_path=temp_path + filename, content=content,
-                                font_path=font_path + "msyh.ttc", font_size=64, text_color=(255, 0, 0),text_position="center",
+                                font_path=font_path + "微软雅黑.ttc", font_size=64, text_color=(255, 0, 0),text_position="center",
                                 position="center")
         await good_news.finish(MessageSegment.file_image(Path(temp_path + filename)))
     elif keyword == "/悲报":
         filename = "bad_news.png"
         await add_text_to_image(image_path=good_bad + filename, output_path=temp_path + filename, content=content,
-                                font_path=font_path + "msyh.ttc", font_size=64, text_color=(128, 128, 128),text_position="center",
+                                font_path=font_path + "微软雅黑.ttc", font_size=64, text_color=(128, 128, 128),text_position="center",
                                 position="center")
         await good_news.send(MessageSegment.file_image(Path(temp_path+filename)))
         await delete_file(temp_path + filename)
