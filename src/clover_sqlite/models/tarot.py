@@ -89,7 +89,7 @@ class MajorArcanaLog(Model):
             'ints': ints,
             'name': model.name,
             'meaning': meaning,
-            'clover_image': image,
+            'image': image,
             'create_time':datetime.now().date()
         }
 
