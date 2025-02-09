@@ -4,7 +4,7 @@ from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.adapters.qq import Message, MessageEvent, MessageSegment,exception
 from src.clover_image.get_image import get_image_names
-from src.clover_sqlite.models.fortune import QrFortune, QrFortuneLog
+from src.clover_sqlite.models.fortune import QrFortune
 from src.clover_sqlite.models.tarot import MajorArcana
 import time
 

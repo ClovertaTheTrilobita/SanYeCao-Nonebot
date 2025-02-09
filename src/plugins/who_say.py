@@ -13,7 +13,7 @@ async def handle(message: MessageEvent):
     filename = str(message.get_user_id()) + str(random.randint(0, 10000)) + ".jpg"
     value = message.get_plaintext().split(" ")
     keyword, content = value[0], value[1]
-    if len(value) < 2 or len(value) > 2:
+    if len(value) < 2 or len(value) > 2 or value[1] == "":
         await luxun.finish("你让鲁迅说点啥?格式不对自己捋一捋吧~")
     if len(content) >= 24:
         await luxun.finish("太长了, 鲁迅说不完! 24字以内~")
