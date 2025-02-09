@@ -133,7 +133,7 @@ class rua():
 """
 图文合成
 """
-async def add_text_to_image(image_path, output_path,content,font_path, font_size, text_color, position):
+async def add_text_to_image(image_path, output_path,content,font_path, font_size, text_color,text_position ,position):
     """
     给图片添加文字
     :param image_path: 输入图片的路径
@@ -159,7 +159,7 @@ async def add_text_to_image(image_path, output_path,content,font_path, font_size
         # 获取字符的宽度
         char_width, _ = draw.textbbox((0, 0), char, font=font)[2:]
         # 如果当前行的宽度加上字符宽度超过图片指定宽度，则换行
-        if current_width + char_width > image.width // 2:  # 这里是图片的一半
+        if current_width + char_width > image.width * 9 // 10:  # 这里是图片的十分之九
             wrapped_text += "\n"
             current_width = 0
         # 将字符添加到当前行
@@ -189,15 +189,23 @@ async def add_text_to_image(image_path, output_path,content,font_path, font_size
         position = (0, image.height - text_height)
     elif position == "bottom right corner":
         position = (image.width - text_width, image.height - text_height)
+    elif position == "bottom left corner 9/10":
+        position = (0, image.height * 9 // 10 - text_height)
 
     # 在图片上绘制文本
-    draw.multiline_text(position, wrapped_text, font=font, fill=text_color, align="center")
+    draw.multiline_text(position, wrapped_text, font=font, fill=text_color, align=text_position)
     # 保存合成后的图片
     image.save(output_path)
     # 关闭图片
     # image.close()
 
-
+async def delete_file(file_path):
+    try:
+        os.remove(file_path)
+    except FileNotFoundError:
+        print(f"文件 {file_path} 不存在。")
+    except Exception as e:
+        print(f"删除文件时发生错误: {e}")
 
 if __name__ == '__main__':
     # print(get_smms_image_url())

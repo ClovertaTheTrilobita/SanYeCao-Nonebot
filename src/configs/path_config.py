@@ -15,6 +15,9 @@ rua_png = path+'/image/rua/'
 # 喜报、悲报图片路径
 good_bad = path+'/image/good_bad_news/'
 
+#谁说 生成图片路径
+who_say_path = path+'/image/who_say/'
+
 # 字体路径
 font_path = path + '/font/'
 

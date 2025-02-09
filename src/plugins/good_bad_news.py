@@ -6,7 +6,7 @@ import urllib.parse
 import requests
 import time
 import httpx
-from src.clover_image.get_image import add_text_to_image
+from src.clover_image.get_image import add_text_to_image,delete_file
 from src.configs.path_config import font_path,good_bad,temp_path
 
 # good_news = on_command("喜报", rule=to_me(), priority=10, block=True, aliases={"悲报"})
@@ -42,16 +42,20 @@ good_news = on_command("喜报", rule=to_me(), priority=10, block=True, aliases=
 @good_news.handle()
 async def function(message: MessageEvent):
     value = message.get_plaintext().split(" ")
+    filename = ""
     keyword,content  = value[0], value[1]
     if len(value) < 2 or len(value) > 2:
         await good_news.finish("请输入 正确的格式哦~ /喜报+内容 或者 /悲报+内容")
     if keyword == "/喜报":
-        await add_text_to_image(image_path=good_bad + "good_news.png", output_path=temp_path+"good_news.png", content=content,
+        filename = "good_news.png"
+        await add_text_to_image(image_path=good_bad + filename, output_path=temp_path + filename, content=content,
                                 font_path=font_path + "msyh.ttc", font_size=64, text_color=(255, 0, 0),
                                 position="center")
-        await good_news.finish(MessageSegment.file_image(Path(temp_path+"good_news.png")))
+        await good_news.finish(MessageSegment.file_image(Path(temp_path + filename)))
     elif keyword == "/悲报":
-        await add_text_to_image(image_path=good_bad + "bad_news.png", output_path=temp_path+"bad_news.png", content=content,
-                                font_path=font_path + "msyh.ttc", font_size=64, text_color=(128, 128, 128),
+        filename = "bad_news.png"
+        await add_text_to_image(image_path=good_bad + filename, output_path=temp_path + filename, content=content,
+                                font_path=font_path + "msyh.ttc", font_size=64, text_color=(128, 128, 128),text_position="center",
                                 position="center")
-        await good_news.finish(MessageSegment.file_image(Path(temp_path+"bad_news.png")))
+        await good_news.send(MessageSegment.file_image(Path(temp_path+filename)))
+        await delete_file(temp_path + filename)
