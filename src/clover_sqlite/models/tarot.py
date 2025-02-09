@@ -58,7 +58,7 @@ class MajorArcanaLog(Model):
     id = fields.IntField(pk=True)
     user_id = fields.CharField(max_length=255, description="用户id")
     ints = fields.CharField(max_length=64,description="正逆")
-    name = fields.CharField(max_length=64, unique=True, description="牌名")
+    name = fields.CharField(max_length=64, description="牌名")
     meaning = fields.TextField(description="正位/逆位含义")
     image = fields.CharField(max_length=255, description="图片文件名")
     create_time = fields.DateField(auto_now_add=True)
