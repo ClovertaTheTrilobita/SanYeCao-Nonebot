@@ -58,4 +58,4 @@ async def function(message: MessageEvent):
                                 font_path=font_path + "微软雅黑.ttc", font_size=72, text_color=(128, 128, 128),text_position="center",
                                 position="center")
         await good_news.send(MessageSegment.file_image(Path(temp_path+filename)))
-        await delete_file(temp_path + filename)
+    await delete_file(temp_path + filename)
