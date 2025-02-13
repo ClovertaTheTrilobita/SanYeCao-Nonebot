@@ -1,11 +1,9 @@
-
 app_id="<KEY>"
 bot_account= "<KEY>"
 
 """
 图床配置
 """
-
 # SMMS图床相关配置
 smms_token= "<KEY>"  # sm.ms图床的token
 smms_image_upload_history= "https://sm.ms/api/v2/upload_history"  # sm.ms图床获取上传图片历史API地址
