@@ -6,7 +6,8 @@ import urllib.parse
 import requests
 import time
 import httpx
-from src.clover_image.get_image import add_text_to_image,delete_file
+from src.clover_image.add_text_to_image import add_text_to_image
+from src.clover_image.delete_file import delete_file
 from src.configs.path_config import font_path,good_bad,temp_path
 
 # good_news = on_command("喜报", rule=to_me(), priority=10, block=True, aliases={"悲报"})

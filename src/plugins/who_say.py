@@ -2,7 +2,8 @@ import random
 from pathlib import Path
 from nonebot.plugin import on_command
 from nonebot.adapters.qq import  MessageEvent, MessageSegment
-from src.clover_image.get_image import add_text_to_image,delete_file
+from src.clover_image.add_text_to_image import add_text_to_image
+from src.clover_image.delete_file import delete_file
 from src.configs.path_config import who_say_path,font_path,temp_path
 
 

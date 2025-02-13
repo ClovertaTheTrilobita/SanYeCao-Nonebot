@@ -3,7 +3,7 @@ from nonebot.adapters.qq import Message, MessageEvent
 from nonebot.adapters.qq import  MessageSegment
 from nonebot.plugin import on_command
 from nonebot.rule import to_me
-from src.clover_image.get_image import  download_qq_image,qq_image_delete
+from src.clover_image.qq_image import  download_qq_image,qq_image_delete
 from src.clover_sqlite.models.user import UserList
 
 today_group_wife = on_command("群老婆", rule=to_me(), priority=10, block=True)

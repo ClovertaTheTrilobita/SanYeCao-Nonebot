@@ -3,8 +3,8 @@ from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
 from src.clover_sqlite.models.touch import QrTouch, QrTouchLog
-from src.clover_image.get_image import download_qq_image_by_account, qq_image_delete, rua
-
+from src.clover_image.qq_image import download_qq_image_by_account, qq_image_delete
+from src.clover_image.rua import rua
 
 to = on_command("摸摸头", rule=to_me(), priority=10, block=True)
 @to.handle()

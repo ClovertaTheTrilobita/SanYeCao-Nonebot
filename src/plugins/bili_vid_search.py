@@ -1,8 +1,6 @@
 # https://api.bilibili.com/x/web-interface/search/type?keyword=av28465342&search_type=video&page=1
 
 import time
-from pathlib import Path
-
 import nonebot.adapters.qq.exception
 from nonebot import on_command
 from nonebot.rule import to_me
