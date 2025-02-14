@@ -17,6 +17,11 @@ pycryptodome
 PyExecJS
 gradio_client
 tortoise-orm
+urllib3==1.26.5
+zhdate
+chinese_calendar
+lunardate
+playwright
 
 requests
 pillow

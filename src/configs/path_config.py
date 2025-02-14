@@ -18,6 +18,9 @@ good_bad = path+'/image/good_bad_news/'
 #谁说 生成图片路径
 who_say_path = path+'/image/who_say/'
 
+# 日报
+daily_news_path = path+'/image/report/'
+
 # 字体路径
 font_path = path + '/font/'
 

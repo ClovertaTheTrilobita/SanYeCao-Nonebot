@@ -6,11 +6,12 @@ from nonebot.adapters.qq import  MessageSegment,MessageEvent
 from src.clover_image.get_image import get_image_names
 from src.clover_image.download_image import download_image
 from src.configs.path_config import temp_path
+from src.clover_report.data_source import Report
 
 image = on_command("图", rule=to_me(), priority=10, block=True)
 @image.handle()
 async def handle_function():
-
+    await Report.get_report_image()
     local_image_path = get_image_names()
     await image.finish(MessageSegment.file_image(Path(local_image_path)))
 
