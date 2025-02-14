@@ -22,6 +22,8 @@ zhdate
 chinese_calendar
 lunardate
 playwright
+nonebot-plugin-htmlrender
+tenacity
 
 requests
 pillow
