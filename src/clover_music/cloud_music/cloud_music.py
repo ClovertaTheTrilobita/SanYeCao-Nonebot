@@ -61,6 +61,7 @@ def get_music(id):
 使用二维码登录网易云音乐，需要先获取二维码的key，然后使用该key生成二维码，扫描二维码登录，最后通过登录接口 返回cookie 保存起来
 """
 save_path = os.getcwd()+'/src/clover_music/netease_music'
+os.makedirs(save_path, exist_ok=True)
 qrcode_path = os.getcwd()+'/src/clover_music'
 
 

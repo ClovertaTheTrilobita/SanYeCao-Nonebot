@@ -84,3 +84,30 @@ test = on_command("test", rule=to_me(), priority=10, block=True)
 @test.handle()
 async def bot_on_ready():
     await test.finish("\nBoost & Magnum, ready fight!!!")
+
+
+import requests
+from src.configs.api_config import wenku8_username, wenku8_password
+# 登录页面的URL
+login_url = 'https://www.wenku8.net/login.php?jumpurl=http%3A%2F%2Fwww.wenku8.net%2Findex.php'
+index_url = 'https://www.wenku8.net/index.php'
+
+headers = {
+    'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
+    'Connection': 'close',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36 Edg/111.0.1661.41',
+}
+
+# 登录表单数据
+login_data = {
+    'username': wenku8_username,
+    'password': wenku8_password,
+    'usecookie': '0',
+    'action': 'login'
+}
+wenku8 = on_command("/wenku8", rule=to_me(), priority=10, block=True)
+@wenku8.handle()
+async def wenku8():
+    # 注意：这里使用了Session对象来保持会话状态
+    login_response = requests.post(login_url, data=login_data, headers=headers)
+    print(login_response)
