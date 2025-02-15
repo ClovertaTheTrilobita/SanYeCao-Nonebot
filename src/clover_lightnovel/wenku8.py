@@ -52,7 +52,7 @@ async def get_books():
         cookie = f.read()
     headers1 = {
         'Connection': 'keep-alive',
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0',
         'Upgrade-Insecure-Requests': '1',
         'Cookie': cookie
     }
