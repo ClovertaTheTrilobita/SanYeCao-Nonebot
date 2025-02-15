@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 from src.configs.api_config import wenku8_username, wenku8_password
 
 # 登录页面的URL
-login_url = 'https://www.wenku8.net/login.php?jumpurl=http%3A%2F%2Fwww.wenku8.net%2Findex.php'
-index_url = 'https://www.wenku8.net/index.php'
+login_url = 'https://www.wenku8.cc/login.php?jumpurl=http%3A%2F%2Fwww.wenku8.net%2Findex.php'
+index_url = 'https://www.wenku8.cc/index.php'
 
 headers = {
     'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
