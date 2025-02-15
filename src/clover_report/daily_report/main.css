@@ -245,7 +245,7 @@ body {
 
 .anime-img {
   height: 130px;
-  width: 105px;
+  width: auto;
 }
 
 .three-border {
