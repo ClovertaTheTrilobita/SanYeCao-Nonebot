@@ -110,4 +110,8 @@ wenku8 = on_command("/wenku8", rule=to_me(), priority=10, block=True)
 async def wenku8():
     # 注意：这里使用了Session对象来保持会话状态
     login_response = requests.post(login_url, data=login_data, headers=headers)
-    print(login_response)
+    # 检查登录是否成功（根据实际需求调整）
+    if login_response.status_code == 200:
+        # 登录成功后，Session对象已经自动保存了Cookie
+        # 可以直接使用该Session对象访问受保护的页面
+        print("登录成功！")
