@@ -87,15 +87,19 @@ async def bot_on_ready():
 
 
 import requests
+from requests.adapters import HTTPAdapter
+from intake.readers import Retry
 from src.configs.api_config import wenku8_username, wenku8_password
 # 登录页面的URL
 login_url = 'https://www.wenku8.net/login.php?jumpurl=http%3A%2F%2Fwww.wenku8.net%2Findex.php'
 index_url = 'https://www.wenku8.net/index.php'
 
 headers = {
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
     'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
-    'Connection': 'close',
+    'Connection': 'keep-alive',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36 Edg/111.0.1661.41',
+    'Upgrade-Insecure-Requests': '1',
 }
 
 # 登录表单数据
@@ -105,13 +109,33 @@ login_data = {
     'usecookie': '0',
     'action': 'login'
 }
+
 wenku8 = on_command("wenku8", rule=to_me(), priority=10, block=True)
 @wenku8.handle()
 async def wenku8():
-    # 注意：这里使用了Session对象来保持会话状态
-    login_response = requests.post(login_url, data=login_data, headers=headers)
-    # 检查登录是否成功（根据实际需求调整）
-    if login_response.status_code == 200:
-        # 登录成功后，Session对象已经自动保存了Cookie
-        # 可以直接使用该Session对象访问受保护的页面
-        print("登录成功！")
+    # 创建会话
+    session = requests.Session()
+
+    # 重试策略
+    retry_strategy = Retry(
+        total=3,
+        backoff_factor=1,
+        status_forcelist=[500, 502, 503, 504],
+        allowed_methods=["POST"]
+    )
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session.mount('https://', adapter)
+    session.mount('http://', adapter)
+
+    try:
+        # 发送登录请求
+        login_response = session.post(login_url, data=login_data, headers=headers)
+        # 检查登录是否成功（根据实际需求调整）
+        if login_response.status_code == 200:
+            # 登录成功后，Session对象已经自动保存了Cookie
+            # 可以直接使用该Session对象访问受保护的页面
+            print("登录成功！")
+        else:
+            print(f"登录失败，状态码: {login_response.status_code}")
+    except requests.exceptions.RequestException as e:
+        print(f"请求出错: {e}")
