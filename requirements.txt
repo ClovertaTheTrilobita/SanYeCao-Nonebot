@@ -24,6 +24,7 @@ lunardate
 playwright
 nonebot-plugin-htmlrender
 tenacity
+paramiko
 
 requests
 pillow
