@@ -28,3 +28,8 @@ Wenku8账号
 """
 wenku8_username = "<user_name>"
 wenku8_password = "<passwd>"
+
+"""
+多米HTTP代理api
+"""
+proxy_api = "<KEY>"
