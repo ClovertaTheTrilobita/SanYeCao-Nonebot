@@ -105,7 +105,7 @@ login_data = {
     'usecookie': '0',
     'action': 'login'
 }
-wenku8 = on_command("/wenku8", rule=to_me(), priority=10, block=True)
+wenku8 = on_command("wenku8", rule=to_me(), priority=10, block=True)
 @wenku8.handle()
 async def wenku8():
     # 注意：这里使用了Session对象来保持会话状态
