@@ -17,7 +17,7 @@ pycryptodome
 PyExecJS
 gradio_client
 tortoise-orm
-urllib3==1.26.5
+urllib3
 zhdate
 chinese_calendar
 lunardate
@@ -34,3 +34,4 @@ lazy_object_proxy
 openai
 typing_extensions
 psutil
+Beautifulsoup4

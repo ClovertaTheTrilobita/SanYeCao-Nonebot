@@ -21,6 +21,9 @@ who_say_path = path+'/image/who_say/'
 # 日报
 daily_news_path = path+'/image/report/'
 
+# 轻小说
+light_novel_path = path + '/image/lightnovel/'
+
 # 字体路径
 font_path = path + '/font/'
 

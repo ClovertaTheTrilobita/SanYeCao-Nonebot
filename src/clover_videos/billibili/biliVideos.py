@@ -12,16 +12,35 @@ from src.configs.path_config import video_path
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 
+headers0 = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
+}
+
 if not os.path.exists('bili.cookie'):
-    # 使用Selenium模拟浏览器获取Cookie
+    # # 使用Selenium模拟浏览器获取Cookie
     driver = webdriver.Chrome(options=chrome_options)
     driver.get("https://www.bilibili.com")
     # cookies = driver.get_cookies()
     with open('bili.cookie', 'wb') as f:
         pickle.dump(driver.get_cookies(), f)
     driver.quit()
+    # with requests.Session() as session:
+    #
+    #     login_response = session.post("https://www.bilibili.com/")
+    #
+    #     cookies = session.cookies
+    #
+    #     # 保存 Cookie 到文件
+    #     with open('bili.cookie', 'w') as f:
+    #         for cookie in cookies:
+    #             f.write(f"{cookie.name}={cookie.value}; ")
 
 cookies = pickle.load(open('bili.cookie', 'rb'))
+print("bilicookie")
+print(cookies)
+print("---end---")
+# with open('bili.cookie', 'r') as f:
+#     cookies = f.read()
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",

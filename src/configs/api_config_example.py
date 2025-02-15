@@ -22,3 +22,9 @@ v3key= "<KEY>"
 # DeepSeek相关配置
 deepseek_url= "https://api.deepseek.com"
 deepseek_key= "<KEY>"
+
+"""
+Wenku8账号
+"""
+wenku8_username = "<user_name>"
+wenku8_password = "<passwd>"
