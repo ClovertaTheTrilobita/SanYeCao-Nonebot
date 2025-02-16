@@ -25,7 +25,6 @@ playwright
 nonebot-plugin-htmlrender
 tenacity
 paramiko
-cssutils
 
 requests
 pillow

@@ -11,5 +11,4 @@ yuc_wiki = on_command("本季新番",aliases={'新番观察'} ,rule=to_me(), pri
 async def handle_function(message: MessageEvent):
     keyword = message.get_plaintext().replace("/", "").strip(" ")
     yuc_wiki_image = await get_yuc_wiki(keyword)
-    await yuc_wiki.send("请稍等。。。")
     await yuc_wiki.finish(MessageSegment.file_image(Path(yuc_wiki_image)))
