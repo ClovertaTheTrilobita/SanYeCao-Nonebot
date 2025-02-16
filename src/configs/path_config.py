@@ -28,6 +28,9 @@ os.makedirs(daily_news_path, exist_ok=True)
 # 轻小说
 light_novel_path = path + '/image/lightnovel/'
 os.makedirs(light_novel_path, exist_ok=True)
+#yuc_wiki 动漫wiki
+yuc_wiki_path = path + '/image/yuc_wiki/'
+os.makedirs(yuc_wiki_path, exist_ok=True)
 # 字体路径
 font_path = path + '/font/'
 os.makedirs(font_path, exist_ok=True)
