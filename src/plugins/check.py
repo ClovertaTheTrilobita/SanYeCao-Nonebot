@@ -8,15 +8,15 @@ from src.clover_openai import ai_chat
 from src.clover_sqlite.models.chat import GroupChatRole
 from src.clover_sqlite.models.user import UserList
 
-menu = ['/重启','/今日运势','/今日塔罗','/图','/日报','/点歌','/摸摸头','/群老婆','/今日老婆', "/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册",
-        '/待办', '/test','/天气','我喜欢你', "❤", "/待办查询", "/新建待办", "/删除待办" ,"/cf","/B站搜索", "/BV搜索", "/喜报", "/悲报", "/luxun","/鲁迅说",
-        "/奶龙", "/repo", "/info", "/menu", "/轻小说",'/本季新番','/新番观察']
+menu = ["/重启","/今日运势","/今日塔罗","/图","/日报","/点歌","/摸摸头","/群老婆","/今日老婆", "/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册",
+        "/待办", "/test","/天气","我喜欢你", "❤", "/待办查询", "/新建待办", "/删除待办" ,"/cf","/B站搜索", "/BV搜索", "/喜报", "/悲报", "/luxun","/鲁迅说",
+        "/奶龙", "/repo", "/info", "/menu", "/轻小说","/本季新番","/新番观察"]
 
-send_menu = ["/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册", '/待办', '/test', '我喜欢你', "❤", "/menu"]
+send_menu = ["/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册", "/待办", "/test", "我喜欢你", "❤", "/menu"]
 
 async def check_value_in_menu(message: MessageEvent) -> bool:
     value = message.get_plaintext().strip().split(" ")
-    if hasattr(message, 'group_openid'): # 是否有属性group_openid，即是否为群聊消息
+    if hasattr(message, "group_openid"): # 是否有属性group_openid，即是否为群聊消息
         group_id = message.group_openid
     else:
         group_id = "C2C" # 非群聊消息，存为c2c
@@ -32,7 +32,7 @@ check = on_message(rule=to_me() & Rule(check_value_in_menu) ,block=True, priorit
 @check.handle()
 async def handle_function(message: MessageEvent):
 
-    if hasattr(message, 'group_openid'):
+    if hasattr(message, "group_openid"):
         group_openid = message.group_openid
     else:
         group_openid = "C2C"
@@ -46,11 +46,11 @@ async def handle_function(message: MessageEvent):
         await check.finish(message=Message(random.choice(text_list)))
 
 text_list = [
-    "是什么呢？猫猫没有识别到,喵~"+'\n'+"(๑＞ڡ＜)☆ 给个准信，别让我瞎猜",
-    "是想让我干嘛呢？猫猫一头雾水，喵～" + '\n' + "(๑•̀ㅂ•́)و✧ 直接跟我说，别这么含蓄，喵～",
-    "是啥意思呀？猫猫完全没搞懂，喵～" + '\n' + "(๑・.・๑)  别折腾我啦，说明白，喵~",
-    "是特殊信号？猫猫听不懂，喵～" + '\n' + "(๑・̀︶・́)و 下个明确指令，喵~",
-    "难道是新指令？猫猫一脸茫然，喵～" + '\n' + "(๑＞ڡ＜)☆ 说详细点，别这么隐晦，喵～",
+    "是什么呢？猫猫没有识别到,喵~"+"\n"+"(๑＞ڡ＜)☆ 给个准信，别让我瞎猜",
+    "是想让我干嘛呢？猫猫一头雾水，喵～" + "\n" + "(๑•̀ㅂ•́)و✧ 直接跟我说，别这么含蓄，喵～",
+    "是啥意思呀？猫猫完全没搞懂，喵～" + "\n" + "(๑・.・๑)  别折腾我啦，说明白，喵~",
+    "是特殊信号？猫猫听不懂，喵～" + "\n" + "(๑・̀︶・́)و 下个明确指令，喵~",
+    "难道是新指令？猫猫一脸茫然，喵～" + "\n" + "(๑＞ڡ＜)☆ 说详细点，别这么隐晦，喵～",
 ]
 
 get_menu = on_command("menu", rule=to_me(), priority=10, block=True)
