@@ -36,9 +36,6 @@ if not os.path.exists('bili.cookie'):
     #             f.write(f"{cookie.name}={cookie.value}; ")
 
 cookies = pickle.load(open('bili.cookie', 'rb'))
-print("bilicookie")
-print(cookies)
-print("---end---")
 # with open('bili.cookie', 'r') as f:
 #     cookies = f.read()
 

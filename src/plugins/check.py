@@ -71,7 +71,7 @@ async def handle_function(message: MessageEvent):
 
     return_code = os.system("python ./update_remote_code.py")
     if return_code == 0:
-        await restart.finish("重启成功")
+        await restart.finish("重启成功,请10s后再试。")
     else:
         await restart.finish("重启失败")
 
