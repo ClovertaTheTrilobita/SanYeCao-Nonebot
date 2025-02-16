@@ -336,7 +336,7 @@ deepseek_url= "https://api.deepseek.com"
 deepseek_key= "<KEY>"
 ```
 
-将你自己的deepseek url和api填入，并将文件重命名为<b><i>chat_ai.yaml</i></b>。
+将你自己的deepseek url和api填入，并将文件重命名为<b><i>api_config.py</i></b>。
 
 再设置一个管理员认证密码，详见[下一节](#admin_control)。
 
