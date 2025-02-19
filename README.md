@@ -209,7 +209,7 @@ QQ_BOTS="
 在项目根目录中，找到 *bot.py* ，在终端输入
 
 ```powershell
-python bot.by
+python bot.py
 ```
 
 或者选择编译器启动，便可以启动机器人。
