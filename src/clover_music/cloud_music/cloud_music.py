@@ -188,7 +188,7 @@ def netease_music_download(song_id,song_name,singer,session):
                 file.write(chunk)
         output_silk_path = os.path.join(save_path, os.path.splitext(file_name)[0] + ".silk")
         # 使用 graiax-silkcoder 进行转换
-        silkcoder.encode(file_path, output_silk_path,tencent=True,ios_adaptive=True)
+        silkcoder.encode(file_path, output_silk_path,rate=36000 ,tencent=True,ios_adaptive=True)
         return output_silk_path
     else:
         return None
