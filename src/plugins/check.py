@@ -42,7 +42,7 @@ async def handle_function(message: MessageEvent):
     member_openid, content = message.author.id, message.get_plaintext()
     status = await GroupChatRole.is_on(group_openid)
     if status:
-        msg = await ai_chat.deepseek_chat(group_openid,content)
+        msg = await ai_chat.silicon_flow(group_openid,content)
         await check.finish(msg)
     else:
         await check.finish(message=Message(random.choice(text_list)))
