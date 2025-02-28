@@ -39,7 +39,7 @@ from src.configs.path_config import font_path,good_bad,temp_path
     #     await good_news.finish("出错啦，请重试。")
 
 
-good_news = on_command("喜报", rule=to_me(), priority=10, block=True, aliases={"悲报"})
+good_news = on_command("喜报", rule=to_me(), priority=10, aliases={"悲报"})
 @good_news.handle()
 async def function(message: MessageEvent):
     value = message.get_plaintext().split(" ")

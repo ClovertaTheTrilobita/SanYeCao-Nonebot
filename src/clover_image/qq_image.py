@@ -36,9 +36,3 @@ def download_qq_image_by_account(account):
             file.write(response.content)  # 将响应内容写入文件
         return save_path
 
-"""删除QQ头像"""
-def qq_image_delete():
-    for root, dirs, files in os.walk(image_local_qq_image_path):
-        for file in files:
-            file_path = os.path.join(root, file)
-            os.remove(file_path)

@@ -3,7 +3,7 @@ from nonebot.plugin import on_command
 from nonebot.rule import to_me
 from src.clover_sqlite.models.to_do import ToDoList
 
-get_todo_list = on_command("待办查询", rule=to_me(), priority=10, block=True, aliases={"代办", "daiban"})
+get_todo_list = on_command("待办查询", rule=to_me(), priority=10, aliases={"代办", "daiban"})
 @get_todo_list.handle()
 async def show_todo_list(message: MessageEvent):
     """
@@ -21,7 +21,7 @@ async def show_todo_list(message: MessageEvent):
     await get_todo_list.finish(f"您的待办有如下哦：⭐\n\n{todo_list}")
 
 
-insert_todo = on_command("新建待办", rule=to_me(), priority=10, block=True)
+insert_todo = on_command("新建待办", rule=to_me(), priority=10)
 @insert_todo.handle()
 async def insert_todo_list(message: MessageEvent):
     member_openid = message.get_user_id()
@@ -33,7 +33,7 @@ async def insert_todo_list(message: MessageEvent):
         await insert_todo.finish("\n请输入 /新建待办+待办内容 哦")
 
 
-delete_todo = on_command("删除待办", rule=to_me(), priority=10, block=True)
+delete_todo = on_command("删除待办", rule=to_me(), priority=10)
 @delete_todo.handle()
 async def del_todo(message: MessageEvent):
     member_openid = message.get_user_id()

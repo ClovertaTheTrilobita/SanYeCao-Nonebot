@@ -6,10 +6,10 @@ import codecs
 import json
 import requests
 from io import BytesIO
-from random import Random
 from Crypto.Cipher import AES
 from graiax import silkcoder
 import src.clover_music.cloud_music.agent as agent
+from src.clover_image.delete_file import delete_file
 
 
 requests.packages.urllib3.disable_warnings()
@@ -66,7 +66,7 @@ qrcode_path = os.getcwd()+'/src/clover_music'
 
 
 # 判断cookie是否有效
-def netease_cloud_music_is_login(session):
+async def netease_cloud_music_is_login(session):
     try:
         session.cookies.load(ignore_discard=True)
     except Exception:
@@ -88,7 +88,7 @@ def netease_cloud_music_is_login(session):
             return session, False
 
 # 获取二维码的key
-def get_qr_key(session):
+async def get_qr_key(session):
     url = f"https://music.163.com/weapi/login/qrcode/unikey"
     data = {"params": login_params(None),"encSecKey": login_encSecKey()}
     response = session.post(url, headers=headers,params=data)
@@ -102,7 +102,7 @@ def get_qr_key(session):
 # 创建 QRCode 对象
 qr = qrcode.QRCode(  version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4, )
 # 生成二维码
-def create_qr_code(unikey):
+async def create_qr_code(unikey):
     # 添加数据
     png_url = f"http://music.163.com/login?codekey={unikey}"
     qr.add_data(png_url)
@@ -113,13 +113,13 @@ def create_qr_code(unikey):
     return  qrcode_path + '/qrcode.png'
 
 # 检查二维码状态是否被扫描
-def check_qr_code(unikey,session):
+async def check_qr_code(unikey,session):
     token_url = f"https://music.163.com/weapi/login/qrcode/client/login?csrf_token="
     u = str({'key': unikey, 'type': "1", 'csrf_token': ""})
     qrcode_data = session.post( token_url,data={'params': login_params(u),'encSecKey': login_encSecKey()},headers=headers).json()
     return qrcode_data.get('code')
 
-def netease_music_search(keyword,session):
+async def netease_music_search(keyword,session):
     url = "http://music.163.com/api/search/get"
     params = {
         "s": keyword,
@@ -163,7 +163,7 @@ def netease_music_search(keyword,session):
 #         return None
 
 #所有歌曲都可以下载
-def netease_music_download(song_id,song_name,singer,session):
+async def netease_music_download(song_id,song_name,singer,session):
 
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -189,15 +189,12 @@ def netease_music_download(song_id,song_name,singer,session):
         output_silk_path = os.path.join(save_path, os.path.splitext(file_name)[0] + ".silk")
         # 使用 graiax-silkcoder 进行转换
         silkcoder.encode(file_path, output_silk_path,rate=32000 ,tencent=True,ios_adaptive=True)
+        #删除临时文件
+        await delete_file(file_path)
         return output_silk_path
     else:
         return None
 
-def netease_music_delete():
-    for root, dirs, files in os.walk(save_path):
-        for file in files:
-            file_path = os.path.join(root, file)
-            os.remove(file_path)
 
 
 

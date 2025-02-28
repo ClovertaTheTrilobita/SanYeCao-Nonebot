@@ -8,11 +8,11 @@ from src.clover_sqlite.models.fortune import QrFortune
 from src.clover_sqlite.models.tarot import TarotExtractLog
 import time
 
-fortune_by_sqlite = on_command("今日运势", rule=to_me(), priority=10, block=True)
+fortune_by_sqlite = on_command("今日运势", rule=to_me(), priority=10)
 @fortune_by_sqlite.handle()
 async def get_today_fortune(message: MessageEvent):
 
-    local_image_path = get_image_names()
+    local_image_path = await get_image_names()
     result = await QrFortune.get_fortune(message.get_user_id())
 
     content = ("\n" + "您的今日运势为：" + "\n" +
@@ -35,7 +35,7 @@ async def get_today_fortune(message: MessageEvent):
         await fortune_by_sqlite.finish("您的今日运势被外星人抢走啦，请重试。这绝对不是咱的错，绝对不是！")
 
 
-tarot = on_command("今日塔罗", rule=to_me(), priority=10, block=True)
+tarot = on_command("今日塔罗", rule=to_me(), priority=10)
 @tarot.handle()
 async def get_tarot(message: MessageEvent):
     #extract_type : 1大阿尔克纳牌 2小阿尔克纳牌 3 混合牌组 4三角牌阵 5六芒星牌阵 6凯尔特十字牌阵 7恋人牌阵

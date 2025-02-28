@@ -3,7 +3,7 @@ from nonebot.plugin import on_command
 from nonebot.adapters import Message
 from nonebot.params import CommandArg
 
-weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10, block=True)
+weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10)
 
 @weather.handle()
 async def handle_function(args: Message = CommandArg()):

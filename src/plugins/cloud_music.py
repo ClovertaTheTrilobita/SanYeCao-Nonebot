@@ -5,8 +5,9 @@ from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.adapters.qq import   MessageSegment,MessageEvent
 from src.clover_music.cloud_music.cloud_music import *
+from src.clover_image.delete_file import delete_file
 
-music = on_command("点歌", rule=to_me(), priority=10, block=True)
+music = on_command("点歌", rule=to_me(), priority=10)
 @music.handle()
 async def handle_function(msg: MessageEvent):
     keyword = msg.get_plaintext().replace("/点歌", "").strip(" ")
@@ -21,18 +22,18 @@ async def handle_function(msg: MessageEvent):
             pickle.dump(session.cookies, f)
     # 读取 cookie
     session.cookies = pickle.load(open('cloud_music_cookies.cookie', 'rb'))
-    session, status = netease_cloud_music_is_login(session)
+    session, status = await netease_cloud_music_is_login(session)
     if not status:
         await music.send("登录失效，请联系管理员进行登录")
-        unikey = get_qr_key(session)
-        path = create_qr_code(unikey)
+        unikey = await get_qr_key(session)
+        path = await create_qr_code(unikey)
 
         """是否要发送到QQ上面登录 """
         # await clover_music.send(MessageSegment.file_image(Path(path)))
         """是否要发送到QQ上面登录 """
 
         while True:
-            code = check_qr_code(unikey, session)
+            code = await check_qr_code(unikey, session)
             if '801' in str(code):
                 print('二维码未失效，请扫码！')
             elif '802' in str(code):
@@ -47,14 +48,14 @@ async def handle_function(msg: MessageEvent):
         pickle.dump(session.cookies, f)
 
     #搜索歌曲
-    song_id,song_name,singer,song_url = netease_music_search(keyword,session)
+    song_id,song_name,singer,song_url = await netease_music_search(keyword,session)
     song_name = str(song_name).replace(".", "·").replace("/", "、")
     if song_id is None:
         await music.finish("\n没有找到歌曲，或检索到的歌曲均为付费喔qwq\n这绝对不是我的错，绝对不是！")
     else:
         await music.send(MessageSegment.text(f" 来源：网易云音乐\n歌曲：{song_name} - {singer}\n请稍等喔🎵"))
         #返回转换后的歌曲路径
-        output_silk_path = netease_music_download(song_id, song_name, singer,session)
+        output_silk_path = await netease_music_download(song_id, song_name, singer,session)
 
         if output_silk_path == -1:
             await music.send("歌曲音频获取失败：登录信息失效。")
@@ -64,7 +65,7 @@ async def handle_function(msg: MessageEvent):
             await music.send(MessageSegment.file_audio(Path(output_silk_path)))
 
         #删除临时文件
-        netease_music_delete()
+        await delete_file(output_silk_path)
         await music.finish()
 
 

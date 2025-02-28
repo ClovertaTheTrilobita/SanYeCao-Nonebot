@@ -8,7 +8,7 @@ from src.configs.path_config import daily_news_path
 import os
 
 
-daily_report = on_command("日报", rule=to_me(), priority=10, block=True)
+daily_report = on_command("日报", rule=to_me(), priority=10)
 @daily_report.handle()
 async def handle_function():
     now = datetime.now()

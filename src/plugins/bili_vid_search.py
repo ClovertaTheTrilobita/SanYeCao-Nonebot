@@ -8,7 +8,7 @@ from nonebot.adapters.qq import   MessageSegment,MessageEvent, Message
 import src.clover_videos.billibili.biliVideos as biliVideos
 from src.configs.path_config import video_path
 
-bili_vid = on_command("B站搜索",rule=to_me(), priority=10, block=True)
+bili_vid = on_command("B站搜索",rule=to_me(), priority=10)
 @bili_vid.handle()
 async def get_bili_vid_info(message: MessageEvent):
     content = message.get_plaintext().replace("/B站搜索", "").strip()
@@ -41,7 +41,7 @@ async def get_bili_vid_info(message: MessageEvent):
     await bili_vid.finish(f"展示{len(search_result)}条结果中的前3条。")
 
 
-bili_bv_search = on_command("BV搜索", rule=to_me(), priority=10, block=True)
+bili_bv_search = on_command("BV搜索", rule=to_me(), priority=10)
 @bili_bv_search.handle()
 async def get_video_file(message: MessageEvent):
     keyword = message.get_plaintext().replace("/BV搜索", "").strip().split()

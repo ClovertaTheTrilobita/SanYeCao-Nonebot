@@ -1,6 +1,6 @@
 import requests
 
-def download_image(url,file_path):
+async def download_image(url,file_path):
     """
     下载图片
     :param url:

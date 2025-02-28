@@ -10,10 +10,11 @@ from src.clover_sqlite.models.user import UserList
 
 menu = ["/重启","/今日运势","/今日塔罗","/图","/日报","/点歌","/摸摸头","/群老婆","/今日老婆", "/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册",
         "/待办", "/test","/天气","我喜欢你", "❤", "/待办查询", "/新建待办", "/删除待办" ,"/cf","/B站搜索", "/BV搜索", "/喜报", "/悲报", "/luxun","/鲁迅说",
-        "/奶龙", "/repo", "/info", "/menu", "/轻小说","/本季新番","/新番观察"]
+        "/奶龙", "/repo", "/info", "/menu", "/轻小说","/本季新番","/新番观察","/绝对色感"]
 
 send_menu = ["/menu","/今日运势","/今日塔罗","/图","/日报","/点歌","/摸摸头","/群老婆","/待办","/天气",
-             "/待办查询", "/新建待办", "/删除待办" ,"/cf","/B站搜索", "/BV搜索", "/喜报", "/悲报","/鲁迅说","/轻小说","/本季新番","/新番观察"]
+             "/待办查询", "/新建待办", "/删除待办" ,"/cf","/B站搜索", "/BV搜索", "/喜报", "/悲报","/鲁迅说",
+             "/轻小说","/本季新番","/新番观察","/绝对色感"]
 
 async def check_value_in_menu(message: MessageEvent) -> bool:
     value = message.get_plaintext().strip().split(" ")
@@ -23,13 +24,13 @@ async def check_value_in_menu(message: MessageEvent) -> bool:
         group_id = "C2C" # 非群聊消息，存为c2c
     #缓存用户id
     await UserList.insert_user(message.author.id,group_id)
-    if value[0] in menu:
+    if value[0] in menu or value[0].isdigit() or value[0] == "#":
         return False
     else:
         return True
 
 
-check = on_message(rule=to_me() & Rule(check_value_in_menu) ,block=True, priority=10)
+check = on_message(rule=to_me() & Rule(check_value_in_menu), priority=10)
 @check.handle()
 async def handle_function(message: MessageEvent):
 
@@ -41,7 +42,7 @@ async def handle_function(message: MessageEvent):
     member_openid, content = message.author.id, message.get_plaintext()
     status = await GroupChatRole.is_on(group_openid)
     if status:
-        msg = await ai_chat.silicon_flow(group_openid,content)
+        msg = await ai_chat.deepseek_chat(group_openid,content)
         await check.finish(msg)
     else:
         await check.finish(message=Message(random.choice(text_list)))
