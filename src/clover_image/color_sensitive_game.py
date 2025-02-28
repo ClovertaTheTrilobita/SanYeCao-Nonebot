@@ -1,5 +1,6 @@
 import random
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw,ImageFont
+from src.configs.path_config import font_path
 
 
 async def generate_diff_color(base_color, level):
@@ -17,8 +18,6 @@ async def generate_diff_color(base_color, level):
         for c in base_color
     ]
     return tuple(new_color)
-
-
 async def generate_base_color():
     """生成基础颜色"""
     return (
@@ -26,9 +25,6 @@ async def generate_base_color():
         random.randint(0, 255),
         random.randint(0, 255)
     )
-
-
-# 原类方法转换为独立函数
 async def init_game_state(level_decision):
     """初始化"""
     level = 1 if level_decision == "初级" else 2 if level_decision == "中级" else 3 if level_decision == "高级" else 4
@@ -44,31 +40,46 @@ async def init_game_state(level_decision):
         "target_col": None
     }
 
-
 async def generate_new_level(state):
-    """生成新关卡（替代generate_new_level方法）"""
+    """生成新关卡"""
     state["base_color"] = await generate_base_color()
     state["diff_color"] = await generate_diff_color(state["base_color"], state["level"])
     state["target_row"] = random.randint(0, state["size"] - 1)
     state["target_col"] = random.randint(0, state["size"] - 1)
     return state
 
-
 async def create_image(state, image_path):
     """创建图片"""
-    # 计算画布尺寸
-    image_width = state["size"] * state["cell_size"]
-    image_height = state["size"] * state["cell_size"]
+    cell_size = state["cell_size"]
+    image_width = (state["size"] + 1) * cell_size
+    image_height = (state["size"] + 1) * cell_size
 
     image = Image.new("RGB", (image_width, image_height), "white")
     draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype(font_path+ "微软雅黑.ttc", cell_size // 2)
+
+    for row in range(state["size"]):
+        y_center = (row + 1) * cell_size + cell_size // 2
+        text = str(row + 1)
+        text_bbox = draw.textbbox((0, 0), text, font=font)
+        text_x = cell_size // 2 - (text_bbox[2] - text_bbox[0]) // 2
+        text_y = y_center - (text_bbox[3] - text_bbox[1]) // 2
+        draw.text((text_x, text_y), text, fill="black", font=font)
+
+    for col in range(state["size"]):
+        x_center = (col + 1) * cell_size + cell_size // 2
+        text = str(col + 1)
+        text_bbox = draw.textbbox((0, 0), text, font=font)
+        text_x = x_center - (text_bbox[2] - text_bbox[0]) // 2
+        text_y = cell_size // 2 - (text_bbox[3] - text_bbox[1]) // 2
+        draw.text((text_x, text_y), text, fill="black", font=font)
 
     for row in range(state["size"]):
         for col in range(state["size"]):
-            x1 = col * state["cell_size"]
-            y1 = row * state["cell_size"]
-            x2 = x1 + state["cell_size"]
-            y2 = y1 + state["cell_size"]
+            x1 = (col + 1) * cell_size
+            y1 = (row + 1) * cell_size
+            x2 = x1 + cell_size
+            y2 = y1 + cell_size
 
             color = state["diff_color"] if (row == state["target_row"] and col == state["target_col"]) else state["base_color"]
             draw.rectangle([x1, y1, x2, y2], fill=color)
@@ -77,7 +88,6 @@ async def create_image(state, image_path):
     return [image_path, state["target_row"], state["target_col"]]
 
 
-# 示例：在插件中组合使用这些函数
 async def game_flow(level_decision: str, file_path: str):
 
     game_state = await init_game_state(level_decision)
