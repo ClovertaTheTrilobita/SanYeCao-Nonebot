@@ -3,6 +3,8 @@ nonebot_adapter_qq
 nonebot2[fastapi]
 nonebot2[httpx]
 nonebot2[websockets]
+apscheduler
+
 
 ffmpeg-python
 sqlalchemy
@@ -25,6 +27,7 @@ playwright
 nonebot-plugin-htmlrender
 tenacity
 paramiko
+
 
 requests
 pillow

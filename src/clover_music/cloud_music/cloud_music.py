@@ -67,6 +67,14 @@ qrcode_path = os.getcwd()+'/src/clover_music'
 
 # 判断cookie是否有效
 async def netease_cloud_music_is_login(session):
+    """
+    验证登录状态
+    Args:
+        session:
+
+    Returns:
+
+    """
     try:
         session.cookies.load(ignore_discard=True)
     except Exception:
@@ -77,18 +85,23 @@ async def netease_cloud_music_is_login(session):
     else:
         try:
             loginurl = session.post(f'https://music.163.com/weapi/w/nuser/account/get?csrf_token={csrf_token}',data={'params': login_params(None), 'encSecKey': login_encSecKey()}, headers=headers).json()
-            if '200' in str(loginurl['code']):
-                print(loginurl)
-                print('登录成功')
-                return session, True
+            if loginurl['account'] is not None:
+                return session, True,loginurl['account']['id']
             else:
-                print('登录失败')
                 return session, False
         except BaseException:
-            return session, False
+            return session, False,None
 
 # 获取二维码的key
 async def get_qr_key(session):
+    """
+    获取unikey
+    Args:
+        session:
+
+    Returns:
+
+    """
     url = f"https://music.163.com/weapi/login/qrcode/unikey"
     data = {"params": login_params(None),"encSecKey": login_encSecKey()}
     response = session.post(url, headers=headers,params=data)
@@ -103,6 +116,14 @@ async def get_qr_key(session):
 qr = qrcode.QRCode(  version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=10, border=4, )
 # 生成二维码
 async def create_qr_code(unikey):
+    """
+    二维码生成
+    Args:
+        unikey:
+
+    Returns:
+
+    """
     # 添加数据
     png_url = f"http://music.163.com/login?codekey={unikey}"
     qr.add_data(png_url)
@@ -120,6 +141,15 @@ async def check_qr_code(unikey,session):
     return qrcode_data.get('code')
 
 async def netease_music_search(keyword,session):
+    """
+    歌曲搜索
+    Args:
+        keyword:
+        session:
+
+    Returns:
+
+    """
     url = "http://music.163.com/api/search/get"
     params = {
         "s": keyword,
@@ -163,60 +193,47 @@ async def netease_music_search(keyword,session):
 #         return None
 
 #所有歌曲都可以下载
-async def netease_music_download(song_id,song_name,singer,session):
+async def netease_music_download(song_id, song_name, singer, session):
+    """
+    歌曲下载
+    Args:
+        song_id:
+        song_name:
+        singer:
+        session:
 
+    Returns:
+
+    """
     if not os.path.exists(save_path):
         os.makedirs(save_path)
-    #获取加密后的歌曲id信息
-    result = get_music(song_id)
-    data = {'params': result['encText'], 'encSecKey': result['encSecKey'],}
-    download_url = 'https://music.163.com/weapi/song/enhance/player/url/v1?br=999000'
-    url = session.post(download_url, headers=headers,data=data).json()['data'][0]['url']
 
+    # 获取加密后的歌曲id信息
+    result = get_music(song_id)
+    data = {'params': result['encText'], 'encSecKey': result['encSecKey']}
+    download_url = 'https://music.163.com/weapi/song/enhance/player/url/v1?br=999000'
+    response_data = session.post(download_url, headers=headers, data=data).json()
+    url = response_data['data'][0]['url']
     if url is None:
         return -1
+    # 下载歌曲
+    try:
+        response = requests.get(url, stream=True)
+        if response.status_code == 200:
+            file_path = os.path.join(save_path, f"{song_name}-{singer}.wav")
+            file_name = os.path.basename(f"{song_name}-{singer}.wav")
 
-    #下载歌曲
-    data = requests.get(url, stream=True)
-    file_path = os.path.join(save_path, f"{song_name}-{singer}.wav")
-    file_name = os.path.basename(f"{song_name}-{singer}.wav")
-    with open(file_path, "wb") as f:
-        f.write(data.content)
-    if data.status_code == 200:
-        with open(file_path, 'wb') as file:
-            for chunk in data.iter_content(chunk_size=8192):
-                file.write(chunk)
-        output_silk_path = os.path.join(save_path, os.path.splitext(file_name)[0] + ".silk")
-        # 使用 graiax-silkcoder 进行转换
-        silkcoder.encode(file_path, output_silk_path,rate=32000 ,tencent=True,ios_adaptive=True)
-        #删除临时文件
-        await delete_file(file_path)
-        return output_silk_path
-    else:
+            with open(file_path, "wb") as file:
+                for chunk in response.iter_content(chunk_size=8192):
+                    file.write(chunk)
+
+            output_silk_path = os.path.join(save_path, os.path.splitext(file_name)[0] + ".silk")
+            # 使用 graiax-silkcoder 进行转换
+            silkcoder.encode(file_path, output_silk_path, rate=32000, tencent=True, ios_adaptive=True)
+            # 删除临时文件
+            await delete_file(file_path)
+            return output_silk_path
+        else:
+            return None
+    except requests.RequestException as e:
         return None
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

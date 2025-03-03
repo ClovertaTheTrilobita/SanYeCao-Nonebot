@@ -22,7 +22,7 @@ async def handle_function(msg: MessageEvent):
             pickle.dump(session.cookies, f)
     # 读取 cookie
     session.cookies = pickle.load(open('cloud_music_cookies.cookie', 'rb'))
-    session, status = await netease_cloud_music_is_login(session)
+    session, status,user_id = await netease_cloud_music_is_login(session)
     if not status:
         await music.send("登录失效，请联系管理员进行登录")
         unikey = await get_qr_key(session)
