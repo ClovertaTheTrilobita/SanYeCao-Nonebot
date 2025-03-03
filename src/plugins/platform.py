@@ -1,14 +1,11 @@
-import os
-import glob
+
 import time
 import psutil
 import platform
-import logging
 from pathlib import Path
 from nonebot.rule import  to_me
 from nonebot.plugin import on_command
 from nonebot.adapters.qq import Message, MessageSegment
-from src.configs.path_config import temp_path,video_path
 
 
 repository = on_command("repo", rule=to_me(), priority=10, block=True)
@@ -46,15 +43,4 @@ async def get_platform_info():
     await platform_info.finish(content)
 
 
-def clean_temp_cache():
-    """定时清理缓存文件"""
-    path_list =  [temp_path, video_path]
 
-    for folder_path in path_list:
-        files = get_files_in_folder(folder_path)
-        for file in files:
-            os.remove(file)
-
-
-def get_files_in_folder(folder_path: Path):
-    return [Path(f) for f in glob.glob(str(folder_path / "*")) if Path(f).is_file()]
