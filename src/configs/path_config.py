@@ -22,12 +22,6 @@ os.makedirs(good_bad, exist_ok=True)
 #谁说 生成图片路径
 who_say_path = path+'/image/who_say/'
 os.makedirs(who_say_path, exist_ok=True)
-# 日报
-daily_news_path = path+'/image/report/'
-os.makedirs(daily_news_path, exist_ok=True)
-# 轻小说
-light_novel_path = path + '/image/lightnovel/'
-os.makedirs(light_novel_path, exist_ok=True)
 #yuc_wiki 动漫wiki
 yuc_wiki_path = path + '/image/yuc_wiki/'
 os.makedirs(yuc_wiki_path, exist_ok=True)

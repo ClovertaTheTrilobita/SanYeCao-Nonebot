@@ -6,7 +6,7 @@ from pathlib import Path
 from nonebot_plugin_htmlrender import template_to_pic
 from playwright.async_api import async_playwright
 
-from src.configs.path_config import light_novel_path
+from src.configs.path_config import temp_path
 import src.clover_lightnovel.wenku8 as Wenku8
 
 
@@ -17,13 +17,13 @@ async def save_img(data: bytes):
      :param data:
      :return:
      """
-    file_path = light_novel_path + f"{datetime.now().date()}.png"
+    file_path = temp_path + f"{datetime.now().date()}轻小说.png"
     with open(file_path, "wb") as file:
         file.write(data)
 
 async def get_ln_image():
     now = datetime.now()
-    file = Path() / light_novel_path / f"{now.date()}.png"
+    file = Path() / temp_path / f"{now.date()}轻小说.png"
     if os.path.exists(file):
         with file.open("rb") as image_file:
             return image_file.read()

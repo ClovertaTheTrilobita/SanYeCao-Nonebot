@@ -13,7 +13,7 @@ from tenacity import retry, stop_after_attempt, wait_fixed
 from zhdate import ZhDate
 from .config import Anime, Hitokoto, SixData
 from .date import get_festivals_dates
-from src.configs.path_config import daily_news_path
+from src.configs.path_config import temp_path
 from playwright.async_api import async_playwright
 
 
@@ -68,7 +68,7 @@ async def save_img(data: bytes):
      :param data:
      :return:
      """
-    file_path = daily_news_path + f"{datetime.now().date()}.png"
+    file_path = temp_path + f"{datetime.now().date()}.png"
     with open(file_path, "wb") as file:
         file.write(data)
 
@@ -98,7 +98,7 @@ class Report:
     async def get_report_image(cls) -> bytes:
         """获取数据"""
         now = datetime.now()
-        file = Path() / daily_news_path / f"{now.date()}.png"
+        file = Path() / temp_path / f"{now.date()}.png"
         if os.path.exists(file):
             with file.open("rb") as image_file:
                 return image_file.read()
