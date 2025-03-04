@@ -68,7 +68,7 @@
 - **功能描述**: 通过网易云音乐API点歌，并将音乐文件以QQ语音的形式发送至群聊。 快点一首你喜欢的歌给群友听吧！
 - **指令**: `/点歌`
 - **注意事项**: 
-  - 使用网易云点歌需要另外安装依赖： npm install crypto-js
+  - 使用网易云点歌需要另外安装依赖：Node.js 和在目录下输入 npm install crypto-js
   - 初次使用或者提示登录失效需要需扫码登录 （在 src\music 目录下）。
 
 #### 图
@@ -164,6 +164,10 @@ conda activate chatbot
 
 <br>
 
+# 安装所需依赖。
+
+<br>
+
 此机器人运行所需依赖已全部打包至***requirements.txt***，您只需回到项目根目录
 
 在终端输入：
@@ -171,20 +175,30 @@ conda activate chatbot
 ```powershell
 pip install -r requirements.txt
 ```
-
-安装所需依赖。
-
 <br>
 
-**使用网易云点歌需要另外安装：**
+### 🎵 网易云点歌依赖安装
 
+#### 1. 安装 Node.js 环境
+- **官网下载**：访问 [Node.js 官网](https://nodejs.org/) 下载 LTS 版本（推荐 v18.x+）
+- **安装注意**：
+  - 勾选 `Add to PATH` 选项（自动配置环境变量）
+  - 完成安装后重启终端使配置生效
+验证 Node.js 版本
+#### 2. 验证安装结果
+```powershell
+npm -v
+```
+#### 3. 安装 crypto-js 库
+在项目根目录执行：
 ```powershell
 npm install crypto-js
 ```
-
 <br>
 
-**使用BV搜索B站视频需要另外安装：**[<b>Chrome Driver</b>](https://googlechromelabs.github.io/chrome-for-testing/)
+### 使用BV搜索B站视频需要另外安装：
+
+**谷歌驱动安装：**[<b>Chrome Driver</b>](https://googlechromelabs.github.io/chrome-for-testing/)
 
 安装教程：[chromedriver下载与安装方法，亲测可用-CSDN博客](https://blog.csdn.net/zhoukeguai/article/details/113247342)
 
