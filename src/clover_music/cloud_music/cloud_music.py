@@ -88,7 +88,7 @@ async def netease_cloud_music_is_login(session):
             if loginurl['account'] is not None:
                 return session, True,loginurl['account']['id']
             else:
-                return session, False
+                return session, False,None
         except BaseException:
             return session, False,None
 
