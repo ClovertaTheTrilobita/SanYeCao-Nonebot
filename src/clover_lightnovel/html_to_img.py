@@ -23,9 +23,9 @@ async def save_img(data: bytes):
 
 async def get_ln_image():
     now = datetime.now()
-    file = Path() / temp_path / f"{now.date()}轻小说.png"
+    file = os.path.join(temp_path , f"{now.date()}轻小说.png")
     if os.path.exists(file):
-        with file.open("rb") as image_file:
+        with open(file,"rb") as image_file:
             return image_file.read()
 
     await Wenku8.login()

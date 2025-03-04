@@ -85,9 +85,9 @@ async def dispose_html(response):
 
 async def get_yuc_wiki_image(template_name,width,height):
 
-    file = Path() / yuc_wiki_path / f"{template_name}.jpeg"
+    file = os.path.join(yuc_wiki_path, f"{template_name}.jpeg")
     if os.path.exists(file):
-        with file.open("rb") as image_file:
+        with  open(file,"rb") as image_file:
             return image_file.read()
 
     image_bytes = await template_to_pic(

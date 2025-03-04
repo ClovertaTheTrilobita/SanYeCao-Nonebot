@@ -98,9 +98,9 @@ class Report:
     async def get_report_image(cls) -> bytes:
         """获取数据"""
         now = datetime.now()
-        file = Path() / temp_path / f"{now.date()}日报.png"
+        file = os.path.join(temp_path,f"{now.date()}日报.png")
         if os.path.exists(file):
-            with file.open("rb") as image_file:
+            with open(file,"rb") as image_file:
                 return image_file.read()
         zhdata = ZhDate.from_datetime(now)
         result = await asyncio.gather(
