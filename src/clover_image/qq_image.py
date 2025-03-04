@@ -13,7 +13,7 @@ def download_qq_image(member_open_id):
         os.makedirs(image_local_qq_image_path)
 
     save_path = image_local_qq_image_path + '/' + member_open_id + '.jpg'
-    size = 640 #尺寸 40、100、140、640
+    size = 140 #尺寸 40、100、140、640
     url = f"https://q.qlogo.cn/qqapp/{app_id}/{member_open_id}/{size}"
     response = requests.get(url)  # 发送 GET 请求获取图片资源
     if response.status_code == 200:  # 判断请求是否成功
