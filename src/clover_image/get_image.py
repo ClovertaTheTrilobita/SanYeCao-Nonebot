@@ -13,7 +13,6 @@ async def get_image_names():
         for file in files:
             if any(file.endswith(ext) for ext in image_extensions):  # 检查文件是否是图片文件
                 image_names.append(file)
-    random.choice(image_names)  # 随机选取一张图片
     local_image_path = image_local_path + '/' + random.choice(image_names)  # 随机选取一张图片的路径
     return local_image_path
 
