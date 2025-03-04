@@ -16,4 +16,4 @@ async def handle_function():
     if not os.path.exists(file):
         await daily_report.send("您是今天第一个查看日报的哦，来看看世界上都发生了些什么吧💫\nCrunching the latest news, just for you. Hang tight…")
     await Report.get_report_image()
-    await daily_report.finish(MessageSegment.file_image(Path(temp_path+f"{now}日报.png")))
+    await daily_report.finish(MessageSegment.file_image(Path(temp_path+f"{now.date()}日报.png")))
