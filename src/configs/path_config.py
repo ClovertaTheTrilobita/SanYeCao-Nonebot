@@ -1,41 +1,41 @@
 import os
 from pathlib import Path
 
-path = os.path.join(os.getcwd(), '/src/resources')
+path = os.getcwd()+'/src/resources'
 
 
 # 塔罗牌图片路径
-image_local_qq_image_path =  os.path.join(path,'/image/qq_image')
+image_local_qq_image_path =  path+'/image/qq_image'
 os.makedirs(image_local_qq_image_path, exist_ok=True)
 # 个人图片路径
-image_local_path= os.path.join(path,"/image/MaoYuNa")
+image_local_path= path+"/image/MaoYuNa"
 os.makedirs(image_local_path, exist_ok=True)
 # 塔罗牌图片路径
-tarots_img_path = os.path.join(path,'/image/tarot/TarotImages/')
+tarots_img_path = path+'/image/tarot/TarotImages/'
 os.makedirs(tarots_img_path, exist_ok=True)
 # 摸摸头图片路径
-rua_png = os.path.join(path,'/image/rua/')
+rua_png = path+'/image/rua/'
 os.makedirs(rua_png, exist_ok=True)
 # 喜报、悲报图片路径
-good_bad = os.path.join(path,'/image/good_bad_news/')
+good_bad = path+'/image/good_bad_news/'
 os.makedirs(good_bad, exist_ok=True)
 #谁说 生成图片路径
-who_say_path = os.path.join(path,'/image/who_say/')
+who_say_path = path+'/image/who_say/'
 os.makedirs(who_say_path, exist_ok=True)
 #yuc_wiki 动漫wiki
-yuc_wiki_path = os.path.join(path , '/image/yuc_wiki/')
+yuc_wiki_path = path + '/image/yuc_wiki/'
 os.makedirs(yuc_wiki_path, exist_ok=True)
 # 字体路径
-font_path = os.path.join(path , '/font/')
+font_path = path + '/font/'
 os.makedirs(font_path, exist_ok=True)
 # 临时数据路径
-temp_path = os.path.join(path , '/temp/')
+temp_path = path + '/temp/'
 os.makedirs(temp_path, exist_ok=True)
 # 日志路径
-log_path = os.path.join(path,'/log/')
+log_path = path+'/log/'
 os.makedirs(log_path, exist_ok=True)
 # 视频路径
-video_path = os.path.join(path,'/video/')
+video_path = path+'/video/'
 os.makedirs(video_path, exist_ok=True)
 
 
