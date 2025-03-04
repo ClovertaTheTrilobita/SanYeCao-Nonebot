@@ -68,7 +68,7 @@ async def save_img(data: bytes):
      :param data:
      :return:
      """
-    file_path = temp_path + f"{datetime.now().date()}.png"
+    file_path = temp_path + f"{datetime.now().date()}日报.png"
     with open(file_path, "wb") as file:
         file.write(data)
 
@@ -98,7 +98,7 @@ class Report:
     async def get_report_image(cls) -> bytes:
         """获取数据"""
         now = datetime.now()
-        file = Path() / temp_path / f"{now.date()}.png"
+        file = Path() / temp_path / f"{now.date()}日报.png"
         if os.path.exists(file):
             with file.open("rb") as image_file:
                 return image_file.read()
