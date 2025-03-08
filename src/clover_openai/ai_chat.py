@@ -1,11 +1,8 @@
 import openai
 import requests
 from src.clover_sqlite.models.chat import GroupChatRole
-from src.configs.api_config import v3url, v3key, deepseek_url, deepseek_key
+from src.configs.api_config import v3url, v3key, deepseek_url, deepseek_key,silicon_flow_key
 import aiohttp
-
-openai.api_key = deepseek_key
-openai.base_url = deepseek_url
 
 """
 来源：https://api.v36.cm
@@ -38,7 +35,8 @@ async def deepseek_chat(group_openid,content):
     :param content:
     :return:
     """
-
+    openai.api_key = deepseek_key
+    openai.base_url = deepseek_url
     await GroupChatRole.save_chat_history(group_openid, {"role": "user", "content": content})
     messages = await GroupChatRole.get_chat_history(group_openid)
     completion = openai.chat.completions.create(
@@ -60,7 +58,7 @@ async def silicon_flow(group_openid, content):
         "messages": messages
     }
     headers = {
-        "Authorization": f"Bearer {deepseek_key}",
+        "Authorization": f"Bearer {silicon_flow_key}",
         "Content-Type": "application/json"
     }
 

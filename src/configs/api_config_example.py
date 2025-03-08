@@ -23,6 +23,9 @@ v3key= "<KEY>"
 deepseek_url= "https://api.deepseek.com"
 deepseek_key= "<KEY>"
 
+#硅基流动
+silicon_flow_key = "<KEY>"
+
 """
 Wenku8账号
 """
