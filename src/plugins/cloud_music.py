@@ -42,7 +42,7 @@ async def handle_function(msg: MessageEvent):
                 print('已确认，登入成功！')
                 break
             else:
-                print('其他：', code)
+                break;
             time.sleep(2)
     with open('cloud_music_cookies.cookie', 'wb') as f:
         pickle.dump(session.cookies, f)
