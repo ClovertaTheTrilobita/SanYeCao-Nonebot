@@ -42,10 +42,11 @@ async def handle_function(message: MessageEvent):
 
     try:
         for file_path in file_paths:
-            await random_keyword_image.send(MessageSegment.file_image(Path(file_path)))
-    except Exception as e:
-        print(e)
-        await random_keyword_image.send("图被外星人抢走啦，请重试")
+            try:
+                await random_keyword_image.send(MessageSegment.file_image(Path(file_path)))
+            except Exception as e:
+                print(f"发送文件 {file_path} 时出错: {e}")
+                await random_keyword_image.send("某个图被外星人抢走啦，请重试")
     finally:
         # 删除所有临时文件
         for file_path in file_paths:
