@@ -1,3 +1,4 @@
+import asyncio
 import pickle
 import time
 from pathlib import Path
@@ -7,7 +8,7 @@ from nonebot.adapters.qq import   MessageSegment,MessageEvent
 from src.clover_music.cloud_music.cloud_music import *
 from src.clover_image.delete_file import delete_file
 
-music = on_command("点歌", rule=to_me(), priority=10)
+music = on_command("点歌", rule=to_me(), priority=10,block=False)
 @music.handle()
 async def handle_function(msg: MessageEvent):
     keyword = msg.get_plaintext().replace("/点歌", "").strip(" ")
@@ -42,10 +43,8 @@ async def handle_function(msg: MessageEvent):
                 print('已确认，登入成功！')
                 break
             else:
-                break;
-            time.sleep(2)
-    with open('cloud_music_cookies.cookie', 'wb') as f:
-        pickle.dump(session.cookies, f)
+                break
+            await asyncio.sleep(2)
 
     #搜索歌曲
     song_id,song_name,singer,song_url = await netease_music_search(keyword,session)
