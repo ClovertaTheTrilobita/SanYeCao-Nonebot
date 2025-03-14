@@ -12,6 +12,9 @@ smms_image_upload_history= "https://sm.ms/api/v2/upload_history"  # sm.ms图床�
 ju_he_token= "<KEY>"  # 聚合图床的token
 ju_he_image_list= "https://api.superbed.cn/timeline"  # 聚合图床获取上传图片历史API地址
 
+#随机图 anosu
+anosu_url = "https://image.anosu.top/pixiv/json"
+
 """
 AI
 """
