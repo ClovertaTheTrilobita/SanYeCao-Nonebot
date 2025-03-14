@@ -1,6 +1,5 @@
 from pathlib import Path
 
-from lazy_object_proxy.utils import await_
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.adapters.qq import Message, MessageEvent, MessageSegment

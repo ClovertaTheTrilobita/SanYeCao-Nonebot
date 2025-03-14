@@ -1,6 +1,5 @@
 import os
 import aiohttp
-import requests
 
 from src.configs.path_config import image_local_qq_image_path
 from src.configs.api_config import app_id,bot_account

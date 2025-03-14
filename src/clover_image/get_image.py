@@ -1,6 +1,6 @@
 import os
 import random
-import requests
+import aiohttp
 
 from src.configs.path_config import image_local_path
 from src.configs.api_config import smms_token,smms_image_upload_history,ju_he_token,ju_he_image_list,anosu_url
@@ -18,25 +18,29 @@ async def get_image_names():
 
 """ sm.ms  图床"""
 async def get_smms_image_url():
-    # 定义请求的参数
-    data = requests.get(smms_image_upload_history, headers={'Authorization': smms_token}, params={"page": "1"}).json().get('data')
-    urls = [item['url'] for item in data]
-    random_url = random.choice(urls)
-    return random_url
+    async with aiohttp.ClientSession() as session:
+        async with session.get(smms_image_upload_history, headers={'Authorization': smms_token}, params={"page": "1"}) as response:
+            data = await response.json()
+            urls = [item['url'] for item in data.get('data', [])]
+            random_url = random.choice(urls)
+            return random_url
 
 """聚合图床"""
 async def get_juhe_image_url():
-    # 定义请求的参数
-    params = {"token": ju_he_token,"f": "json","categories": "猫羽雫","page": 1, "size": 400}
-    random_url = random.choice(requests.get(ju_he_image_list, params=params).json().get('docs', [])).get('url')
-    return random_url
+    params = {"token": ju_he_token, "f": "json", "categories": "猫羽雫", "page": 1, "size": 400}
+    async with aiohttp.ClientSession() as session:
+        async with session.get(ju_he_image_list, params=params) as response:
+            data = await response.json()
+            random_url = random.choice(data.get('docs', [])).get('url')
+            return random_url
 
 """
 随机图api
 """
-
-async def get_anosu_image(keyword : str ,is_r18 : int,num : int,proxy : str = "i.pixiv.re"):
-    url= anosu_url+f"?keyword={keyword}&r18={is_r18}&num={num}&proxy={proxy}"
-    data = requests.get(url).json()
-    urls = [item['url'] for item in data]
-    return urls
+async def get_anosu_image(keyword: str, is_r18: int, num: int, proxy: str = "i.pixiv.re"):
+    url = anosu_url + f"?keyword={keyword}&r18={is_r18}&num={num}&proxy={proxy}"
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            data = await response.json()
+            urls = [item['url'] for item in data]
+            return urls
