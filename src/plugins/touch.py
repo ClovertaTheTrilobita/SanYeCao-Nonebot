@@ -24,8 +24,10 @@ async def handle_touch(message: MessageEvent):
         result = await QrTouch.touch(0)
     q.reply_touch_content = result.reply_touch_content
     await QrTouchLog.insert_touch_log(q, member_openid)
-    local_gif = rua(await download_qq_image_by_account(None)).add_gif()
+    qq_head_image  = await download_qq_image_by_account(None)
+    local_gif = rua(qq_head_image).add_gif()
     msg = Message([MessageSegment.file_image(Path(local_gif)),
                   MessageSegment.text(result.reply_touch_content),])
+    await delete_file(qq_head_image)
     await delete_file(local_gif)
     await to.finish(msg)
