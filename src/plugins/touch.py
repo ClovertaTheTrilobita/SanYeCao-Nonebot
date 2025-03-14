@@ -1,4 +1,6 @@
 from pathlib import Path
+
+from lazy_object_proxy.utils import await_
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.adapters.qq import Message, MessageEvent, MessageSegment
@@ -22,7 +24,7 @@ async def handle_touch(message: MessageEvent):
         result = await QrTouch.touch(0)
     q.reply_touch_content = result.reply_touch_content
     await QrTouchLog.insert_touch_log(q, member_openid)
-    local_gif = rua(download_qq_image_by_account(None)).add_gif()
+    local_gif = rua(await download_qq_image_by_account(None)).add_gif()
     msg = Message([MessageSegment.file_image(Path(local_gif)),
                   MessageSegment.text(result.reply_touch_content),])
     await delete_file(local_gif)
