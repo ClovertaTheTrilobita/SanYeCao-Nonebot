@@ -14,8 +14,9 @@ async def animetrace_search_by_url(search_url):
         async with session.post(animetrace_url, data=data) as response:
             if response.status == 200:
                 result = await response.json()
-                for item in result['data'][0]['character']:
-                    content += f"{sort} :作品名称：{item['work']}\n"
+                for item in result['data']:
+                    character = item['character'][0]
+                    content += f"{sort} :作品名称：{character['work']}, 角色名称：{character['character']}\n"
                     sort += 1
                 return content
             else:
