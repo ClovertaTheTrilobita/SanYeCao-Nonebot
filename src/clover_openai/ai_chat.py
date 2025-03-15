@@ -1,4 +1,4 @@
-import openai
+from openai import AsyncOpenAI as openai
 import requests
 from src.clover_sqlite.models.chat import GroupChatRole
 from src.configs.api_config import v3url, v3key, deepseek_url, deepseek_key,silicon_flow_key
@@ -39,7 +39,7 @@ async def deepseek_chat(group_openid,content):
     openai.base_url = deepseek_url
     await GroupChatRole.save_chat_history(group_openid, {"role": "user", "content": content})
     messages = await GroupChatRole.get_chat_history(group_openid)
-    completion = openai.chat.completions.create(
+    completion = await openai.chat.completions.create(
         model="deepseek-chat",
         messages=messages,
         stream=False
