@@ -15,6 +15,8 @@ ju_he_image_list= "https://api.superbed.cn/timeline"  # 聚合图床获取上传
 #随机图 anosu
 anosu_url = "https://image.anosu.top/pixiv/json"
 
+# 搜番/acg api
+animetrace_url = "https://api.animetrace.com/v1/search"
 """
 AI
 """
