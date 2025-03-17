@@ -230,8 +230,56 @@ QQ_BOTS="
 分别在id、token、secret处填写你的机器人ID，机器人Token和Apple Secret，需从[QQ开放平台](https://q.qq.com/)获取。
 
 <br>
+#### 📄 需要替换的文件
 
-### 📍二、启动机器人
+首先找到 [**src/configs/api_config_example.py**](src/configs/api_config_example.py) 文件，并根据需要替换以下配置项：
+
+```python
+app_id = "<KEY>"
+bot_account = "<KEY>"
+
+"""
+图床配置
+"""
+# SMMS图床相关配置
+smms_token = "<KEY>"  # sm.ms图床的token
+smms_image_upload_history = "https://sm.ms/api/v2/upload_history"  # sm.ms图床获取上传图片历史API地址
+
+# 聚合图床相关配置
+ju_he_token = "<KEY>"  # 聚合图床的token
+ju_he_image_list = "https://api.superbed.cn/timeline"  # 聚合图床获取上传图片历史API地址
+
+"""
+AI
+"""
+admin_password = "123456"  # 默认注册管理员密码
+# 图灵机器人相关配置
+v3url = "https://api.vveai.com/v1/chat/completions"
+v3key = "<KEY>"
+# DeepSeek相关配置
+deepseek_url = "https://api.deepseek.com"
+deepseek_key = "<KEY>"
+
+"""
+Wenku8账号
+"""
+wenku8_username = "<user_name>"
+wenku8_password = "<passwd>"
+
+"""
+多米HTTP代理api
+"""
+proxy_api = "<KEY>"
+```
+
+<b>🚫注意：</b>
+将你的 `app_id` 和 `smms_token` 替换为实际值（可以根据自身需求选填），然后将文件重命名为 **api_config.py**。
+
+<br>
+
+
+
+### 📍三、启动机器人
 
 在项目根目录中，找到 *bot.py* ，在终端输入
 
@@ -245,7 +293,7 @@ python bot.py
 
 当然可以！以下是根据您提供的文件内容整理后的项目结构：
 
-### 🗒️ 三、项目结构
+### 🗒️ 四、项目结构
 
 ```
 SanYeCao-Nonebot:.
@@ -471,7 +519,7 @@ SanYeCao-Nonebot:.
 
 <br>
 
-### 🎈四、更多功能
+### 🎈五、更多功能
 
 #### 📲所有指令
 
@@ -492,52 +540,6 @@ menu = ["/重启","/今日运势","/今日塔罗","/图","/日报","/点歌","/�
 
 ### 🎨 功能补充说明
 
-#### 📄 需要替换的文件
-
-首先找到 [**src/configs/api_config_example.py**](src/configs/api_config_example.py) 文件，并根据需要替换以下配置项：
-
-```python
-app_id = "<KEY>"
-bot_account = "<KEY>"
-
-"""
-图床配置
-"""
-# SMMS图床相关配置
-smms_token = "<KEY>"  # sm.ms图床的token
-smms_image_upload_history = "https://sm.ms/api/v2/upload_history"  # sm.ms图床获取上传图片历史API地址
-
-# 聚合图床相关配置
-ju_he_token = "<KEY>"  # 聚合图床的token
-ju_he_image_list = "https://api.superbed.cn/timeline"  # 聚合图床获取上传图片历史API地址
-
-"""
-AI
-"""
-admin_password = "123456"  # 默认注册管理员密码
-# 图灵机器人相关配置
-v3url = "https://api.vveai.com/v1/chat/completions"
-v3key = "<KEY>"
-# DeepSeek相关配置
-deepseek_url = "https://api.deepseek.com"
-deepseek_key = "<KEY>"
-
-"""
-Wenku8账号
-"""
-wenku8_username = "<user_name>"
-wenku8_password = "<passwd>"
-
-"""
-多米HTTP代理api
-"""
-proxy_api = "<KEY>"
-```
-
-
-将你的 `app_id` 和 `smms_token` 替换为实际值（可以根据自身需求选填），然后将文件重命名为 **api_config.py**。
-
-<br>
 
 #### 🎵 使用网易云API实现点歌
 
@@ -557,7 +559,7 @@ proxy_api = "<KEY>"
 ```
 
 
-此时需要 **删除** [**cloud_music_cookies.cookie**](cloud_music_cookies.cookie) 并重新扫码登录。
+此时需要并重新扫码登录。  [cloud_music.py](src/plugins/cloud_music.py) 内有控制是否发送到qq,详情请看 Line:33
 
 <br>
 
