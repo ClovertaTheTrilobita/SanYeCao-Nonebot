@@ -112,7 +112,7 @@ async def get_yuc_wiki_image(template_name,width,height):
         template_path=yuc_wiki_path,
         template_name=f'{template_name}.html',
         templates={"data": None},
-        quality=50,
+        quality=40,
         type="jpeg",
         pages={
             "viewport": {"width": width, "height": height},

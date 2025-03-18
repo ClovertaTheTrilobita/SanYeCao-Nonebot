@@ -17,5 +17,6 @@ async def handle_function(message: MessageEvent):
         await yuc_wiki.finish("暂无新番信息")
     try:
         await yuc_wiki.finish(MessageSegment.file_image(Path(yuc_wiki_image)))
-    except Exception:
-        await yuc_wiki.finish("新番信息被外星人抢走啦，请重试。这绝对不是咱的错，绝对不是！")
+    except Exception as e:
+        if not isinstance(e, nonebot.exception.FinishedException):
+            await yuc_wiki.finish("新番信息被外星人抢走啦，请重试。这绝对不是咱的错，绝对不是！")
