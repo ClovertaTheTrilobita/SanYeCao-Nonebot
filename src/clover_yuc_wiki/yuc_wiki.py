@@ -19,9 +19,6 @@ async def get_yuc_wiki(keyword):
         if keyword == '本季新番':
             template_name = await generate_season_url()
             response = requests.get(base_url + f'{template_name}')
-        elif keyword == '下季新番':
-            template_name = await generate_next_season_url()
-            response = requests.get(base_url + f'{template_name}')
         else:
             template_name = 'forecast_anime'
             response = requests.get(new)
@@ -46,19 +43,6 @@ async def generate_season_url():
     now = datetime.now()
     quarter_month = ((now.month - 1) // 3) * 3 + 1
     return f"{now.year}{quarter_month:02d}"
-
-async def generate_next_season_url():
-    """
-    获取下季度
-    :return:
-    """
-    now = datetime.now()
-    quarter_month = ((now.month - 1) // 3) * 3 + 1
-    current_quarter_start = datetime(now.year, quarter_month, 1)
-
-    next_quarter_start = current_quarter_start + timedelta(days=90)
-    next_quarter_month = ((next_quarter_start.month - 1) // 3) * 3 + 1
-    return f"{next_quarter_start.year}{next_quarter_month:02d}"
 
 async def dispose_html(response):
     """
