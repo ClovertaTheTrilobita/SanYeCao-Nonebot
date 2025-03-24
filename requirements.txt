@@ -11,9 +11,7 @@ sqlalchemy
 selenium
 autopep8
 graiax-silkcoder[ffmpeg]
-Crypto
 graiax-silkcoder
-Crypto
 fake_useragent
 pycryptodome
 PyExecJS

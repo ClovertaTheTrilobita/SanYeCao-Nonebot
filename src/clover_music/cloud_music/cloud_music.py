@@ -81,7 +81,7 @@ async def netease_cloud_music_is_login(session):
         pass
     csrf_token = session.cookies.get('__csrf')
     if csrf_token is None:
-        return session, False
+        return session, False,None
     else:
         try:
             loginurl = session.post(f'https://music.163.com/weapi/w/nuser/account/get?csrf_token={csrf_token}',data={'params': login_params(None), 'encSecKey': login_encSecKey()}, headers=headers).json()
