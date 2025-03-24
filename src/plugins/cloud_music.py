@@ -32,7 +32,6 @@ async def handle_function(msg: MessageEvent):
         """是否要发送到QQ上面登录 """
         # await clover_music.send(MessageSegment.file_image(Path(path)))
         """是否要发送到QQ上面登录 """
-
         while True:
             code = await check_qr_code(unikey, session)
             if '801' in str(code):
@@ -45,6 +44,8 @@ async def handle_function(msg: MessageEvent):
             else:
                 break
             await asyncio.sleep(2)
+        with open('cloud_music_cookies.cookie', 'wb') as f:
+            pickle.dump(session.cookies, f)
 
     #搜索歌曲
     song_id,song_name,singer,song_url = await netease_music_search(keyword,session)
