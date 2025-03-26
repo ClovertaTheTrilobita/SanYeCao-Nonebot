@@ -7,7 +7,7 @@ from nonebot import logger
 from nonebot.log import default_format
 from nonebot.adapters.qq import Adapter as QQAdapter
 from apscheduler.schedulers.background import BackgroundScheduler
-from src.configs.path_config import log_path,temp_path,video_path
+from src.configs.path_config import log_path,temp_path,video_path,yuc_wiki_path
 
 nonebot.init()
 driver = nonebot.get_driver()
@@ -21,7 +21,7 @@ driver.on_shutdown(disconnect)
 
 def clean_temp_cache():
     """定时清理缓存文件"""
-    path_list =  [Path(temp_path), Path(video_path)]
+    path_list =  [Path(temp_path), Path(video_path),Path(yuc_wiki_path)]
     print("开始清理文件")
     for folder_path in path_list:
         files = get_files_in_folder(folder_path)
