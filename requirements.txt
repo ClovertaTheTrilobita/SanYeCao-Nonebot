@@ -26,6 +26,9 @@ nonebot-plugin-htmlrender
 tenacity
 paramiko
 
+commonX
+jmcomic
+natsort
 
 requests
 pillow

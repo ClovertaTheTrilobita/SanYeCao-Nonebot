@@ -31,6 +31,9 @@ os.makedirs(font_path, exist_ok=True)
 # 临时数据路径
 temp_path = path + '/temp/'
 os.makedirs(temp_path, exist_ok=True)
+# JM发送 图片模板
+jm_path = path + '/image/jm/'
+os.makedirs(jm_path, exist_ok=True)
 # 日志路径
 log_path = path+'/log/'
 os.makedirs(log_path, exist_ok=True)
