@@ -9,9 +9,8 @@ jm = on_command("jm", rule=to_me(), priority=10,block=False)
 async def handle_function(message: MessageEvent):
 
     values = message.get_plaintext().replace("/jm", "").split(" ")
-
-    if 3 > len(values) > 4:
-        await jm.finish("请输入正确的格式 /jm+id 或 /jm+id+邮箱号")
+    if len(values) != 3:
+        await jm.finish("请输入正确的格式 /jm+id+邮箱号")
     else:
         if not validate_email(values[2]):
             await jm.finish("邮箱格式不正确！")
