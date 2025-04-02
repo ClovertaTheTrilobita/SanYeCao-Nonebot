@@ -1,3 +1,12 @@
 dir_rule:
   base_dir: src\resources\image\jm
   rule: Bd_Pname
+
+# 下载配置
+download:
+  cache: true # 如果要下载的文件在磁盘上已存在，不用再下一遍了吧？默认为true
+  image:
+    decode: true # JM的原图是混淆过的，要不要还原？默认为true
+    suffix: .jpg # 把图片都转为.jpg格式，默认为null，表示不转换。
+  threading:
+    photo: 5
