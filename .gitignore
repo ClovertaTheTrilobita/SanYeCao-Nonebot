@@ -27,3 +27,4 @@ bili.cookie
 src/clover_lightnovel/wenku8.cookie
 src/clover_lightnovel/output1.html
 *.pyc
+/src/resources/image/jm/*

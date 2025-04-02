@@ -29,6 +29,7 @@ paramiko
 commonX
 jmcomic
 natsort
+aiosmtplib
 
 requests
 pillow

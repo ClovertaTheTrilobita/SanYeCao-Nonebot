@@ -31,7 +31,7 @@ os.makedirs(font_path, exist_ok=True)
 # 临时数据路径
 temp_path = path + '/temp/'
 os.makedirs(temp_path, exist_ok=True)
-# JM发送 图片模板
+# JM下载位置
 jm_path = path + '/image/jm/'
 os.makedirs(jm_path, exist_ok=True)
 # 日志路径
@@ -41,7 +41,8 @@ os.makedirs(log_path, exist_ok=True)
 video_path = path+'/video/'
 os.makedirs(video_path, exist_ok=True)
 
-
+#jm配置文件路径
+jm_config_path = os.getcwd()+'/src/configs/jm_config.yml'
 
 # # 语音路径
 # RECORD_PATH = Path() / "src" / "resources" / "record"

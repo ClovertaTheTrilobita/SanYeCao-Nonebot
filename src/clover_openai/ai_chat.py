@@ -70,6 +70,3 @@ async def silicon_flow(group_openid, content):
 
     await GroupChatRole.save_chat_history(group_openid, {"role": "assistant", "content": reply_content})
     return reply_content
-
-if __name__ == '__main__':
-    print(deepseek_chat("你拽什么啊？"))

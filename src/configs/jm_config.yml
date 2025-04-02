@@ -1,0 +1,3 @@
+dir_rule:
+  base_dir: src\resources\image\jm
+  rule: Bd_Pname
