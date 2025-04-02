@@ -1,5 +1,17 @@
 app_id="<KEY>"
 bot_account= "<KEY>"
+"""
+谷歌邮箱配置
+"""
+google_smtp_server = "smtp.gmail.com"
+google_email ="xxxxxx@gmail.com"
+google_password = "1234567891234567" #16位应用码
+"""
+qq 邮箱配置
+"""
+qq_smtp_server = "smtp.qq.com"
+qq_email = "xxxxxxxxxx@qq.com"
+qq_password = "123456789123456789" #应用码
 
 """
 图床配置
