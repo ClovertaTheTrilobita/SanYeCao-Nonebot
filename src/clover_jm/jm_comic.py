@@ -7,7 +7,7 @@ from src.clover_image.delete_file import delete_folder,delete_file
 from src.clover_email.send_email import send_email_by_google,send_email_by_qq
 
 # 创建线程池
-jm_executor = ThreadPoolExecutor(max_workers=5)
+jm_executor = ThreadPoolExecutor(max_workers=2)
 jm_executor.submit(lambda: None).result()
 
 async def download_jm(album_id: str| None,receiver_email: str| None):

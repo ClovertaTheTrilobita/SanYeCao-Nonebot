@@ -9,4 +9,4 @@ download:
     decode: true # JM的原图是混淆过的，要不要还原？默认为true
     suffix: .jpg # 把图片都转为.jpg格式，默认为null，表示不转换。
   threading:
-    photo: 5
+    photo: 1
