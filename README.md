@@ -48,92 +48,10 @@
 - [x] 获取新番信息
 - [x] 绝对色感
 
-#### 待办
-- **功能描述**: 用户可以添加、查询和删除个人待办事项。
-- **指令**: `/待办`, `/待办查询`, `/新建待办`, `/删除待办`
-
-#### 天气
-- **功能描述**: 提供当前天气信息。
-- **指令**: `/天气`
-
-#### 今日运势
-- **功能描述**: 提供用户的今日运势。
-- **指令**: `/今日运势`
-
-#### 今日塔罗
-- **功能描述**: 提供一张随机的塔罗牌及其解读。
-- **指令**: `/今日塔罗`
-
-#### 点歌
-- **功能描述**: 通过网易云音乐API点歌，并将音乐文件以QQ语音的形式发送至群聊。 快点一首你喜欢的歌给群友听吧！
-- **指令**: `/点歌`
-- **注意事项**: 
-  - 使用网易云点歌需要另外安装依赖：Node.js 和在目录下输入 npm install crypto-js
-  - 初次使用或者提示登录失效需要需扫码登录 （在 src\music 目录下）。
-
-#### 图
-- **功能描述**: 返回图库中的图片。
-- **指令**: `/图`
-
-#### 摸摸头
-- **功能描述**: 与机器人进行互动，发送“摸摸头”的回复。
-- **指令**: `/摸摸头`
-
-#### 接入语言模型
-- **功能描述**: 使用第三方大语言模型进行交互。
-- **指令**: `/开启ai`, `/关闭ai`  `/角色列表`,`/添加人设`, `/更新人设`, `/删除人设`, `/切换人设`, `/管理员注册`
-- **注意事项**: 
-  - 需要管理员身份认证。
-  - AI功能为每个群单独启动，默认关闭。
-
-#### 搜索B站视频
-- **功能描述**: 通过BV号搜索B站视频，并将视频文件发送至群聊。
-- **指令**: `/BV搜索 <BV号>`
-- **注意事项**: 
-  - <b>🚨注意：</b> 由于QQ的限制，官方bot无法发送文件大于10M。
-  - 需要安装 Chrome Driver。您需要首先确保自己的电脑安装了[<b>Chrome Driver</b>](https://developer.chrome.google.cn/docs/chromedriver?hl=zh-cn)。
-  - 若没安装过，请参考教程：[chromedriver下载与安装方法，亲测可用-CSDN博客](https://blog.csdn.net/zhoukeguai/article/details/113247342)
-  - 程序第一次启动时，会获取B站的cookie保存至本地，使用selenium库完成，下载可能较慢，需要稍等一会儿。
-
-#### 今日老婆
-- **功能描述**: 提供今日老婆的信息。
-- **指令**: `/今日老婆`
-- **状态**: 待开发
-
-#### 群老婆
-- **功能描述**: 提供群内成员的老婆信息。
-- **指令**: `/群老婆`
-
-#### 鲁迅说
-- **功能描述**: 提供鲁迅的经典语录。
-- **指令**: `/鲁迅说`,`/luxun`
-
-#### 喜报、悲报
-- **功能描述**: 提供喜报和悲报的信息。
-- **指令**: `/喜报`, `/悲报`
-
-#### 查询cf比赛
-- **功能描述**: 通过CodeForces官方API查询近期比赛。
-- **指令**: `/cf`
-
-#### 日报
-- **功能描述**: 提供每日的新闻或信息。
-- **指令**: `/日报`
-
-#### 查询热门轻小说
-- **功能描述**: 查询当前热门的轻小说。
-- **指令**: `/轻小说`
-
-#### 获取新番信息
-- **功能描述**: 获取当季动漫的新番信息和预期新番上线信息。
-- **指令**: `/本季新番`, `/新番观察`
-
-#### 绝对色感小游戏
-- **功能描述**: 返回一个绝对色感小游戏，玩家需要猜测一个颜色，并输入颜色代码。
-- **指令**: `/绝对色感 初级、中级、高级、超神`
+#### 更多详细功能请查看<b>[features.md](docs/features.md)</b>.
 
 
-## 🛠️使用
+## 🛠️ 安装
 
 - 关于Nonebot完整部署使用方法，请查看[官方文档](https://nonebot.dev/)
 
@@ -164,7 +82,7 @@ conda activate chatbot
 
 <br>
 
-# 安装所需依赖。
+### 🧪 安装所需依赖
 
 <br>
 
@@ -199,14 +117,6 @@ npm -v
 ```powershell
 npm install crypto-js
 ```
-<br>
-
-### 使用BV搜索B站视频需要另外安装：
-
-**谷歌驱动安装：**[<b>Chrome Driver</b>](https://googlechromelabs.github.io/chrome-for-testing/)
-
-安装教程：[chromedriver下载与安装方法，亲测可用-CSDN博客](https://blog.csdn.net/zhoukeguai/article/details/113247342)
-
 <br>
 
 ### ✒️二、配置所需文件
@@ -351,8 +261,6 @@ codeforces:
 
 <br>
 
-
-
 ### 📍三、启动机器人
 
 在项目根目录中，找到 *bot.py* ，在终端输入
@@ -361,255 +269,9 @@ codeforces:
 python bot.py
 ```
 
-或者选择编译器启动，便可以启动机器人。
-
 <br>
 
-### 🗒️ 四、项目结构
-
-```
-SanYeCao-Nonebot:.
-│  .gitignore
-│  bot.py
-│  chat_bot.db
-│  example.env.prod
-│  package-lock.json
-│  package.json
-│  pyproject.toml
-│  README.md
-│  requirements.txt
-│          
-├─node_modules
-│  └─crypto-js
-│              
-└─src
-    ├─clover_image
-    │  └─get_image.py
-    │          
-    ├─clover_music
-    │  ├─cloud_music         
-    │  │  ├─cloud_music_cookies.cookie
-    │  │  └─qrcode.png
-    │  └─netease_music
-    │          
-    ├─clover_openai
-    │  ├─api_config_example.py
-    │  └─api_config.py
-    │          
-    ├─clover_sqlite
-    │  ├─data_init      
-    │  │  ├─init_tables.py
-    │  │  └─...
-    │  └─models
-    │     ├─models.py
-    │     └─...
-    │              
-    ├─clover_videos
-    │  └─billibili
-    │     ├─bilibili_search.py
-    │     └─...
-    │              
-    ├─configs
-    │  ├─path_config.py
-    │  ├─api_config_example.py
-    │  └─utils
-    │     ├─utils.py
-    │     └─...
-    │          
-    ├─plugins
-    │  ├─check.py
-    │  ├─todo.py
-    │  ├─weather.py
-    │  ├─fortune.py
-    │  ├─tarot.py
-    │  ├─music.py
-    │  ├─image.py
-    │  ├─petpet.py
-    │  ├─openai.py
-    │  ├─bilibili.py
-    │  ├─news.py
-    │  ├─light_novel.py
-    │  ├─anime.py
-    │  └─...
-    │          
-    └─resources
-        ├─font
-        │  ├─font.ttf
-        │  └─...
-        ├─image
-        │  ├─codeforces
-        │  │  ├─image1.png
-        │  │  └─...
-        │  ├─github_repo
-        │  │  ├─image2.png
-        │  │  └─...
-        │  ├─good_bad_news
-        │  │  ├─image3.png
-        │  │  └─...
-        │  ├─MaoYuNa
-        │  │  ├─image4.png
-        │  │  └─...
-        │  ├─rua
-        │  │  ├─image5.png
-        │  │  └─...
-        │  ├─tarot
-        │  │  ├─sideTarotImages
-        │  │  │  ├─image6.png
-        │  │  │  └─...
-        │  │  └─TarotImages
-        │  │     ├─image7.png
-        │  │     └─...
-        │  └─who_say
-        │     ├─image8.png
-        │     └─...
-        ├─log
-        │  ├─bot.log
-        │  └─...
-        ├─temp
-        │  ├─temp_file1.tmp
-        │  └─...
-        └─videos
-           ├─video1.mp4
-           └─...
-```
-
-
-### 详细说明
-
-- **根目录文件**
-  - `.gitignore`: 忽略文件配置。
-  - `bot.py`: 机器人启动文件。
-  - `chat_bot.db`: SQLite 数据库文件。
-  - `example.env.prod`: 示例环境配置文件。
-  - `package-lock.json`: npm 依赖锁定文件。
-  - `package.json`: npm 依赖配置文件。
-  - `pyproject.toml`: Python 项目配置文件。
-  - `README.md`: 项目说明文档。
-  - `requirements.txt`: Python 依赖配置文件。
-
-- **node_modules**
-  - `crypto-js`: 加密库。
-
-- **src 目录**
-  - **clover_image**
-    - `get_image.py`: 图片获取模块。
-  
-  - **clover_music**
-    - **cloud_music**
-      - `cloud_music_cookies.cookie`: 网易云音乐 cookie 文件。
-      - `qrcode.png`: 网易云音乐扫码登录二维码。
-    - **netease_music**
-      - 网易云音乐相关模块。
-  
-  - **clover_openai**
-    - `api_config_example.py`: 示例 API 配置文件。
-    - `api_config.py`: 实际 API 配置文件。
-  
-  - **clover_sqlite**
-    - **data_init**
-      - `init_tables.py`: 数据库初始化脚本。
-      - 其他初始化脚本。
-    - **models**
-      - `models.py`: 数据库模型定义。
-      - 其他模型定义文件。
-  
-  - **clover_videos**
-    - **bilibili**
-      - `bilibili_search.py`: B站视频搜索模块。
-      - 其他 B站相关模块。
-  
-  - **configs**
-    - `path_config.py`: 路径配置文件。
-    - `api_config_example.py`: 示例 API 配置文件。
-    - **utils**
-      - `utils.py`: 工具函数。
-      - 其他工具函数文件。
-  
-  - **plugins**
-    - `check.py`: 指令检查模块。
-    - `todo.py`: 待办事项模块。
-    - `weather.py`: 天气模块。
-    - `fortune.py`: 运势模块。
-    - `tarot.py`: 塔罗牌模块。
-    - `music.py`: 点歌模块。
-    - `image.py`: 图片模块。
-    - `petpet.py`: 摸摸头模块。
-    - `openai.py`: AI 模块。
-    - `bilibili.py`: B站视频模块。
-    - `news.py`: 日报模块。
-    - `light_novel.py`: 轻小说模块。
-    - `anime.py`: 新番信息模块。
-    - 其他插件模块。
-  
-  - **resources**
-    - **font**
-      - `font.ttf`: 字体文件。
-      - 其他字体文件。
-    - **image**
-      - **codeforces**
-        - `image1.png`: 图片文件。
-        - 其他图片文件。
-      - **github_repo**
-        - `image2.png`: 图片文件。
-        - 其他图片文件。
-      - **good_bad_news**
-        - `image3.png`: 图片文件。
-        - 其他图片文件。
-      - **MaoYuNa**
-        - `image4.png`: 图片文件。
-        - 其他图片文件。
-      - **rua**
-        - `image5.png`: 图片文件。
-        - 其他图片文件。
-      - **tarot**
-        - **sideTarotImages**
-          - `image6.png`: 图片文件。
-          - 其他图片文件。
-        - **TarotImages**
-          - `image7.png`: 图片文件。
-          - 其他图片文件。
-      - **who_say**
-        - `image8.png`: 图片文件。
-        - 其他图片文件。
-    - **log**
-      - `bot.log`: 日志文件。
-      - 其他日志文件。
-    - **temp**
-      - `temp_file1.tmp`: 临时文件。
-      - 其他临时文件。
-    - **videos**
-      - `video1.mp4`: 视频文件。
-      - 其他视频文件。
-
 <br>
-
-### 📦三、插件
-  - 插件的目录位于src/plugins中<br>
-  - 插件的配置文件位于src/configs中<br>
-  - 基本插件存储在plugins目录中，启动即可使用<br>
-  - 部分插件通过调用其它目录中的方法完成其功能<br>
-  - 部分插件需要调用第三方API，需要在配置文件中填写相关配置<br>
-
-<br>
-
-### 🎈五、更多功能
-
-#### 📲所有指令
-
-机器人的指令列表在[<B>src/plugins/check.py</B>](src/plugins/check.py)中，有如下指令：
-
-```python
-menu = ["/重启","/今日运势","/今日塔罗","/图","/日报","/点歌","/摸摸头","/群老婆","/今日老婆", "/开启ai","/关闭ai",
-        "/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册","/待办", "/test","/天气",
-        "我喜欢你", "❤", "/待办查询", "/新建待办", "/删除待办" ,"/cf","/B站搜索", "/BV搜索", "/喜报", "/悲报",
-        "/luxun","/鲁迅说", "/奶龙", "/repo", "/info", "/menu", "/轻小说","/本季新番","/新番观察"]
-```
-
-输入其它指令机器人会回复听不懂哦。
-
-<br>
-
-
 
 ### 🎨 功能补充说明
 
@@ -632,7 +294,7 @@ menu = ["/重启","/今日运势","/今日塔罗","/图","/日报","/点歌","/�
 ```
 
 
-此时需要并重新扫码登录。  [cloud_music.py](src/plugins/cloud_music.py) 内有控制是否发送到qq,详情请看 Line:33
+此时需要并重新扫码登录。
 
 <br>
 
@@ -640,7 +302,7 @@ menu = ["/重启","/今日运势","/今日塔罗","/图","/日报","/点歌","/�
 
 ##### 介绍
 
-机器人现已更新管理员机制，机器人管理员可以控制是否使用第三方大语言模型进行交互。后续其它功能更新中。
+机器人管理员可以控制是否使用第三方大语言模型进行交互。后续其它功能更新中。
 
 ##### 使用
 
@@ -675,7 +337,11 @@ ai:
 
 注册成为管理员之后，你的 `member_openid` 将会被保存至 `chatbot.db` 下的 `admin_list` 表中。
 
+<br>
 
+<br>
+
+### 更多配置内容，请详见[configuration.md](docs/configuration.md)
 
 
 
