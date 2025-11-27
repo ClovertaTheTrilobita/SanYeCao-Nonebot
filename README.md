@@ -53,13 +53,7 @@
 
 <br>
 
-
 ## 🛠️ 安装
-
-> [!TIP]
->
-> 关于Nonebot完整部署使用方法，请查看[官方文档](https://nonebot.dev/)
-
 
 ### ⚙️一、环境配置
 
@@ -224,6 +218,10 @@ ai:
 ```
 
 <br>
+
+> [!TIP]
+>
+> 关于Nonebot完整部署使用方法，请查看[官方文档](https://nonebot.dev/)
 
 #### 更多配置内容，请详见：[configuration.md](docs/configuration.md)
 
