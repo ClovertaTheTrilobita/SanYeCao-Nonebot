@@ -11,6 +11,7 @@
 </p>
 
 
+
 ## 🔖亮点
 
 - 基于[Nonebot2](https://nonebot.dev/)，使用[QQ官方API](https://bot.q.qq.com/wiki/)，更稳定、高效✨
@@ -49,6 +50,8 @@
 - [x] 绝对色感
 
 #### 更多详细功能请查看<b>[features.md](docs/features.md)</b>.
+
+<br>
 
 
 ## 🛠️ 安装
@@ -122,7 +125,7 @@ QQ_BOTS="
 ]
 "
 ```
-分别在id、token、secret处填写你的机器人ID，机器人Token和Apple Secret，需从[QQ开放平台](https://q.qq.com/)获取。
+分别在id、token、secret处填写你的机器人ID，机器人Token和App Secret，需从[QQ开放平台](https://q.qq.com/)获取。
 
 <br>
 
@@ -152,7 +155,7 @@ QQ_BOTS="
 
 - **对于Debian/Ubuntu**
 
-- 你可以直接用以下命令安装
+  - 你可以直接用以下命令安装
 
   ```shell
   sudo apt install nodejs npm
@@ -190,15 +193,13 @@ python bot.py
 
 ##### 介绍
 
-机器人管理员可以控制是否使用第三方大语言模型进行交互。后续其它功能更新中。
+机器人管理员可以控制是否使用第三方大语言模型进行交互。
 
 ##### 使用
 
-###### 1. 注册为管理员 <a id="admin_control"></a>
-
 在 [**config.yaml**](config.yaml) 内，找到：
 
-```python
+```yaml
 ai:
   admin:
     password: '123456'
@@ -220,14 +221,9 @@ ai:
 @三叶草 /管理员注册 123456
 ```
 
-
-<b>注意：</b> 管理员密码请不要泄露给其他人，建议定期更换密码。
-
-注册成为管理员之后，你的 `member_openid` 将会被保存至 `chatbot.db` 下的 `admin_list` 表中。
-
 <br>
 
-### 更多配置内容，请详见[configuration.md](docs/configuration.md)
+#### 更多配置内容，请详见：[configuration.md](docs/configuration.md)
 
 
 
