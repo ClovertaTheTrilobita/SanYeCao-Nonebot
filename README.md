@@ -53,9 +53,9 @@
 
 ## 🛠️ 安装
 
-- 关于Nonebot完整部署使用方法，请查看[官方文档](https://nonebot.dev/)
-
-<br>
+> [!TIP]
+>
+> 关于Nonebot完整部署使用方法，请查看[官方文档](https://nonebot.dev/)
 
 
 ### ⚙️一、环境配置
@@ -78,13 +78,11 @@ conda activate chatbot
 
 你也可以将上述 *chatbot* 更换为你喜欢的名字。
 
-<b>🚫注意：</b>机器人<b>不</b>支持<img alt="Static Badge" src="https://img.shields.io/badge/Python-3.13/+-blue">的发行版，推荐使用<img alt="Static Badge" src="https://img.shields.io/badge/Python-3.11%2F3.12-blue">
+<b>🚫注意：</b>机器人<b>不</b>支持<img alt="Static Badge" src="https://img.shields.io/badge/Python-3.13/+-blue">，推荐使用<img alt="Static Badge" src="https://img.shields.io/badge/Python-3.11%2F3.12-blue">
 
 <br>
 
-### 🧪 安装所需依赖
-
-<br>
+### 🧪 二、安装所需依赖
 
 此机器人运行所需依赖已全部打包至***requirements.txt***，您只需回到项目根目录
 
@@ -95,31 +93,11 @@ pip install -r requirements.txt
 ```
 <br>
 
-### 🎵 网易云点歌依赖安装
+### ✒️ 三、配置所需文件
 
-#### 1. 安装 Node.js 环境
-- **官网下载**：访问 [Node.js 官网](https://nodejs.org/) 下载 LTS 版本（推荐 v18.x+）
-- **安装注意**：
-  - 勾选 `Add to PATH` 选项（自动配置环境变量）
-  - 完成安装后重启终端使配置生效
-  验证 Node.js 版本
-- **对于Debian/Ubuntu**
-- 你可以直接用以下命令安装
-  ```shell
-  sudo apt install nodejs npm
-  ```
-#### 2. 验证安装结果
-```powershell
-npm -v
-```
-#### 3. 安装 crypto-js 库
-在项目根目录执行：
-```powershell
-npm install crypto-js
-```
-<br>
-
-### ✒️二、配置所需文件
+> [!CAUTION]
+>
+> **请一定要配置，否则bot无法启动**
 
 在一切开始前，你需要将项目根目录下的[<b>example.env.prod</b>](example.env.prod)文件更名为<b><i>.env.prod</i></b>，这是机器人的账号配置文件。
 
@@ -150,118 +128,53 @@ QQ_BOTS="
 
 #### 📄 需要修改的配置文件
 
-首先找到 [**example.config.yaml**](example.config.yaml) ，将其重命名为<b>config.yaml</b>
+> [!IMPORTANT]
+>
+> **请一定要配置，否则bot功能会不完善**
 
-并根据需要替换以下配置项：
+找到 [**example.config.yaml**](example.config.yaml) ，将其重命名为<b>config.yaml</b>
 
-```yaml
-#######################################
-# 如果您已经配置好了，请将此字段改为 ‘False’#
-#######################################
-default: "True" # 配置完成后，请将这个字段改为 False
-
-bot:
-  app_id: ""
-  bot_account: ""
-
-############################
-#     三叶草邮箱发信设置      #
-############################
-mail:
-  google:
-    enabled: 'False'
-    smtp_server: 'smtp.gmail.com'
-    email: 'xxxxxx@gmail.com'
-    password: '1234567891234567' # 16 位应用码
-
-  qq:
-    enabled: 'True'
-    smtp_server: 'smtp.qq.com'
-    email: 'xxxxxxxx@qq.com'
-    password: '1234567891234567' # qq邮箱应用码
-
-  server: # 自建服务器
-    enabled: 'False'
-    smtp_server: 'mail.example.com' # 自建邮局域名
-    email: 'user_name@example.com'
-    password: '123456'
-    port: '587'
-
-############################
-#       三叶草图床设置       #
-############################
-image_hosting:
-  smms: # sm.ms图床
-    enabled: 'False'
-    token: '<KEY>'
-    smms_image_upload_history: "https://sm.ms/api/v2/upload_history"
-
-  superbed: # 聚合图床
-    enabled: 'False'
-    token: '<KEY>'
-    superbed_image_list: "https://api.superbed.cn/timeline"
-
-  random_pic: "https://image.anosu.top/pixiv/json"
-
-  animetrace:
-    url: "https://api.animetrace.com/v1/search"
-
-############################
-#        三叶草AI设置        #
-############################
-ai:
-  admin:
-    password: '123456'
-
-  api:
-    v3:
-      enabled: "False"
-      url: "https://api.vveai.com/v1/chat/completions"
-      key: '<KEY>'
-
-    deepseek:
-      enabled: "False"
-      url: "https://api.deepseek.com"
-      key: '<KEY>'
-
-    silicon_flow:
-      enabled: "True"
-      url: "https://api.siliconflow.cn/v1/chat/completions"
-      model: "Pro/deepseek-ai/DeepSeek-V3"
-      key: '<KEY>'
-
-############################
-#       其他时尚小功能       #
-############################
-
-wenku8:
-  # 通过wenku8.com获取最新轻小说咨询
-  # 此功能需要启用代理
-  enabled: 'False'
-  user_name: '<user_name>'
-  password: '<passwd>'
-
-proxy:
-  # 目前代码中仅支持多米HTTP代理
-  enabled: 'False'
-  key: '<KEY>'
-
-qr:
-  # 二维码生成api
-  url: "https://api.qrserver.com/v1/create-qr-code/"
-  size: "200x200"
-
-codeforces:
-  # 查询codeforces比赛列表
-  key: "<KEY>"
-  secret: "<KEY>"
-```
-
-<b>🚫注意：</b> 将你的 `app_id` 和 `smms_token` 替换为实际值（可以根据自身需求选填）
+并根据需要替换其配置项
 
 <br>
 
-### 📍三、启动机器人
+### 🎵 四、网易云点歌依赖安装
+
+#### 1. 安装 Node.js 环境
+
+- **官网下载**：访问 [Node.js 官网](https://nodejs.org/) 下载 LTS 版本（推荐 v18.x+）
+
+- **安装注意**：
+
+  - 勾选 `Add to PATH` 选项（自动配置环境变量）
+  - 完成安装后重启终端使配置生效
+    验证 Node.js 版本
+
+- **对于Debian/Ubuntu**
+
+- 你可以直接用以下命令安装
+
+  ```shell
+  sudo apt install nodejs npm
+  ```
+
+#### 2. 验证安装结果
+
+```powershell
+npm -v
+```
+
+#### 3. 安装 crypto-js 库
+
+在项目根目录执行：
+
+```powershell
+npm install crypto-js
+```
+
+<br>
+
+### 📍五、启动机器人
 
 在项目根目录中，找到 *bot.py* ，在终端输入
 
@@ -271,32 +184,7 @@ python bot.py
 
 <br>
 
-<br>
-
 ### 🎨 功能补充说明
-
-
-#### 🎵 使用网易云API实现点歌
-
-若您是初次使用点歌功能，在群聊中 @ 机器人后，机器人会提示：
-
-```
-登录失效，请联系管理员进行登录
-```
-
-
-此时会在 [**src/music**](src/clover_music) 目录下生成一张 **qrcode.png**，您需要使用手机端网易云音乐扫码该二维码，登录您的网易云账号。
-
-<b>注意：</b> 我们使用 cookie 存储用户登录信息，所以会存在登录过期的情况。若 cookie 过期，机器人会提示：
-
-```
-歌曲音频获取失败：登录信息失效。
-```
-
-
-此时需要并重新扫码登录。
-
-<br>
 
 #### ✋ 管理员身份认证
 
@@ -336,8 +224,6 @@ ai:
 <b>注意：</b> 管理员密码请不要泄露给其他人，建议定期更换密码。
 
 注册成为管理员之后，你的 `member_openid` 将会被保存至 `chatbot.db` 下的 `admin_list` 表中。
-
-<br>
 
 <br>
 
