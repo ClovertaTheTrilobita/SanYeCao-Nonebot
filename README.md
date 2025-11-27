@@ -106,6 +106,8 @@ pip install -r requirements.txt
 
 我加了神必小代码，如果你没配置这两个配置文件是启动不起来的，因为有<span style="color:gray">~~海量~~</span>个例显示，很多人不看README就想当然地启动bot，并在群里问为什么会有报错（
 
+但是，如果你碰到了难以解决的问题，无论是什么，都欢迎来群里和我们一起讨论♥️！
+
 ```
 DRIVER=~fastapi+~httpx+~websockets
 
