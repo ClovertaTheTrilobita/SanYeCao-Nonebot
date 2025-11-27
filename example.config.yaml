@@ -20,14 +20,14 @@ bot:
 # 如果你需要启用此邮箱，请将该邮箱下的 ‘enabled’ 字段修改为 'True'
 # 请至少启用一个邮箱，若三个邮箱均启用，则优先级为gmail > qq邮箱 > 自建邮箱 （按照此配置文件中的顺序）
 mail:
-  google:
+  google: #gmail
     enabled: 'False'
     smtp_server: 'smtp.gmail.com'
     email: 'xxxxxx@gmail.com'
     password: '1234567891234567' # 16 位应用码
 
-  qq:
-    enabled: 'True'
+  qq: # qq邮箱
+    enabled: 'False' # 请至少启用一个邮箱
     smtp_server: 'smtp.qq.com'
     email: 'xxxxxxxx@qq.com'
     password: '1234567891234567' # qq邮箱应用码

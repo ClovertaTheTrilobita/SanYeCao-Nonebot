@@ -37,7 +37,7 @@ async def jm_email(album_id: str| None,receiver_email: str| None):
         send_status = await send_email_by_server(receiver_email,zip_path)
     else:
         logger.error("您未启用任何一个发信服务，请前往 config.yaml 修改。")
-        send_status = False
+        return "管理员未配置邮箱，发送失败了喵，大哥哥真是杂鱼♥️"
 
     if send_status:
         # 删除文件
