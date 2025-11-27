@@ -196,7 +196,6 @@ async def send_email_by_server(receiver_email: str, file_path: str):
     msg = MIMEMultipart()
     msg["From"] = server_email
     msg["To"] = receiver_email
-    msg["X-No-AddSig"] = "1"
     msg["Subject"] = "您的快递已送达"
     msg.attach(MIMEText(html, "html", "utf-8"))
 

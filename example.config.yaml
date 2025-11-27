@@ -1,0 +1,92 @@
+bot:
+  app_id: ""
+  bot_account: ""
+
+############################
+#     三叶草邮箱发信设置      #
+############################
+mail:
+  google:
+    enabled: 'False'
+    smtp_server: 'smtp.gmail.com'
+    email: 'xxxxxx@gmail.com'
+    password: '1234567891234567' # 16 位应用码
+
+  qq:
+    enabled: 'True'
+    smtp_server: 'smtp.qq.com'
+    email: 'xxxxxxxx@qq.com'
+    password: '1234567891234567' # qq邮箱应用码
+
+  server: # 自建服务器
+    enabled: 'False'
+    smtp_server: 'mail.example.com' # 自建邮局域名
+    email: 'user_name@example.com'
+    password: '123456'
+    port: '587'
+
+############################
+#       三叶草图床设置       #
+############################
+image_hosting:
+  smms: # sm.ms图床
+    enabled: 'False'
+    token: '<KEY>'
+    smms_image_upload_history: "https://sm.ms/api/v2/upload_history"
+
+  superbed: # 聚合图床
+    enabled: 'False'
+    token: '<KEY>'
+    superbed_image_list: "https://api.superbed.cn/timeline"
+
+  random_pic: "https://image.anosu.top/pixiv/json"
+
+  animetrace:
+    url: "https://api.animetrace.com/v1/search"
+
+############################
+#        三叶草AI设置        #
+############################
+ai:
+  admin:
+    password: '123456'
+
+  api:
+    v3:
+      url: "https://api.vveai.com/v1/chat/completions"
+      key: '<KEY>'
+
+    deepseek:
+      url: "https://api.deepseek.com"
+      key: '<KEY>'
+
+    silicon_flow:
+      url: "https://api.siliconflow.cn/v1/chat/completions"
+      model: "Pro/deepseek-ai/DeepSeek-V3"
+      key: '<KEY>'
+
+############################
+#       其他时尚小功能       #
+############################
+
+wenku8:
+  # 通过wenku8.com获取最新轻小说咨询
+  # 此功能需要启用代理
+  enabled: 'False'
+  user_name: '<user_name>'
+  password: '<passwd>'
+
+proxy:
+  # 目前代码中仅支持多米HTTP代理
+  enabled: 'False'
+  key: '<KEY>'
+
+qr:
+  # 二维码生成api
+  url: "https://api.qrserver.com/v1/create-qr-code/"
+  size: "200x200"
+
+codeforces:
+  # 查询codeforces比赛列表
+  key: "<KEY>"
+  secret: "<KEY>"
