@@ -11,10 +11,24 @@ from nonebot.adapters.qq import Adapter as QQAdapter
 from apscheduler.schedulers.background import BackgroundScheduler
 from src.configs.path_config import log_path,temp_path,video_path,yuc_wiki_path
 
+# 检查配置文件是否都存在，若不存在则直接退出
+CURRENT_FILE = Path(__file__).resolve()
+ROOT_DIR = CURRENT_FILE.parent
+ENV_PROD = ROOT_DIR / ".env.prod"
+CONFIG_PATH = ROOT_DIR / "config.yaml"
+
+if not ENV_PROD.is_file():
+    raise FileNotFoundError(
+        f"未找到配置文件: {ENV_PROD}，请根据README.md，将example.env.prod重命名为.env.prod，并进行正确配置")
+
+if not CONFIG_PATH.is_file():
+    raise FileNotFoundError(
+        f"未找到配置文件: {CONFIG_PATH}，请根据README.md，将example.config.yaml重命名为config.yaml，并配置机器人设置")
+
+
 nonebot.init()
 
 from backend import start_flask
-
 
 driver = nonebot.get_driver()
 driver.register_adapter(QQAdapter)  # 注册QQ适配器
@@ -41,6 +55,7 @@ scheduler = BackgroundScheduler()
 scheduler.add_job(clean_temp_cache, 'cron', hour=0, minute=0)
 
 if __name__ == "__main__":
+
     flask_thread = threading.Thread(target=start_flask, daemon=True)
     flask_thread.start()
     scheduler.start()

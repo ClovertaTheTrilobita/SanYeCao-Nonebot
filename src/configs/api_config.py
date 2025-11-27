@@ -1,14 +1,22 @@
 import yaml
 from pathlib import Path
+from nonebot import logger
 
 CURRENT_FILE = Path(__file__).resolve()
 ROOT_DIR = CURRENT_FILE.parent.parent.parent   # config -> src -> project root
 CONFIG_PATH = ROOT_DIR / "config.yaml"
 
-with open(CONFIG_PATH, "r", encoding="utf-8") as f:
-    config = yaml.safe_load(f)
+try:
+    with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+        config = yaml.safe_load(f)
+except FileNotFoundError:
+    raise FileNotFoundError(f"未找到配置文件: {CONFIG_PATH}，请根据README.md，将example.config.yaml重命名为config.yaml，并正确配置机器人设置")
 
-#print(data)
+default_config = config['default']
+
+if default_config == "True":
+    logger.warning(f"正在使用未经配置的配置文件，若你不想看到此警告，请将 {CONFIG_PATH} 第一行的default字段改为：False")
+
 app_id = config['bot']['app_id']
 bot_account = config['bot']['bot_account']
 """

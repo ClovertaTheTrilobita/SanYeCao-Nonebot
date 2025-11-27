@@ -213,6 +213,8 @@ npm install crypto-js
 
 在一切开始前，你需要将项目根目录下的[<b>example.env.prod</b>](example.env.prod)文件更名为<b><i>.env.prod</i></b>，这是机器人的账号配置文件。
 
+我加了神必小代码，如果你没配置这两个配置文件是启动不起来的，因为有<span style="color:gray">~~海量~~</span>个例显示，很多人不看README就想当然地启动bot，并在群里问为什么会有报错（
+
 ```
 DRIVER=~fastapi+~httpx+~websockets
 
@@ -236,50 +238,116 @@ QQ_BOTS="
 
 <br>
 
-#### 📄 需要替换的文件
+#### 📄 需要修改的配置文件
 
-首先找到 [**src/configs/api_config_example.py**](src/configs/api_config_example.py) 文件，并根据需要替换以下配置项：
+首先找到 [**example.config.yaml**](example.config.yaml) ，将其重命名为<b>config.yaml</b>
 
-```python
-app_id = "<KEY>"
-bot_account = "<KEY>"
+并根据需要替换以下配置项：
 
-"""
-图床配置
-"""
-# SMMS图床相关配置
-smms_token = "<KEY>"  # sm.ms图床的token
-smms_image_upload_history = "https://sm.ms/api/v2/upload_history"  # sm.ms图床获取上传图片历史API地址
+```yaml
+#######################################
+# 如果您已经配置好了，请将此字段改为 ‘False’#
+#######################################
+default: "True" # 配置完成后，请将这个字段改为 False
 
-# 聚合图床相关配置
-ju_he_token = "<KEY>"  # 聚合图床的token
-ju_he_image_list = "https://api.superbed.cn/timeline"  # 聚合图床获取上传图片历史API地址
+bot:
+  app_id: ""
+  bot_account: ""
 
-"""
-AI
-"""
-admin_password = "123456"  # 默认注册管理员密码
-# 图灵机器人相关配置
-v3url = "https://api.vveai.com/v1/chat/completions"
-v3key = "<KEY>"
-# DeepSeek相关配置
-deepseek_url = "https://api.deepseek.com"
-deepseek_key = "<KEY>"
+############################
+#     三叶草邮箱发信设置      #
+############################
+mail:
+  google:
+    enabled: 'False'
+    smtp_server: 'smtp.gmail.com'
+    email: 'xxxxxx@gmail.com'
+    password: '1234567891234567' # 16 位应用码
 
-"""
-Wenku8账号
-"""
-wenku8_username = "<user_name>"
-wenku8_password = "<passwd>"
+  qq:
+    enabled: 'True'
+    smtp_server: 'smtp.qq.com'
+    email: 'xxxxxxxx@qq.com'
+    password: '1234567891234567' # qq邮箱应用码
 
-"""
-多米HTTP代理api
-"""
-proxy_api = "<KEY>"
+  server: # 自建服务器
+    enabled: 'False'
+    smtp_server: 'mail.example.com' # 自建邮局域名
+    email: 'user_name@example.com'
+    password: '123456'
+    port: '587'
+
+############################
+#       三叶草图床设置       #
+############################
+image_hosting:
+  smms: # sm.ms图床
+    enabled: 'False'
+    token: '<KEY>'
+    smms_image_upload_history: "https://sm.ms/api/v2/upload_history"
+
+  superbed: # 聚合图床
+    enabled: 'False'
+    token: '<KEY>'
+    superbed_image_list: "https://api.superbed.cn/timeline"
+
+  random_pic: "https://image.anosu.top/pixiv/json"
+
+  animetrace:
+    url: "https://api.animetrace.com/v1/search"
+
+############################
+#        三叶草AI设置        #
+############################
+ai:
+  admin:
+    password: '123456'
+
+  api:
+    v3:
+      enabled: "False"
+      url: "https://api.vveai.com/v1/chat/completions"
+      key: '<KEY>'
+
+    deepseek:
+      enabled: "False"
+      url: "https://api.deepseek.com"
+      key: '<KEY>'
+
+    silicon_flow:
+      enabled: "True"
+      url: "https://api.siliconflow.cn/v1/chat/completions"
+      model: "Pro/deepseek-ai/DeepSeek-V3"
+      key: '<KEY>'
+
+############################
+#       其他时尚小功能       #
+############################
+
+wenku8:
+  # 通过wenku8.com获取最新轻小说咨询
+  # 此功能需要启用代理
+  enabled: 'False'
+  user_name: '<user_name>'
+  password: '<passwd>'
+
+proxy:
+  # 目前代码中仅支持多米HTTP代理
+  enabled: 'False'
+  key: '<KEY>'
+
+qr:
+  # 二维码生成api
+  url: "https://api.qrserver.com/v1/create-qr-code/"
+  size: "200x200"
+
+codeforces:
+  # 查询codeforces比赛列表
+  key: "<KEY>"
+  secret: "<KEY>"
 ```
 
-<b>🚫注意：</b>
-将你的 `app_id` 和 `smms_token` 替换为实际值（可以根据自身需求选填），然后将文件重命名为 **api_config.py**。
+<b>🚫注意：</b> 将你的 `app_id` 和 `smms_token` 替换为实际值（可以根据自身需求选填）
 
 <br>
 
@@ -296,8 +364,6 @@ python bot.py
 或者选择编译器启动，便可以启动机器人。
 
 <br>
-
-当然可以！以下是根据您提供的文件内容整理后的项目结构：
 
 ### 🗒️ 四、项目结构
 
@@ -580,10 +646,12 @@ menu = ["/重启","/今日运势","/今日塔罗","/图","/日报","/点歌","/�
 
 ###### 1. 注册为管理员 <a id="admin_control"></a>
 
-在 [**src/configs/api_config_example.py**](src/configs/api_config_example.py) 内，找到：
+在 [**config.yaml**](config.yaml) 内，找到：
 
 ```python
-admin_password = "123456"  # 默认注册管理员密码
+ai:
+  admin:
+    password: '123456'
 ```
 
 
