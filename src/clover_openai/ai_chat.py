@@ -1,7 +1,7 @@
 from openai import AsyncOpenAI as openai
 import requests
 from src.clover_sqlite.models.chat import GroupChatRole
-from src.configs.api_config import v3url, v3key, deepseek_url, deepseek_key,silicon_flow_key
+from src.configs.api_config import v3url, v3key, deepseek_url, deepseek_key,silicon_flow_key,silicon_flow_url,silicon_flow_model
 import aiohttp
 
 """
@@ -51,9 +51,9 @@ async def deepseek_chat(group_openid,content):
 async def silicon_flow(group_openid, content):
     await GroupChatRole.save_chat_history(group_openid, {"role": "user", "content": content})
     messages = await GroupChatRole.get_chat_history(group_openid)
-    url = "https://api.siliconflow.cn/v1/chat/completions"
+    url = silicon_flow_url
     payload = {
-        "model": "Pro/deepseek-ai/DeepSeek-V3",
+        "model": silicon_flow_model,
         "stream": False,
         "messages": messages
     }

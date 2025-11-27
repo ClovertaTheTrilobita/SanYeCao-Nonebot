@@ -7,6 +7,7 @@ from nonebot.adapters.qq import Message, MessageEvent
 from src.clover_openai import ai_chat
 from src.clover_sqlite.models.chat import GroupChatRole
 from src.clover_sqlite.models.user import UserList
+from src.configs.api_config import v3_enabled, deepseek_enabled, silicon_flow_enabled
 
 menu = ["/重启","/今日运势","/今日塔罗","/图","/随机图","/搜番","/日报","/点歌","/摸摸头","/群老婆","/今日老婆", "/开启ai","/关闭ai","/角色列表","/添加人设", "/更新人设", "/删除人设", "/切换人设", "/管理员注册",
         "/待办", "/test","/天气","我喜欢你", "❤", "/待办查询", "/新建待办", "/删除待办" ,"/cf","/B站搜索", "/BV搜索", "/喜报", "/悲报", "/luxun","/鲁迅说",
@@ -42,7 +43,14 @@ async def handle_function(message: MessageEvent):
     member_openid, content = message.author.id, message.get_plaintext()
     status = await GroupChatRole.is_on(group_openid)
     if status:
-        msg = await ai_chat.silicon_flow(group_openid,content)
+        if str(v3_enabled).strip().lower() in {"1", "t", "true"}:
+            msg = await ai_chat.v3_chat(group_openid, content)
+        elif str(deepseek_enabled).strip().lower() in {"1", "t", "true"}:
+            msg = await ai_chat.deepseek_chat(group_openid, content)
+        elif str(silicon_flow_enabled).strip().lower() in {"1", "t", "true"}:
+            msg = await ai_chat.silicon_flow(group_openid,content)
+        else:
+            msg = "管理员未配置ai聊天功能"
         await check.finish(msg)
     else:
         await check.finish(message=Message(random.choice(text_list)))

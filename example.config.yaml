@@ -53,14 +53,17 @@ ai:
 
   api:
     v3:
+      enabled: "False"
       url: "https://api.vveai.com/v1/chat/completions"
       key: '<KEY>'
 
     deepseek:
+      enabled: "False"
       url: "https://api.deepseek.com"
       key: '<KEY>'
 
     silicon_flow:
+      enabled: "True"
       url: "https://api.siliconflow.cn/v1/chat/completions"
       model: "Pro/deepseek-ai/DeepSeek-V3"
       key: '<KEY>'

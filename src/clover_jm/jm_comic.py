@@ -2,7 +2,7 @@ import yaml
 import uuid
 import jmcomic
 from datetime import datetime
-from src.configs.api_config import qrserver_url,qrserver_size
+from src.configs.api_config import qrserver_url,qrserver_size,google_enabled,qq_enabled,server_enabled
 from src.clover_jm.disguise_pdf import *
 from concurrent.futures import ThreadPoolExecutor
 from src.configs.path_config import jm_path,jm_config_path
@@ -28,7 +28,17 @@ async def jm_email(album_id: str| None,receiver_email: str| None):
         await delete_folder(folder_path)
         return "压缩文件失败"
     # 发送邮件
-    send_status = await send_email_by_qq(receiver_email,zip_path)
+
+    if str(google_enabled).strip().lower() in {"1", "t", "true"}:
+        send_status = await send_email_by_google(receiver_email, zip_path)
+    elif str(qq_enabled).strip().lower() in {"1", "t", "true"}:
+        send_status = await send_email_by_qq(receiver_email,zip_path)
+    elif str(server_enabled).strip().lower() in {"1", "t", "true"}:
+        send_status = await send_email_by_server(receiver_email,zip_path)
+    else:
+        logger.error("您未启用任何一个发信服务，请前往 config.yaml 修改。")
+        send_status = False
+
     if send_status:
         # 删除文件
         await delete_folder(folder_path)

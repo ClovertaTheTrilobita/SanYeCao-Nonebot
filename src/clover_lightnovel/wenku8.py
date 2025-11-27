@@ -2,7 +2,7 @@ from os import getcwd
 
 import requests
 from bs4 import BeautifulSoup
-from src.configs.api_config import wenku8_username, wenku8_password, proxy_api
+from src.configs.api_config import wenku8_username, wenku8_password, proxy_api, proxy_enabled
 
 # 登录页面的URL
 login_url = 'https://www.wenku8.net/login.php?jumpurl=http%3A%2F%2Fwww.wenku8.net%2Findex.php'
@@ -29,8 +29,6 @@ def get_proxy(headers):
     aaa = requests.get(proxy_url, headers=headers).text
     proxy_host = aaa.splitlines()[0]
     print('代理IP为：' + proxy_host)
-    # proxy_host='117.35.254.105:22001'
-    # proxy_host='192.168.0.134:1080'
     proxy = {
         'http': 'http://' + proxy_host,
         'https': 'http://' + proxy_host
@@ -43,7 +41,10 @@ async def login():
     with requests.Session() as session:
         proxy = get_proxy(headers)
         # 注意：这里使用了Session对象来保持会话状态
-        login_response = session.post(login_url, data=login_data, headers=headers, proxies=proxy)
+        if str(proxy_enabled).strip().lower() in {"1", "t", "true"}:
+            login_response = session.post(login_url, data=login_data, headers=headers, proxies=proxy)
+        else:
+            login_response = session.post(login_url, data=login_data, headers=headers)
 
         # 检查登录是否成功（根据实际需求调整）
         if login_response.status_code == 200:
