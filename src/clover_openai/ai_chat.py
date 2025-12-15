@@ -65,7 +65,6 @@ async def silicon_flow(group_openid, content):
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=payload, headers=headers) as response:
             result = await response.json()
-            print(result)
             reply_content = result["choices"][0]["message"]["content"]
 
     await GroupChatRole.save_chat_history(group_openid, {"role": "assistant", "content": reply_content})
