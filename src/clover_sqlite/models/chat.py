@@ -238,7 +238,7 @@ class GroupChatRole(Model):
             if len(history.role_chat_history) > 5:
                 history.role_chat_history.pop(2)
 
-            data = {"role": "system", "content": "你现在在qq群聊聊天，回复一定要口语化（这非常重要），回复尽可能在10字以内，禁止超出50字。"}
+            data = {"role": "system", "content": "你现在在qq群聊聊天，回复一定要口语化（这非常重要），回复尽可能在30字以内"}
             history.role_chat_history.append(data)
             print(history.role_chat_history)
             await history.save()
