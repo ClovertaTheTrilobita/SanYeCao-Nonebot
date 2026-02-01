@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+
+<body>
+<div class="wrapper">
+    <div class="main">
+        <div class="top-border">
+            <div class="top-title">
+                <p class="zx-title">Splatoon<span class="zx-title-num">3</span></p>
+                <p class="zx-tip">当前地图</p>
+            </div>
+            <div class="top-date">
+                <p class="top-date-week">{{data.week}}</p>
+                <p class="top-date-date">{{data.date}}</p>
+                <p class="top-date-cn">{{data.time}}</p>
+            </div>
+        </div>
+        <br><br>
+
+        <div class="three-border-regular">
+            <div class="moyu-title"><img src="./res/icon/regular.png" class="title-img">一般比赛</div>
+            <ul class="match-list">
+                {% for match in data.data_regular %}
+
+                    <li class="zx-paragraph">{{ match[0] }}</li>
+
+                    {% if match[1] %}
+                    <img class="match-img" src="{{ match[1] }}" alt="{{ match[0] }}">
+                    {% endif %}
+
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="three-border-bankara">
+            <div class="moyu-title"><img src="./res/icon/rank.png" class="title-img">蛮颓比赛(挑战)</div>
+            <ul class="match-list">
+                {% for match in data.data_bankara_challenge %}
+
+                    <li class="zx-paragraph">{{ match[0] }}</li>
+
+                    {% if match[1] %}
+                    <img class="match-img" src="{{ match[1] }}" alt="{{ match[0] }}">
+                    {% endif %}
+
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="three-border-bankara">
+            <div class="moyu-title"><img src="./res/icon/rank.png" class="title-img">蛮颓比赛(开放)</div>
+            <ul class="match-list">
+                {% for match in data.data_bankara_open %}
+
+                    <li class="zx-paragraph">{{ match[0] }}</li>
+
+                    {% if match[1] %}
+                    <img class="match-img" src="{{ match[1] }}" alt="{{ match[0] }}">
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="three-border-coop">
+            <div class="moyu-title"><img src="./res/icon/salmon_run.png" class="title-img-salmon">鲑鱼跑</div>
+            <div class="moyu-title-sub">武器： {% for img in data.data_coop[1] %}<img src="{{ img }}" class="title-img-weapon"> {% endfor %}</div>
+            <ul class="match-list">
+
+                <li class="zx-paragraph">{{ data.data_coop[0][0] }}</li>
+                {% if data.data_coop[0][1] %}
+                <img class="match-img" src="{{ data.data_coop[0][1] }}" alt="{{ data.data_coop[0][1] }}">
+                {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

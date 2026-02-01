@@ -103,3 +103,9 @@ CodeForces API
 """
 codeforces_key = config['codeforces']['key']
 codeforces_secret = config['codeforces']['secret']
+
+"""
+Splatoon3 API
+"""
+
+splatoon3_api = config['splatoon']['v3']["schedules"]

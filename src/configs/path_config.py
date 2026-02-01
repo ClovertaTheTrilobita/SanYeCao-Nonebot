@@ -3,7 +3,7 @@ from pathlib import Path
 
 path = os.getcwd()+'/src/resources'
 
-
+resources_path = path
 # 塔罗牌图片路径
 image_local_qq_image_path =  path+'/image/qq_image'
 os.makedirs(image_local_qq_image_path, exist_ok=True)
@@ -43,6 +43,8 @@ os.makedirs(log_path, exist_ok=True)
 # 视频路径
 video_path = path+'/video/'
 os.makedirs(video_path, exist_ok=True)
+# splatoon资源路径
+splatoon_path = path+'/image/splatoon/'
 
 #jm配置文件路径
 jm_config_path = os.getcwd()+'/src/configs/jm_config.yml'

@@ -118,3 +118,10 @@ codeforces:
   # 但如果仅查询比赛列表或个人rating，本内容可以不用配置
   key: "<KEY>"
   secret: "<KEY>"
+
+splatoon:
+  v3:
+    schedules: "https://splatoon3.ink/data/schedules.json"
+
+  v2:
+    schedules: "https://splatoon2.ink/data/schedules.json"
