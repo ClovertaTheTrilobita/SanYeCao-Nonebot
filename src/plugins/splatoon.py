@@ -11,7 +11,7 @@ from src.clover_splatoon.stages import RegularScheduleItem, BankaraScheduleItem,
 from src.configs.path_config import splatoon_path, temp_path
 from src.clover_splatoon.html_to_image import generate_splatoon_report_image
 
-stages11 = on_command("Splatoon地图", aliases={"splatooon地图", "喷喷地图"},rule=to_me(), priority=10, block=True)
+stages11 = on_command("Splatoon地图", aliases={"splatoon地图", "喷喷地图"},rule=to_me(), priority=10, block=True)
 @stages11.handle()
 async def stage_handle():
     await stages11.send("正在专门为超鱿型的您整理比赛场地！\n请稍等哦～ᔦꙬᔨ")
