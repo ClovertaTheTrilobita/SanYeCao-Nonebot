@@ -16,6 +16,20 @@ game_types = {
     '塔': '24px-Mode_Icon_Tower_Control.png'
 }
 
+game_types3 = {
+    "AREA": {"image": "./res/icon/AREA.png", "cname": "真格区域"},
+    "CLAM": {
+        "image": "./res/icon/CLAM.png", "cname": "真格蛤蜊" },
+    "GOAL": {
+        "image": "./res/icon/GOAL.png",
+        "cname": "真格鱼虎"
+    },
+    "LOFT": {
+        "image": "./res/icon/LOFT.png",
+        "cname": "真格塔楼"
+    }
+}
+
 stage = {"0": {"image": "stage/300px-S2_Stage_The_Reef.png", "name": "寿司街"},
          "1": {"image": "stage/300px-S2_Stage_Musselforge_Fitness.png", "name": "健身房"},
          "2": {"image": "stage/300px-S2_Stage_Starfish_Mainstage.png", "name": "音乐堂"},
