@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from src.clover_sqlite.models.questions import Question
 app = Flask(__name__)
 
@@ -16,6 +16,10 @@ async def init_data():
         return "success"
 
     return "failed"
+
+@app.route("/ping", methods=["GET"])
+def ping():
+    return jsonify({"status": "ok", "message": "pong"}), 200
 
 def start_flask():
     print("Flask启动中...")
