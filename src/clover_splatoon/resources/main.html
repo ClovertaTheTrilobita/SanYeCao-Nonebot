@@ -40,6 +40,7 @@
         </div>
         <div class="three-border-bankara">
             <div class="moyu-title"><img src="./res/icon/rank.png" class="title-img">蛮颓比赛(挑战)</div>
+            <div class="moyu-title-sub"><img src="{{ data.data_bankara_vs_rule[0][0] }}" class="title-img">{{ data.data_bankara_vs_rule[0][1] }}</div>
             <ul class="match-list">
                 {% for match in data.data_bankara_challenge %}
 
@@ -54,6 +55,7 @@
         </div>
         <div class="three-border-bankara">
             <div class="moyu-title"><img src="./res/icon/rank.png" class="title-img">蛮颓比赛(开放)</div>
+                    <div class="moyu-title-sub"><img src="{{ data.data_bankara_vs_rule[1][0] }}" class="title-img">{{ data.data_bankara_vs_rule[1][1] }}</div>
             <ul class="match-list">
                 {% for match in data.data_bankara_open %}
 

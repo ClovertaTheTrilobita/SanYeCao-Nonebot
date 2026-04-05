@@ -5,7 +5,8 @@ from src.clover_splatoon.stages import RegularScheduleItem, BankaraScheduleItem,
 from src.configs.path_config import temp_path
 from nonebot_plugin_htmlrender import template_to_pic
 from playwright.async_api import async_playwright
-from src.clover_splatoon.splatoon_data import stage3
+from src.clover_splatoon.splatoon_data import stage3, game_types3
+
 
 async def save_img(data: bytes):
 
@@ -40,6 +41,17 @@ async def generate_splatoon_report_image(regular: RegularScheduleItem, bankara: 
         [
             stage3[str(regular.regularMatchSetting.vsStages[1].vsStageId)]["cname"],
             regular.regularMatchSetting.vsStages[1].image.url
+        ]
+    ]
+
+    bankara_vs_rule = [
+        [
+            game_types3[str(bankara.bankaraMatchSettings[0].vsRule.rule)]["image"],
+            game_types3[str(bankara.bankaraMatchSettings[0].vsRule.rule)]["cname"],
+        ],
+        [
+            game_types3[str(bankara.bankaraMatchSettings[1].vsRule.rule)]["image"],
+            game_types3[str(bankara.bankaraMatchSettings[1].vsRule.rule)]["cname"],
         ]
     ]
 
@@ -78,6 +90,7 @@ async def generate_splatoon_report_image(regular: RegularScheduleItem, bankara: 
 
     data = {
         "data_regular": regular_list,
+        "data_bankara_vs_rule": bankara_vs_rule,
         "data_bankara_challenge": bankara_list_challenge,
         "data_bankara_open": bankara_list_open,
         "data_coop": coop_list,
