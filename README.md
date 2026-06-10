@@ -98,9 +98,7 @@ pip install -r requirements.txt
 
 在一切开始前，你需要将项目根目录下的[<b>example.env.prod</b>](example.env.prod)文件更名为<b><i>.env.prod</i></b>，这是机器人的账号配置文件。
 
-我加了神必小代码，如果你没配置这两个配置文件是启动不起来的，因为有<span style="color:gray">~~海量~~</span>个例显示，很多人不看README就想当然地启动bot，并在群里问为什么会有报错（
-
-但是，如果你碰到了难以解决的问题，无论是什么，都欢迎来群里和我们一起讨论♥️！
+如果你在配置过程中碰到了问题，欢迎加群和我们讨论❤️。
 
 ```
 DRIVER=~fastapi+~httpx+~websockets
